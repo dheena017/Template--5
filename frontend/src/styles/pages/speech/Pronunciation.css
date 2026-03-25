@@ -1,0 +1,249 @@
+.pronunciation-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+}
+
+.pron-header {
+  margin-bottom: 2rem;
+}
+
+.pron-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.pron-header p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.pron-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.pron-checker {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.pron-input-group {
+  margin-bottom: 1.5rem;
+}
+
+.pron-input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.pron-input-group input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.pron-input-group input:focus {
+  outline: none;
+  border-color: rgba(102, 126, 234, 0.5);
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.pron-input-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.pron-language {
+  margin-bottom: 1.5rem;
+}
+
+.pron-language label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.pron-language select {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.pron-language select:focus {
+  outline: none;
+  border-color: rgba(102, 126, 234, 0.5);
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.pron-check-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.pron-check-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.pron-check-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pron-result {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.pron-result h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pron-phonetic {
+  font-size: 1.2rem;
+  color: #3b82f6;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.pron-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pron-play,
+.pron-save {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.pron-play {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  color: #3b82f6;
+}
+
+.pron-play:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.pron-save {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.pron-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.pron-saved {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.pron-saved h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.pron-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pron-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.pron-item p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.pron-item small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.pron-item-play {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  color: #3b82f6;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pron-item-play:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+@media (max-width: 768px) {
+  .pron-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .pron-buttons {
+    flex-direction: column;
+  }
+
+  .pron-play,
+  .pron-save {
+    width: 100%;
+    justify-content: center;
+  }
+}

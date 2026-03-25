@@ -1,0 +1,25 @@
+// Core Platform Components (Root & Hubs)
+export { default as Dashboard } from './dashboards/Dashboard'
+export { default as Profile } from './Profile'
+export { default as Login } from './Login'
+export { default as Register } from './Register'
+export { default as Settings } from './Settings'
+export { default as SettingsHub } from './dashboards/SettingsHub'
+export { default as GenericDashboard } from './dashboards/GenericDashboard'
+export { default as HubDashboard } from './dashboards/HubDashboard'
+
+// Primary Category Star Exports (The 10 Sections)
+export * from './image'
+export * from './avatar'
+export * from './speech'
+export * from './text'
+export * from './studio'
+export * from './files'
+export * from './pdf'
+export * from './developers'
+export * from './social-media'
+export * from './about-us'
+export { default as AIOrchestrator } from './studio/AIOrchestrator'
+
+// Subsection Tabs & Layouts
+export * as ProfileTabs from './profile/tabs' 

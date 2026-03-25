@@ -1,0 +1,306 @@
+.discord-landing-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    animation: fadeIn 0.8s var(--transition-smooth);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.discord-hero {
+    padding: 6rem 4rem;
+    border-radius: var(--radius-lg);
+    border: var(--glass-border);
+    background: var(--glass-bg);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+}
+
+.discord-icon-wrap {
+    width: 100px;
+    height: 100px;
+    background: #5865f2;
+    color: white;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+    box-shadow: 0 15px 40px rgba(88, 101, 242, 0.4);
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 950;
+    margin-bottom: 1.5rem;
+    letter-spacing: -4px;
+    background: linear-gradient(135deg, #fff 0%, #5865f2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+.discord-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+    align-items: center;
+}
+
+.d-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.online-dot {
+    width: 10px;
+    height: 10px;
+    background: #23a559;
+    border-radius: 50%;
+}
+
+.d-stat strong {
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-subtle);
+}
+
+.join-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.1rem 2.5rem;
+    background: #5865f2;
+    color: white;
+    border-radius: 100px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 10px 25px rgba(88, 101, 242, 0.3);
+}
+
+.join-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(88, 101, 242, 0.4);
+    background: #4752c4;
+}
+
+.discord-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3.5rem;
+}
+
+.discord-preview {
+    border-radius: 24px;
+    border: 1px solid var(--border-subtle);
+    background: #2b2d31;
+    overflow: hidden;
+}
+
+.d-preview-header {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    height: 480px;
+}
+
+.d-nav {
+    background: #2b2d31;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.server-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.d-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.d-channel {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    color: #949ba4;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.d-channel.active {
+    background: #3f4248;
+    color: white;
+}
+
+.d-chat {
+    background: #313338;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.chat-msg {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.user-avatar.bot { background: #5865f2; }
+.user-avatar.pro { background: #1d9bf0; }
+
+.m-user {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.4rem;
+}
+
+.b-tag {
+    background: #5865f2;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+}
+
+.m-time {
+    font-size: 0.75rem;
+    color: #949ba4;
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+
+.msg-content p {
+    color: #dbdee1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.discord-perks h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+}
+
+.perks-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.perk-card {
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: var(--glass-border);
+    background: var(--glass-bg);
+    transition: var(--transition-bounce);
+}
+
+.perk-card:hover {
+    transform: translateY(-8px);
+    border-color: #5865f2;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.perk-card h3 {
+    margin: 1rem 0 0.5rem;
+}
+
+.perk-card p {
+    color: var(--text-secondary);
+}
+
+.event-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    border-radius: 32px;
+    background: var(--card-gradient-subtle);
+}
+
+.event-info h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-info p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+.rsvp-btn {
+    padding: 1.1rem 2.25rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rsvp-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+}
+
+.icon-blue { color: #5865f2; }
+.icon-green { color: #10b981; }
+.icon-amber { color: #f59e0b; }
+.icon-purple { color: #8b5cf6; }
+
+@media (max-width: 1024px) {
+    .discord-hero { padding: 3rem 1.5rem; }
+    .hero-content h1 { font-size: 2.75rem; }
+    .discord-layout { grid-template-columns: 1fr; }
+    .d-preview-header { grid-template-columns: 1fr; height: auto; }
+    .d-nav { display: none; }
+    .d-chat { padding: 1.5rem; }
+    .event-box { flex-direction: column; text-align: center; gap: 2rem; padding: 2.5rem 1.5rem; }
+}

@@ -1,0 +1,384 @@
+.contest-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+    color: var(--text-primary);
+    animation: fadeIn 0.8s var(--transition-smooth);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.contest-hero {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.contest-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    background: var(--bg-surface-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 2rem;
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 950;
+    line-height: 1;
+    margin-bottom: 2rem;
+    letter-spacing: -5px;
+    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.6;
+}
+
+.contest-timer-wrap {
+    display: inline-flex;
+    gap: 1.5rem;
+    padding: 2rem 4rem;
+    border-radius: 100px;
+    background: var(--glass-bg);
+    border: var(--glass-border);
+    align-items: center;
+    margin-bottom: 4rem;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+.timer-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 60px;
+}
+
+.timer-item span:first-child {
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.timer-item span:last-child {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.timer-divider {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.enter-btn {
+    padding: 1.1rem 2.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 10px 30px var(--primary-alpha-30);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.rules-btn {
+    padding: 1.1rem 2.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.contest-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+.highlight-item {
+    padding: 2.5rem;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.h-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--bg-surface);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.highlight-item h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.highlight-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.prizes-section {
+    margin-bottom: 5rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 3rem;
+}
+
+.prizes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.prize-card {
+    padding: 4rem 2.5rem;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: var(--glass-border);
+    background: var(--glass-bg);
+    transition: var(--transition-bounce);
+}
+
+.prize-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    border-color: #facc15;
+    box-shadow: 0 30px 60px rgba(250, 204, 21, 0.2);
+}
+
+.prize-icon {
+    margin-bottom: 1.5rem;
+}
+
+.gold { color: #facc15; }
+.silver { color: #94a3b8; }
+.bronze { color: #b45309; }
+
+.prize-card h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.prize-card p {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.showcase-section {
+    margin-bottom: 6rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+}
+
+.view-gallery {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.entries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.entry-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: var(--glass-border);
+    transition: var(--transition-bounce);
+}
+
+.entry-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--card-shadow);
+}
+
+.entry-img {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.entry-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.entry-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.entry-card:hover .entry-overlay {
+    opacity: 1;
+}
+
+.vote-btn {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 100px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.entry-info {
+    padding: 1.5rem;
+}
+
+.entry-info h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+}
+
+.entry-artist {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.entry-stats {
+    display: flex;
+    gap: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.entry-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.submission-guide {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    padding: 4rem;
+    border-radius: 32px;
+    background: var(--card-bg-elevated);
+}
+
+.guide-left h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin: 1rem 0;
+}
+
+.guide-left p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.step-num {
+    font-size: 2.5rem;
+    font-weight: 950;
+    color: var(--primary);
+    opacity: 0.3;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.step h4 {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+.step p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.icon-purple { color: #8b5cf6; }
+.icon-blue { color: #3b82f6; }
+.icon-green { color: #10b981; }
+.icon-amber { color: #f59e0b; }
+
+@media (max-width: 1024px) {
+    .contest-hero h1 { font-size: 3rem; }
+    .contest-highlights-grid, .prizes-grid, .entries-grid, .steps-grid { grid-template-columns: 1fr; }
+    .submission-guide { grid-template-columns: 1fr; padding: 2.5rem; text-align: center; }
+}

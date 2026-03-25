@@ -1,0 +1,178 @@
+.billing-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--s-10) var(--s-8) var(--s-16);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.b-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--s-16);
+}
+
+.b-title h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-display);
+}
+
+.b-title p {
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+}
+
+/* Balance Card */
+.balance-card-refined {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--s-12);
+  margin-bottom: var(--s-16);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+.bc-info span {
+  color: var(--primary);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+}
+
+.bc-info h2 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-top: 0.5rem;
+  letter-spacing: -0.04em;
+  font-family: var(--font-display);
+  color: #fff;
+}
+
+/* Plans Grid */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-8);
+  margin-bottom: var(--s-16);
+}
+
+.plan-card-refined {
+  padding: 2.5rem;
+  background: var(--bg-surface);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  transition: var(--transition-gentle);
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-card-refined:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  background: var(--bg-elevated);
+}
+
+.plan-card-refined.active {
+  border-color: var(--primary);
+  background: rgba(34, 211, 238, 0.05);
+  box-shadow: 0 0 30px var(--primary-glow);
+}
+
+.plan-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.plan-price { font-size: 2.5rem; font-weight: 800; margin: 1.5rem 0 2rem; display: flex; align-items: baseline; gap: 0.5rem; }
+.plan-price small { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+
+.plan-features {
+  list-style: none;
+  margin-bottom: 3rem;
+  flex: 1;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.plan-features li svg { color: var(--success); }
+
+/* Main Grid Layout */
+.b-main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+}
+
+.history-card-refined {
+  padding: 2.5rem;
+  background: var(--bg-surface);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+}
+
+.h-head h3 { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+
+.tx-item-refined {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  background: var(--bg-elevated);
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  margin-bottom: 1rem;
+  transition: var(--transition-gentle);
+}
+
+.tx-item-refined:hover { transform: translateX(5px); border-color: var(--primary); }
+
+.tx-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.25rem;
+}
+
+.tx-icon.up { background: rgba(74, 222, 128, 0.1); color: var(--success); }
+.tx-icon.down { background: rgba(244, 63, 94, 0.1); color: var(--error); }
+
+.tx-info strong { font-size: 1rem; color: #fff; display: block; }
+.tx-info span { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
+
+/* Modal */
+.modal-box-refined {
+  background: var(--bg-surface);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  max-width: 520px;
+  width: 100%;
+}
+
+.modal-box-refined h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+
+@media (max-width: 1000px) {
+  .b-main-grid { grid-template-columns: 1fr; }
+  .plans-grid { grid-template-columns: repeat(2, 1fr); }
+  .bc-info h2 { font-size: 3rem; }
+}

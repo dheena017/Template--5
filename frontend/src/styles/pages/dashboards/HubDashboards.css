@@ -1,0 +1,287 @@
+/* 
+  Hub Dashboards Master CSS
+  Focused on Management Center & Platform Hubs
+  Fixes: Card Overflow, Responsive Grid, Spacing, & Typography
+*/
+
+:root {
+  --hub-bg: #f9fafb;
+  --hub-text-main: #111827;
+  --hub-text-muted: #4b5563;
+  --hub-text-dim: #6b7280;
+  --hub-border: #e5e7eb;
+  --hub-card-bg: #ffffff;
+  --hub-primary: #6366f1;
+  --hub-primary-soft: rgba(99, 102, 241, 0.1);
+  --hub-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --hub-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.main-tools-dashboard,
+.management-dashboard,
+.system-info-dashboard,
+.pdf-hub-dashboard {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+/* --- HEADER SECTION --- */
+.main-tools-header,
+.management-header,
+.system-header,
+.pdf-header {
+  margin-bottom: 4rem;
+  text-align: center; /* Keeping it centered as per feedback */
+}
+
+/* Fix: Neutral color & proper sizing for Title */
+.main-tools-header h1,
+.management-header h1,
+.system-header h1,
+.pdf-header h1 {
+  font-size: 2.75rem; /* Reduced from overpoweringly large */
+  font-weight: 850;
+  color: #1a1a1a; /* Neutral dark color */
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+  background: none; /* Removing the blue gradient for neutral look */
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: initial;
+}
+
+/* Fix: Darker subtitle for better contrast */
+.main-tools-header p,
+.management-header p,
+.system-header p,
+.pdf-header p {
+  color: #555; /* Darker than #999 for contrast */
+  font-size: 1.125rem;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* --- GRID LAYOUT --- */
+/* Fix: repeat(auto-fit, minmax(350px, 1fr)) for responsiveness */
+.categories-container,
+.management-grid,
+.system-grid,
+.pdf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); /* Increased min-width to prevent cramped rows */
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.tools-category-section {
+  grid-column: 1 / -1;
+  margin-bottom: 4rem;
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--hub-border);
+  padding-bottom: 1rem;
+}
+
+.category-title h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--hub-text-main);
+  margin: 0;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- CARD COMPONENTS --- */
+.management-card,
+.tool-card {
+  background: var(--hub-card-bg);
+  border: 1px solid var(--hub-border);
+  border-radius: 24px;
+  padding: 1.75rem; /* Balanced consistent padding */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--hub-shadow);
+  position: relative;
+  overflow: visible; /* Important: Do not cut off content */
+  height: auto; /* Natural height */
+  min-height: 400px; /* As requested: min-height instead of max-height */
+}
+
+/* Fix: Hover effects with shadow and transform */
+.management-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--hub-shadow-hover);
+  border-color: var(--cat-color, var(--hub-primary));
+}
+
+/* Icon Area */
+/* Fix: 64x64px with proper spacing */
+.card-icon-box,
+.tool-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--primary-rgb, 99, 102, 241), 0.08);
+  color: var(--cat-color, var(--hub-primary));
+  margin-bottom: 1.25rem; /* Content Gap fix */
+  transition: all 0.3s;
+}
+
+.management-card:hover .card-icon-box {
+  background: var(--cat-color, var(--hub-primary));
+  color: white;
+}
+
+/* Fix: Centered icon content */
+.card-icon-box svg {
+  display: block;
+}
+
+/* Content Area */
+.card-content {
+  flex: 1; /* Pushes action/stats to bottom */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fix: 1.1rem with margin bottom */
+.management-card h3,
+.tool-card h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 0.85rem 0; /* Horizontal alignment fix */
+  letter-spacing: -0.01em;
+}
+
+/* Fix: Line-height 1.6 for readability */
+.management-card p,
+.tool-card p {
+  color: #666; /* Contrast improvement */
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Fix: CTA visibility & contrast */
+.card-action,
+.tool-footer {
+  margin-top: auto; /* Ensure it stays above stats */
+  margin-bottom: 1.75rem; /* Gap before stats section */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--cat-color, var(--hub-primary));
+  font-weight: 700;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  transition: opacity 0.2s, gap 0.2s;
+}
+
+.management-card:hover .card-action {
+  opacity: 1;
+  gap: 0.75rem;
+}
+
+/* Stats Section */
+/* Fix: Proper spacing & divider */
+.card-stats {
+  padding-top: 1.25rem;
+  margin-top: 0; 
+  border-top: 1px solid #f0f0f0; /* Subtle divider */
+  display: flex;
+  gap: 2rem;
+}
+
+/* Fix: Label too small hard to read */
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem; /* Cramped spacing fix */
+}
+
+/* Fix: #666 instead of #999 for labels */
+.stat-item span:first-child {
+  font-size: 0.75rem; 
+  color: #666;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Fix: Font-weight 600 for values */
+.stat-item span:last-child {
+  font-weight: 800; /* Prominent value */
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* Tablet Adjustments */
+@media (max-width: 1024px) {
+  .management-grid, .system-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .management-header h1 {
+    font-size: 2.25rem;
+  }
+}
+
+/* Fix: Mobile Break (Single column layout) */
+@media (max-width: 768px) {
+  .main-tools-dashboard,
+  .management-dashboard,
+  .system-info-dashboard,
+  .pdf-hub-dashboard {
+    padding: 2rem 1rem;
+  }
+
+  .management-grid, .system-grid, .pdf-grid, .categories-container {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .management-header h1 {
+    font-size: 2rem;
+  }
+  
+  .management-card {
+    min-height: initial; /* Allow natural expansion on mobile */
+    padding: 1.5rem;
+  }
+
+  .card-stats {
+    gap: 1.5rem;
+  }
+}
+
+/* Accessibility: Focus States */
+.management-card:focus-visible {
+  outline: 3px solid var(--hub-primary);
+  outline-offset: 4px;
+}

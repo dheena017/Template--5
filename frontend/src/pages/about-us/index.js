@@ -1,0 +1,10 @@
+export { default as AboutUs } from './AboutUs'
+export { default as Docs } from './Docs'
+export { default as FAQSupport } from './FAQSupport'
+export { default as Feedback } from './Feedback'
+export { default as Notifications } from './Notifications'
+export { default as ComingSoon } from './ComingSoon'
+export { default as Billing } from './Billing'
+export { default as Ask } from './Ask'
+export { default as SupportTopic } from './SupportTopic'
+

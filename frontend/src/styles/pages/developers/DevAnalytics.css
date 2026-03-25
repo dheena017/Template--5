@@ -1,0 +1,299 @@
+:root {
+  --da-bg: #09090b;
+  --da-card: rgba(24, 24, 27, 0.4);
+  --da-border: rgba(255, 255, 255, 0.06);
+  --da-primary: #818cf8;
+  --da-secondary: #c084fc;
+  --da-accent: #22d3ee;
+  --da-text: #f4f4f5;
+  --da-text-muted: #a1a1aa;
+  --da-success: #10b981;
+  --da-error: #f43f5e;
+  --da-radius: 20px;
+}
+
+.analytics-container {
+  padding: 2.5rem;
+  background: var(--da-bg);
+  min-height: 100vh;
+  color: var(--da-text);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left h1 {
+  font-size: 2.25rem;
+  font-weight: 850;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff 0%, var(--da-primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.header-left p {
+  color: var(--da-text-muted);
+  font-size: 1rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.time-select {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--da-card);
+  border: 1px solid var(--da-border);
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.time-select select {
+  background: transparent;
+  border: none;
+  color: var(--da-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.premium-card {
+  background: var(--da-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--da-border);
+  border-radius: var(--da-radius);
+  padding: 1.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(129, 140, 248, 0.3);
+  background: rgba(24, 24, 27, 0.6);
+}
+
+.metric-card .label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--da-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.metric-card .value {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-card .trend {
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.trend.pos { color: var(--da-success); }
+.trend.neg { color: var(--da-error); }
+
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+/* Charts Area */
+.chart-section {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.chart-head h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.legend {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--da-text-muted);
+}
+
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.p { background: var(--da-primary); box-shadow: 0 0 10px var(--da-primary); }
+.dot.s { background: var(--da-error); box-shadow: 0 0 10px var(--da-error); }
+
+.viz-canvas-main {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 1rem 0;
+}
+
+.v-bar-group {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.v-bar {
+  width: 100%;
+  border-radius: 2px;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.v-bar.p { background: linear-gradient(to top, var(--da-primary), var(--da-accent)); opacity: 0.6; }
+.v-bar.s { background: var(--da-error); opacity: 0.8; }
+
+.v-bar-group:hover .v-bar.p { opacity: 1; transform: scaleX(1.1); }
+
+/* Geo Section */
+.geo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.geo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.geo-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid var(--da-border);
+}
+
+.geo-item strong { color: var(--da-accent); }
+
+.viz-donut-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ring-inner {
+  width: 120px;
+  height: 120px;
+  border: 8px solid var(--da-card);
+  border-top-color: var(--da-primary);
+  border-right-color: var(--da-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--da-text-muted);
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Performance Table */
+.performance-table {
+  overflow-x: auto;
+}
+
+.perf-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--da-border);
+  align-items: center;
+}
+
+.p-row.header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--da-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.code-font {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--da-primary);
+}
+
+.tag-ok {
+  color: var(--da-success);
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 999px;
+  width: fit-content;
+}
+
+@media (max-width: 1200px) {
+  .analytics-grid { grid-template-columns: repeat(2, 1fr); }
+  .span-3 { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .analytics-grid { grid-template-columns: 1fr; }
+  .span-2, .span-3 { grid-column: span 1; }
+  .analytics-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+}

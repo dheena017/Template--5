@@ -1,0 +1,70 @@
+.feedback-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.feedback-header { text-align: center; margin-bottom: 4rem; }
+.feedback-header h1 { font-size: 3.5rem; font-family: var(--font-display); margin: 0; }
+.feedback-header p { color: var(--text-muted); font-size: 1.25rem; margin-top: 1rem; }
+
+.feedback-form-wrapper { padding: 3rem; background: var(--bg-surface); border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.04); }
+
+.feedback-form-wrapper section { margin-bottom: 3rem; }
+.feedback-form-wrapper section h3 { font-size: 1.25rem; font-family: var(--font-display); margin-bottom: 1.5rem; }
+
+.sentiment-btns { display: flex; gap: 1.5rem; justify-content: center; }
+.sentiment-btns button {
+  width: 80px; height: 80px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+
+.sentiment-btns button.active { background: var(--primary-color); color: #fff; box-shadow: 0 8px 32px var(--primary-glow); border-color: var(--primary-color); }
+
+.category-chips { display: flex; flex-wrap: wrap; gap: 1rem; }
+.cat-chip {
+  padding: 0.85rem 1.5rem;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  color: #fff;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 0.75rem;
+  cursor: pointer;
+}
+
+.cat-chip:hover { border-color: var(--primary-color); background: rgba(var(--primary-rgb), 0.05); }
+
+.premium-textarea {
+  width: 100%; height: 180px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: none;
+}
+
+.form-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.03); padding-top: 2rem; }
+.checkbox-row { display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+
+.submit-btn {
+  padding: 1rem 2.5rem;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  display: flex; align-items: center; gap: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.feedback-stats { margin-top: 5rem; display: flex; justify-content: center; gap: 4rem; color: var(--text-muted); font-size: 0.9rem; }

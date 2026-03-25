@@ -1,0 +1,111 @@
+.history-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.history-header {
+  margin-bottom: 2rem;
+}
+
+.history-header h1 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 2.4rem;
+  font-family: var(--font-display);
+}
+
+.history-header p {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 760px;
+}
+
+.history-timeline {
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: var(--bg-surface);
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.history-item + .history-item {
+  margin-top: 0.8rem;
+}
+
+.history-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(var(--primary-rgb), 0.12);
+  border: 1px solid rgba(var(--primary-rgb), 0.25);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-copy h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.history-copy p {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.history-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.history-meta span {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.history-open-btn {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.45rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.history-open-btn:hover {
+  border-color: rgba(var(--primary-rgb), 0.55);
+  background: rgba(var(--primary-rgb), 0.12);
+}
+
+@media (max-width: 900px) {
+  .history-item {
+    grid-template-columns: auto 1fr;
+  }
+
+  .history-meta {
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    padding-left: 2.9rem;
+  }
+}

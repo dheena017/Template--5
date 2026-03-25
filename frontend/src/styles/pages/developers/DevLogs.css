@@ -1,0 +1,71 @@
+.logs-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  gap: 2rem;
+}
+
+.logs-header { display: flex; justify-content: space-between; align-items: center; }
+.logs-header h1 { font-size: 2.75rem; margin: 0; font-family: var(--font-display); }
+.search-logs { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1.5rem; width: 440px; border-radius: 99px; }
+.search-logs input { background: transparent; border: none; color: #fff; width: 100%; font-size: 0.85rem; }
+
+.logs-content { padding: 3rem; display: flex; flex-direction: column; gap: 3rem; overflow-y: auto; }
+
+.logs-toolbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255, 255, 255, 0.03); padding-bottom: 2rem; }
+.filter-group { display: flex; gap: 0.5rem; }
+.filter-btn { padding: 0.6rem 1.25rem; background: transparent; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; color: var(--text-muted); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+.filter-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: #fff; }
+
+.live-status { display: flex; align-items: center; gap: 1rem; color: var(--success-color); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; animation: pulse 2s infinite; }
+.s-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success-color); box-shadow: 0 0 10px var(--success-color); }
+
+.logs-table { display: flex; flex-direction: column; font-family: 'Fira Code', monospace; }
+.log-row { display: grid; grid-template-columns: 80px 100px 1fr 100px 100px; padding: 1rem 1.5rem; gap: 2rem; font-size: 0.85rem; border-bottom: 1px solid rgba(255, 255, 255, 0.02); }
+.log-row.header { border-bottom: 2px solid rgba(255, 255, 255, 0.05); color: var(--text-muted); font-weight: 800; text-transform: uppercase; font-size: 0.75rem; }
+
+.level.info { color: var(--success-color); font-weight: 800; }
+.level.warn { color: #ffa502; font-weight: 800; }
+.level.error { color: var(--error-color); font-weight: 800; }
+.level.debug { color: var(--primary-color); font-weight: 800; }
+
+.service { color: var(--text-muted); font-weight: 800; text-transform: uppercase; }
+.event { color: #fff; line-height: 1.6; }
+.status { color: var(--text-muted); font-weight: 700; }
+.time { color: var(--text-muted); text-align: right; }
+
+.logs-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.03); color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
+.pagination { 
+  display: flex; 
+  gap: 0.5rem; 
+}
+
+.pagination button { 
+  width: 32px; 
+  height: 32px; 
+  background: rgba(255, 255, 255, 0.02); 
+  border: 1.5px solid rgba(255, 255, 255, 0.05); 
+  border-radius: 6px; 
+  color: var(--text-muted); 
+  cursor: pointer; 
+  font-family: var(--font-main);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pagination button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.pagination button.active { 
+  background: var(--primary-color); 
+  color: #fff; 
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.2);
+}
+
+@media (max-width: 900px) {
+  .log-row { grid-template-columns: 80px 100px 1fr; }
+  .status, .time { display: none; }
+}

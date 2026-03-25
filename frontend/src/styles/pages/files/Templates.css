@@ -1,0 +1,4 @@
+.templates-container { padding: 2rem; }
+.templates-list { display: flex; flex-direction: column; gap: 1rem; }
+.template-item { padding: 1rem; border-radius: 8px; }
+

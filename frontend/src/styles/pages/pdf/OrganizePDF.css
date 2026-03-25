@@ -1,0 +1,305 @@
+:root {
+  --tool-bg: #09090b;
+  --tool-card: rgba(30, 41, 59, 0.4);
+  --tool-border: rgba(255, 255, 255, 0.08);
+  --tool-text-main: #f8fafc;
+  --tool-text-muted: #94a3b8;
+  --tool-accent: #ef4444; /* Default PDF Red */
+  --tool-radius-lg: 24px;
+  --tool-radius-md: 16px;
+  --tool-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.pdf-tools-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--tool-bg);
+  color: var(--tool-text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.pdf-tools-main {
+  flex: 1;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dashboard Header */
+.pdf-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.pdf-header h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pdf-header p {
+  font-size: 1.25rem;
+  color: var(--tool-text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Mega Grid Styling */
+.pdf-megagrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+}
+
+.pdf-category-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pdf-category-col h3 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--tool-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--tool-border);
+}
+
+.pdf-category-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pdf-tool-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--tool-card);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-md);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  text-align: left;
+}
+
+.pdf-tool-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-tool-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: transform 0.3s;
+}
+
+.pdf-tool-card:hover .pdf-tool-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.pdf-tool-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+/* --- ACTIVE TOOL VIEW --- */
+.pdf-tool-active-view {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--tool-border);
+  padding: 0.6rem 1.2rem;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tool-text-muted);
+  cursor: pointer;
+  margin-bottom: 3rem;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  transform: translateX(-5px);
+}
+
+.tool-upload-center {
+  background: var(--tool-card);
+  border: 1px solid var(--tool-border);
+  border-radius: var(--tool-radius-lg);
+  padding: 4rem;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--tool-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tool-title-wrapper {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.tool-main-icon {
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 0 20px currentColor);
+}
+
+.tool-title-wrapper h2 {
+  font-size: 3.5rem;
+  font-weight: 950;
+  letter-spacing: -0.05em;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.tool-title-wrapper p {
+  font-size: 1.25rem;
+  color: var(--tool-text-muted);
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+/* Upload Dropzone */
+.upload-dropzone {
+  width: 100%;
+  max-width: 700px;
+  min-height: 350px;
+  border: 2px dashed var(--tool-border);
+  border-radius: var(--tool-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.upload-dropzone.drag-active {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--tool-accent);
+}
+
+.upload-dropzone:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.primary-upload-btn {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+  padding: 1.25rem 3rem;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+.primary-upload-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.secondary-upload-btns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  z-index: 10;
+}
+
+.cloud-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--tool-border);
+  border-radius: 12px;
+  color: var(--tool-text-muted);
+  transition: all 0.2s;
+}
+
+.cloud-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.drag-hint {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--tool-text-muted);
+}
+
+/* Processing State */
+.processing-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.spinner {
+  width: 80px;
+  height: 80px;
+  border: 6px solid rgba(255, 255, 255, 0.05);
+  border-top-width: 6px;
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .pdf-tools-main { padding: 2rem 1rem; }
+  .pdf-header h1 { font-size: 2.25rem; }
+  .tool-title-wrapper h2 { font-size: 2rem; }
+  .tool-upload-center { padding: 2rem 1rem; }
+  .primary-upload-btn { width: 100%; padding: 1rem; font-size: 1rem; }
+}

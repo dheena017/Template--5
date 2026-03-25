@@ -1,0 +1,80 @@
+.pdf-tool-section {
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  margin-bottom: 24px;
+}
+
+.pdf-tool-section h3 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.tool-controls {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.selected-files-list {
+  margin-top: 24px;
+  background-color: #f9f9fb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.selected-files-list p {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+.selected-files-list ul {
+  padding-left: 20px;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #555;
+  list-style: disc;
+}
+
+.result-container {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px dashed #e0e0e0;
+}
+
+.text-result-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.text-preview {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 20px;
+  border-radius: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: #333;
+}
+
+.preview-frame {
+  margin-top: 16px;
+}
+
+/* Custom file upload styling hides the standard input */
+.custom-file-upload {
+    display: inline-block;
+}

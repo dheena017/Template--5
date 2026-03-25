@@ -1,0 +1,171 @@
+.audiobooks-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.tool-icon-wrap.audio-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--warning);
+  color: #000;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+  transition: var(--transition-spring);
+}
+
+.title-section h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-display);
+}
+
+.title-section p {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+}
+
+.audiobook-hero {
+  padding: 4rem;
+  border-radius: var(--radius-xl);
+  border: var(--glass-border);
+  background: var(--bg-surface);
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.hero-text h2 { 
+  font-size: 3rem; 
+  font-weight: 800; 
+  margin-bottom: 1rem; 
+  color: var(--warning); 
+  font-family: var(--font-display);
+}
+
+.hero-text p { 
+  font-size: 1.25rem; 
+  color: var(--text-secondary); 
+  margin-bottom: 3rem; 
+  max-width: 700px; 
+  line-height: 1.6; 
+}
+
+.hero-stats { display: flex; gap: 5rem; margin-bottom: 4rem; }
+.h-stat strong { font-size: 2.5rem; font-weight: 800; color: #fff; font-family: var(--font-display); }
+.h-stat span { font-size: 0.8rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.resume-btn { 
+  padding: 1.25rem 3rem; 
+  border-radius: var(--radius-sm); 
+  background: var(--warning); 
+  color: #000; 
+  font-weight: 800; 
+  font-size: 1.1rem; 
+  display: flex; 
+  align-items: center; 
+  gap: 1rem; 
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.4); 
+  transition: var(--transition-spring);
+}
+
+.resume-btn:hover { transform: translateY(-4px); filter: brightness(1.1); }
+
+.audiobook-management {
+  padding: 3rem;
+  border-radius: var(--radius-xl);
+  border: var(--glass-border);
+  background: var(--bg-surface);
+  margin-bottom: 4rem;
+}
+
+.m-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; }
+.tabs { display: flex; gap: 3rem; }
+.tabs button { 
+  background: transparent; 
+  border: none; 
+  font-size: 1.1rem; 
+  font-weight: 700; 
+  color: var(--text-muted); 
+  cursor: pointer; 
+  padding: 0.75rem 0; 
+  transition: var(--transition-gentle);
+}
+
+.tabs button.active { color: var(--warning); border-bottom: 2px solid var(--warning); }
+
+.m-search input { 
+  width: 320px; 
+  padding: 0.85rem 1.5rem 0.85rem 3.5rem; 
+  background: var(--bg-elevated); 
+  border: 1px solid var(--border-light); 
+  border-radius: var(--radius-sm); 
+  color: #fff; 
+  font-family: inherit;
+}
+
+.books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 3rem; }
+
+.book-card { 
+  border-radius: var(--radius-lg); 
+  border: var(--glass-border); 
+  background: var(--bg-surface);
+  overflow: hidden; 
+  transition: var(--transition-gentle); 
+}
+
+.book-card:hover { transform: translateY(-10px); border-color: var(--warning); }
+
+.book-cover { height: 400px; background: #000; overflow: hidden; }
+.book-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+.book-card:hover .book-cover img { transform: scale(1.1); }
+
+.book-info { padding: 2rem; background: var(--bg-surface); }
+.book-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; font-family: var(--font-display); }
+.author { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; display: block; font-weight: 600; }
+
+.add-book-card { 
+  height: 100%; 
+  min-height: 520px; 
+  border-radius: var(--radius-lg); 
+  border: 2px dashed var(--border-light); 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center; 
+  color: var(--text-dim); 
+  gap: 1.5rem; 
+  transition: var(--transition-gentle); 
+}
+
+.add-book-card:hover { border-color: var(--warning); color: var(--warning); background: rgba(251, 191, 36, 0.03); }
+
+@media (max-width: 1024px) {
+  .hero-stats { gap: 2.5rem; }
+  .tool-header { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  .m-header { flex-direction: column; align-items: stretch; gap: 2rem; }
+  .m-search input { width: 100%; }
+}

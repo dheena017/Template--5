@@ -1,0 +1,269 @@
+.project-page {
+  padding: 2.5rem;
+}
+
+.pj-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.pj-title h1 {
+  font-size: 3rem;
+  font-weight: 850;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  letter-spacing: -2.5px;
+}
+
+.pj-title p {
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  max-width: 600px;
+}
+
+.pj-btn-primary {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pj-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 24px;
+  margin-bottom: 3.5rem;
+  gap: 4rem;
+}
+
+.pj-search {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pj-search input {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.pj-filters {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.pj-filter-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  font-weight: 750;
+  transition: all 0.3s;
+}
+
+.pj-filter-btn.active {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.pj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.pj-card {
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.pj-card:hover { transform: translateY(-4px) scale(1.02); }
+
+.pj-card-thumb {
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.pj-processing {
+  text-align: center;
+  width: 100%;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pj-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.pj-prog-text { font-size: 1.25rem; font-weight: 900; }
+
+.pj-prog-bar {
+  width: 80%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.pj-prog-bar .fill { height: 100%; background: #fff; transition: width 0.3s; }
+
+.pj-play-overlay {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.pj-card:hover .pj-play-overlay { opacity: 1; transform: scale(1.1); }
+
+.pj-status-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pj-status-badge.completed { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.pj-status-badge.processing { background: rgba(var(--primary-rgb), 0.15); color: var(--primary-color); }
+.pj-status-badge.draft { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+
+.pj-duration {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  padding: 0.45rem 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.pj-card-info {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pj-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pj-card-top h3 { font-size: 1.6rem; font-weight: 850; letter-spacing: -0.5px; }
+
+.pj-more-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; }
+
+.pj-card-meta {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.pj-type-tag, .pj-credit-tag {
+  padding: 0.45rem 0.9rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.pj-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.pj-time { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; }
+
+.pj-footer-btns { display: flex; gap: 0.75rem; }
+.pj-mini-btn { width: 36px; height: 36px; border-radius: 10px; background: rgba(255, 255, 255, 0.03); color: var(--text-muted); border: none; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.pj-mini-btn:hover { background: rgba(255, 255, 255, 0.08); color: var(--text-primary); }
+
+.pj-new-card {
+  border: 4px dashed rgba(255, 255, 255, 0.05);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.pj-new-inner { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+
+.pj-active-banner {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  padding: 1.5rem 3rem;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  z-index: 100;
+}
+
+.pj-ab-info { display: flex; align-items: center; gap: 1.75rem; }
+.pj-ab-icon-wrap { width: 52px; height: 52px; border-radius: 16px; background: rgba(var(--primary-rgb), 0.1); color: var(--primary-color); display: flex; align-items: center; justify-content: center; }
+.pj-ab-info div { display: flex; flex-direction: column; gap: 0.25rem; }
+.pj-ab-info strong { font-size: 1.15rem; font-weight: 850; }
+.pj-ab-info span { font-size: 0.9rem; color: var(--text-muted); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
