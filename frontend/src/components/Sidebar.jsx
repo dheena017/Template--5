@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Sidebar.css';
+import OrganizePDFSidebar from './sidebars/OrganizePDFSidebar';
+import OptimizePDFSidebar from './sidebars/OptimizePDFSidebar';
+import ConvertToPDFSidebar from './sidebars/ConvertToPDFSidebar';
+import ConvertFromPDFSidebar from './sidebars/ConvertFromPDFSidebar';
+import EditPDFSidebar from './sidebars/EditPDFSidebar';
+import PDFSecuritySidebar from './sidebars/PDFSecuritySidebar';
+import PDFIntelligenceSidebar from './sidebars/PDFIntelligenceSidebar';
 
 // Bespoke Aura Modern SVG Icons
 const Icons = {
@@ -10,9 +17,14 @@ const Icons = {
   Files: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>,
   PDF: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>,
   Books: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
+  ChevronDown: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>,
+  ChevronRight: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
 };
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
+  const [sidebarView, setSidebarView] = useState('main'); 
+  const [isPdfOpen, setIsPdfOpen] = useState(false);
+
   const menuItems = [
     { id: 'dashboard', label: 'Home', icon: <Icons.Home /> },
     { id: 'voices', label: 'Voices', icon: <Icons.Voices /> },
@@ -21,15 +33,35 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
     { id: 'files', label: 'Files', icon: <Icons.Files /> },
   ];
 
-  const pinnedItems = [
-    { id: 'merge', label: 'Merge PDF', icon: <Icons.PDF /> },
-    { id: 'compress', label: 'Compress PDF', icon: <Icons.PDF /> },
-    { id: 'extract', label: 'Extract Text', icon: <Icons.PDF /> },
+  const pdfCategories = [
+    { id: 'organize-pdf', label: 'Organize PDF', icon: <Icons.PDF /> },
+    { id: 'optimize-pdf', label: 'Optimize PDF', icon: <Icons.PDF /> },
+    { id: 'convert-to-pdf', label: 'Convert to PDF', icon: <Icons.PDF /> },
+    { id: 'convert-from-pdf', label: 'Convert from PDF', icon: <Icons.PDF /> },
+    { id: 'edit-pdf', label: 'Edit PDF', icon: <Icons.PDF /> },
+    { id: 'pdf-security', label: 'PDF security', icon: <Icons.PDF /> },
+    { id: 'pdf-intelligence', label: 'PDF Intelligence', icon: <Icons.PDF /> },
+  ];
+
+  const renderSecondarySidebar = () => {
+    switch (sidebarView) {
+      case 'organize-pdf': return <OrganizePDFSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'optimize-pdf': return <OptimizePDFSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'convert-to-pdf': return <ConvertToPDFSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'convert-from-pdf': return <ConvertFromPDFSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'edit-pdf': return <EditPDFSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'pdf-security': return <PDFSecuritySidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'pdf-intelligence': return <PDFIntelligenceSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      default: return null;
+    }
+  };
+
+  const otherPinned = [
     { id: 'audiobooks', label: 'Audiobooks', icon: <Icons.Books />, badge: 'Pro' },
   ];
 
   return (
-    <>
+    <div className={`sidebar-container ${sidebarView !== 'main' ? 'has-secondary' : ''}`}>
       <aside className={`sidebar ${!isOpen ? 'sidebar-collapsed' : ''}`}>
         <div className="sidebar-header">
            <div className="aura-logo">
@@ -49,7 +81,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
              <span className="workspace-label">Current Workspace</span>
              <span className="workspace-name">Aura Design</span>
           </div>
-          <svg className="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <Icons.ChevronDown />
         </div>
 
         <nav className="sidebar-nav">
@@ -58,22 +90,44 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               <li 
                 key={item.id}
                 className={activeTab === item.id ? 'active' : ''}
-                onClick={() => onTabChange(item.id)}
+                onClick={() => { onTabChange(item.id); setSidebarView('main'); }}
               >
                 <span className="item-icon-aura">{item.icon}</span>
                 <span className="label-aura">{item.label}</span>
                 {item.badge && <span className={`item-badge-aura ${item.badge.toLowerCase()}`}>{item.badge}</span>}
               </li>
             ))}
-          </ul>
+            
+            <div className="nav-section-title-aura">Essentials</div>
+            <li className={`dropdown-trigger-aura ${isPdfOpen ? 'open' : ''} ${sidebarView !== 'main' ? 'active-parent' : ''}`} onClick={() => setIsPdfOpen(!isPdfOpen)}>
+               <span className="item-icon-aura"><Icons.PDF /></span>
+               <span className="label-aura">PDF Tools</span>
+               <span className="dropdown-arrow-aura">
+                 {isPdfOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+               </span>
+            </li>
 
-          <div className="nav-section-title-aura">Essentials</div>
-          <ul className="nav-list">
-            {pinnedItems.map((item) => (
+            {isPdfOpen && (
+              <ul className="nav-sub-list-aura">
+                {pdfCategories.map((item) => (
+                  <li 
+                    key={item.id}
+                    className={`category-item-aura ${sidebarView === item.id ? 'active' : ''}`}
+                    onClick={() => setSidebarView(item.id)}
+                  >
+                    <span className="item-icon-aura">{item.icon}</span>
+                    <span className="label-aura">{item.label}</span>
+                    <Icons.ChevronRight />
+                  </li>
+                ))}
+              </ul>
+            )}
+            
+            {otherPinned.map((item) => (
               <li 
                 key={item.id}
                 className={activeTab === item.id ? 'active' : ''}
-                onClick={() => onTabChange(item.id)}
+                onClick={() => { onTabChange(item.id); setSidebarView('main'); }}
               >
                 <span className="item-icon-aura">{item.icon}</span>
                 <span className="label-aura">{item.label}</span>
@@ -93,20 +147,25 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
                <div className="usage-bar-fill" style={{ width: '85%' }}></div>
             </div>
           </div>
-          
           <div className="user-profile-footer-aura">
             <div className="user-avatar-aura">KJ</div>
             <div className="user-details-aura">
                <span className="user-name">Kj. Dheena</span>
                <span className="user-plan">Pro Plan</span>
             </div>
-            <button className="settings-btn-aura">
-               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-            </button>
           </div>
         </div>
       </aside>
-    </>
+
+      {sidebarView !== 'main' && (
+        <aside className="secondary-sidebar">
+           <button className="secondary-close-btn" onClick={() => setSidebarView('main')}>
+             <Icons.ChevronRight style={{ transform: 'rotate(180deg)' }} />
+           </button>
+           {renderSecondarySidebar()}
+        </aside>
+      )}
+    </div>
   );
 };
 

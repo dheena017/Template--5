@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { fetchHealth } from './utils/api'
+import { fetchHealth, fetchFeatures } from './utils/api'
 import Sidebar from './components/Sidebar'
 import Navbar from './components/Navbar'
 import Toolbar from './components/Toolbar'
@@ -39,9 +39,9 @@ function App() {
             <div className="announcement-banner-aura">
               <span className="badge-aura">Aura Pro</span>
               <span className="banner-text">Welcome to the future of AI generation.</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m9 18 6-6-6-6" /></svg>
             </div>
-            
+
             <header className="dashboard-content-header">
               <span className="sub-greeting-aura">Personal Workspace</span>
               <h2 className="greeting-aura">Aura Evolution</h2>
@@ -67,55 +67,79 @@ function App() {
               <div className="aura-section">
                 <h3>Aura Studio Library</h3>
                 <div className="library-list-aura">
-                   <div className="library-item-aura">
-                     <div className="avatar-aura">IA</div>
-                     <div className="item-text-aura">
-                        <span className="name">Aura Neural Engine</span>
-                        <p>Optimized for high-fidelity voice cloning....</p>
-                     </div>
-                   </div>
-                   <div className="library-item-aura">
-                     <div className="avatar-aura" style={{background: 'rgba(6, 182, 212, 0.1)', color: 'var(--accent-secondary)'}}>AS</div>
-                     <div className="item-text-aura">
-                        <span className="name">Visual Synthesis v2</span>
-                        <p>Ultra-fast generative video processing....</p>
-                     </div>
-                   </div>
+                  <div className="library-item-aura">
+                    <div className="avatar-aura">IA</div>
+                    <div className="item-text-aura">
+                      <span className="name">Aura Neural Engine</span>
+                      <p>Optimized for high-fidelity voice cloning....</p>
+                    </div>
+                  </div>
+                  <div className="library-item-aura">
+                    <div className="avatar-aura" style={{ background: 'rgba(6, 182, 212, 0.1)', color: 'var(--accent-secondary)' }}>AS</div>
+                    <div className="item-text-aura">
+                      <span className="name">Visual Synthesis v2</span>
+                      <p>Ultra-fast generative video processing....</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
+
               <div className="aura-section" style={{ background: 'var(--bg-tertiary)' }}>
-                 <h3>Quick Actions</h3>
-                 <div className="action-card-aura">
-                    <div className="action-icon-aura">✨</div>
-                    <div className="action-details-aura">
-                       <span className="action-title-aura">Create New project</span>
-                       <p>Start from a blank canvas</p>
-                    </div>
-                 </div>
-                 <div className="action-card-aura" style={{ borderColor: 'var(--accent-secondary)' }}>
-                    <div className="action-icon-aura" style={{color: 'var(--accent-secondary)'}}>🌊</div>
-                    <div className="action-details-aura">
-                       <span className="action-title-aura">Clone Aura Voice</span>
-                       <p>Digital vocal twin technology</p>
-                    </div>
-                 </div>
+                <h3>Quick Actions</h3>
+                <div className="action-card-aura">
+                  <div className="action-icon-aura">✨</div>
+                  <div className="action-details-aura">
+                    <span className="action-title-aura">Create New project</span>
+                    <p>Start from a blank canvas</p>
+                  </div>
+                </div>
+                <div className="action-card-aura" style={{ borderColor: 'var(--accent-secondary)' }}>
+                  <div className="action-icon-aura" style={{ color: 'var(--accent-secondary)' }}>🌊</div>
+                  <div className="action-details-aura">
+                    <span className="action-title-aura">Clone Aura Voice</span>
+                    <p>Digital vocal twin technology</p>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div style={{ marginTop: '40px', textAlign: 'center' }}>
-                <Button variant="secondary" onClick={() => setActiveTab('studio')}>
-                    Launch Studio
-                </Button>
-                <Button variant="primary" style={{ marginLeft: '12px' }}>
-                    Upgrade Pro
-                </Button>
+              <Button variant="secondary" onClick={() => setActiveTab('studio')}>
+                Launch Studio
+              </Button>
+              <Button variant="primary" style={{ marginLeft: '12px' }}>
+                Upgrade Pro
+              </Button>
             </div>
           </div>
         )
       case 'merge':
+      case 'split':
+      case 'organize':
       case 'compress':
-      case 'extract':
+      case 'repair':
+      case 'word-to-pdf':
+      case 'jpg-to-pdf':
+      case 'excel-to-pdf':
+      case 'pdf-to-word':
+      case 'pdf-to-jpg':
+      case 'pdf-to-excel':
+      case 'edit':
+      case 'watermark':
+      case 'page-numbers':
+      case 'lock':
+      case 'unlock':
+      case 'sign':
+      case 'summarize':
+      case 'chat':
+      case 'extract-data':
+      case 'organize-pdf':
+      case 'optimize-pdf':
+      case 'convert-to-pdf':
+      case 'convert-from-pdf':
+      case 'edit-pdf':
+      case 'pdf-security':
+      case 'pdf-intelligence':
         return (
           <section id="pdf-tools">
             <PDFTools initialView={activeTab} />
