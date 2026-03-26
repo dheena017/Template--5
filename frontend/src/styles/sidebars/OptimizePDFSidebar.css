@@ -1,0 +1,5 @@
+/* Optimize PDF Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.secondary-nav li[data-id="compress"]:hover .tool-icon { color: #43a047; }
+.secondary-nav li[data-id="repair"]:hover .tool-icon { color: #388e3c; }

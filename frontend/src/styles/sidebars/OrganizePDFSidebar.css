@@ -1,0 +1,11 @@
+/* Organize PDF Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.organize-sidebar-aura {
+    /* Potential custom color focus for Organize items */
+}
+
+/* Specific tool icons color adjustments if desired */
+.secondary-nav li[data-id="merge"]:hover .tool-icon { color: #e53935; }
+.secondary-nav li[data-id="split"]:hover .tool-icon { color: #ff5252; }
+.secondary-nav li[data-id="organize"]:hover .tool-icon { color: #f44336; }

@@ -1,0 +1,6 @@
+/* Edit PDF Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.secondary-nav li[data-id="edit"]:hover .tool-icon { color: #f97316; }
+.secondary-nav li[data-id="watermark"]:hover .tool-icon { color: #3b82f6; }
+.secondary-nav li[data-id="page-numbers"]:hover .tool-icon { color: #8b5cf6; }

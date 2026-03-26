@@ -1,0 +1,6 @@
+/* PDF Intelligence Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.secondary-nav li[data-id="summarize"]:hover .tool-icon { color: #8b5cf6; }
+.secondary-nav li[data-id="chat"]:hover .tool-icon { color: #f59e0b; }
+.secondary-nav li[data-id="extract-data"]:hover .tool-icon { color: #6366f1; }

@@ -1,0 +1,6 @@
+/* Convert To PDF Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.secondary-nav li[data-id="word-to-pdf"]:hover .tool-icon { color: #42a5f5; }
+.secondary-nav li[data-id="jpg-to-pdf"]:hover .tool-icon { color: #ffca28; }
+.secondary-nav li[data-id="excel-to-pdf"]:hover .tool-icon { color: #66bb6a; }

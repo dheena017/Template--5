@@ -1,0 +1,6 @@
+/* PDF Security Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.secondary-nav li[data-id="lock"]:hover .tool-icon { color: #f43f5e; }
+.secondary-nav li[data-id="unlock"]:hover .tool-icon { color: #10b981; }
+.secondary-nav li[data-id="sign"]:hover .tool-icon { color: #8b5cf6; }

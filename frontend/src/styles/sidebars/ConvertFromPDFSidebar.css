@@ -1,0 +1,6 @@
+/* Convert From PDF Sidebar Specific Styles */
+@import './SecondarySidebar.css';
+
+.secondary-nav li[data-id="pdf-to-word"]:hover .tool-icon { color: #42a5f5; }
+.secondary-nav li[data-id="pdf-to-jpg"]:hover .tool-icon { color: #ffca28; }
+.secondary-nav li[data-id="pdf-to-excel"]:hover .tool-icon { color: #66bb6a; }
