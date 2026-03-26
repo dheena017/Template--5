@@ -199,7 +199,7 @@ const getSectionKey = (toolKey) => {
   if (toolKey === 'pdf_chinese_english' || toolKey === 'pdf_english_chinese') return 'pdf_translation'
   if (isAudioKey(toolKey)) return 'audio_conversion'
   if (isVideoKey(toolKey)) return 'video_conversion'
-  
+
   if (isImageKey(toolKey)) {
     if (toolKey.endsWith('_to_pdf')) return 'convert_to_pdf' // Grouping JPG to PDF etc in Convert to PDF if non-popular
     return 'image_format_conversion'
@@ -208,14 +208,14 @@ const getSectionKey = (toolKey) => {
   // Explicit mapping based on source/target
   if (toolKey.startsWith('pdf_to_')) return 'pdf_conversion'
   if (toolKey.endsWith('_to_pdf')) return 'convert_to_pdf'
-  
+
   // Specific catch-alls requested
   if (/(word|excel|ppt|ofd|caj|cad|xps|hwp|pdf)/.test(toolKey)) {
     if (toolKey.startsWith('pdf_')) return 'pdf_conversion'
     if (toolKey.endsWith('_pdf')) return 'convert_to_pdf'
     return 'pdf_conversion'
   }
-  
+
   return 'other'
 }
 
@@ -297,8 +297,8 @@ const PDFPages = ({ forcedTab = null }) => {
       <main className="pdf-pages-main">
         <header className="pdf-pages-header">
           <div className="pdf-category-dropdown">
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="pdf-dropdown-trigger"
               onClick={() => setShowDropdown(!showDropdown)}
             >
@@ -308,7 +308,7 @@ const PDFPages = ({ forcedTab = null }) => {
               </div>
               <ChevronDown size={18} className={`dropdown-chevron ${showDropdown ? 'rotate' : ''}`} />
             </button>
-            
+
             {showDropdown && (
               <div className="pdf-dropdown-menu">
                 {PDF_TOOL_SECTIONS.map((section) => (
@@ -364,7 +364,8 @@ const PDFPages = ({ forcedTab = null }) => {
                     </span>
                     <span className="pdf-page-name">{tool.name}</span>
                   </button>
-                )}
+                )
+              }
               )}
             </div>
           </>

@@ -1,5 +1,11 @@
 export { default as PDFPages } from './PDFPages'
 export { default as OrganizePDF } from './OrganizePDF'
+export { default as OptimizePDF } from './OptimizePDF.jsx'
+export { default as ConvertToPDFPage } from './ConvertToPDF.jsx'
+export { default as ConvertFromPDFPage } from './ConvertFromPDF.jsx'
+export { default as EditPDF } from './EditPDF.jsx'
+export { default as PDFSecurity } from './PDFSecurity.jsx'
+export { default as PDFIntelligence } from './PDFIntelligence.jsx'
 
 // Folder-based sub-pages
 export { default as PopularConversions } from './PopularConversions/index'
