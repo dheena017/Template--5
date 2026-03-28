@@ -30,7 +30,7 @@
     height: 72px;
     background: #ec4899;
     color: white;
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,7 +62,7 @@
     padding: 0.8rem 1.25rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-weight: 700;
     cursor: pointer;
@@ -75,7 +75,7 @@
     padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: white;
     font-weight: 800;
     cursor: pointer;
@@ -105,7 +105,7 @@
 .gen-icon-wrap {
     width: 56px;
     height: 56px;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     background: var(--bg-surface);
     display: flex;
     align-items: center;
@@ -206,7 +206,7 @@
     align-items: center;
     gap: 1rem;
     padding: 0.85rem 1.25rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 1px solid transparent;
     background: transparent;
     color: var(--text-secondary);
@@ -303,7 +303,7 @@
 .result-play-area {
     width: 100px;
     height: 100px;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     background: var(--bg-surface);
     display: flex;
     flex-direction: column;

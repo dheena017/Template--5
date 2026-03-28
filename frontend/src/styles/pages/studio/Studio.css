@@ -70,7 +70,7 @@
   color: var(--text-muted); 
   background: rgba(0, 0, 0, 0.2); 
   padding: 4px 12px; 
-  border-radius: 20px; 
+  border-radius: var(--radius-lg); 
   border: 1px solid var(--border-light);
   font-weight: 700;
   text-transform: uppercase;
@@ -125,7 +125,7 @@
   color: var(--text-muted);
   cursor: pointer;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   transition: var(--transition-gentle);
 }
 

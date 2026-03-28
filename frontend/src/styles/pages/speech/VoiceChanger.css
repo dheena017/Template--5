@@ -30,7 +30,7 @@
     height: 72px;
     background: var(--primary);
     color: white;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +67,7 @@
     padding: 0.8rem 1.25rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-weight: 700;
     cursor: pointer;
@@ -80,7 +80,7 @@
     padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: white;
     font-weight: 800;
     cursor: pointer;
@@ -226,7 +226,7 @@
     padding: 0.75rem 1.5rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-weight: 700;
     display: flex;
@@ -286,7 +286,7 @@
     background: var(--primary);
     color: white;
     border: none;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     font-weight: 800;
     font-size: 1.1rem;
     display: flex;
@@ -323,7 +323,7 @@
     align-items: center;
     gap: 1.25rem;
     padding: 1rem;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     border: 1px solid transparent;
     background: transparent;
     text-align: left;
@@ -342,7 +342,7 @@
 .v-icon {
     width: 44px;
     height: 44px;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -370,7 +370,7 @@
     border: 2px dashed var(--border-subtle);
     background: transparent;
     color: var(--text-muted);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     cursor: pointer;
     display: flex;

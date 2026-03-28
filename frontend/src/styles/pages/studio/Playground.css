@@ -51,7 +51,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   color: #fff;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.62rem 0.9rem;
   font-weight: 800;
   font-size: 0.85rem;

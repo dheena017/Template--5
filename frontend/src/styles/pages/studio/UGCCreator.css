@@ -40,7 +40,7 @@
   color: var(--primary-color);
   padding: 10px;
   background: rgba(var(--primary-rgb), 0.1);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .panel-header h3 { font-size: 1.25rem; margin: 0; font-weight: 800; }
@@ -67,7 +67,7 @@
 .file-drop-zone {
   height: 120px;
   border: 2px dashed rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,7 +90,7 @@
 .ugc-form textarea {
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 1rem;
   color: #fff;
   min-height: 120px;
@@ -123,7 +123,7 @@
   background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-weight: 850;
   font-size: 1.1rem;
   display: flex;
@@ -212,7 +212,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: var(--text-dim);
     margin-top: 0.5rem;
  }
  
@@ -233,7 +233,7 @@
   padding: 6px 16px;
   background: rgba(var(--primary-rgb), 0.1);
   color: var(--primary-color);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -297,7 +297,7 @@
   background: white;
   color: black;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-weight: 800;
   cursor: pointer;
 }

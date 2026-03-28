@@ -30,7 +30,7 @@
     height: 72px;
     background: #10b981;
     color: white;
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,7 +62,7 @@
     padding: 0.8rem 1.25rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-weight: 700;
     cursor: pointer;
@@ -75,7 +75,7 @@
     padding: 0.8rem 1.75rem;
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: white;
     font-weight: 800;
     cursor: pointer;
@@ -121,7 +121,7 @@
 
 .theme-chip {
     padding: 0.8rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
     background: var(--bg-surface);
     display: flex;
@@ -147,7 +147,7 @@
     padding: 0.8rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-weight: 700;
 }
@@ -177,7 +177,7 @@
     align-items: center;
     justify-content: center;
     background: var(--bg-surface-subtle);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     padding: 2rem;
 }
 
@@ -214,13 +214,13 @@
 .code-block {
     padding: 1.5rem;
     background: #0f172a;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     border: 1px solid rgba(255,255,255,0.05);
 }
 
 .code-block pre {
     margin: 0;
-    color: #94a3b8;
+    color: var(--text-dim);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     line-height: 1.6;
@@ -244,7 +244,7 @@
 
 .white-btn {
     padding: 1rem 2rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     font-weight: 800;
@@ -257,7 +257,7 @@
 
 @media (max-width: 1024px) {
     .native-editor { grid-template-columns: 1fr; }
-    .mock-player { grid-template-columns: 1fr; border-radius: 24px; text-align: center; }
+    .mock-player { grid-template-columns: 1fr; border-radius: var(--radius-lg); text-align: center; }
     .p-icon, .p-wave, .p-actions { justify-self: center; }
     .integration-promo { flex-direction: column; text-align: center; }
 }

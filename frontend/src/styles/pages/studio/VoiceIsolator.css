@@ -30,7 +30,7 @@
     height: 72px;
     background: #a855f7;
     color: white;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +67,7 @@
     padding: 0.8rem 1.25rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-weight: 700;
     cursor: pointer;
@@ -80,7 +80,7 @@
     padding: 0.8rem 1.75rem;
     background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: white;
     font-weight: 800;
     cursor: pointer;
@@ -199,7 +199,7 @@
     align-items: center;
     gap: 1.25rem;
     padding: 1.25rem;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
     background: transparent;
     text-align: left;
@@ -216,7 +216,7 @@
     box-shadow: var(--shadow-sm);
 }
 
-.icon-p { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-surface); display: flex; align-items: center; justify-content: center; }
+.icon-p { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--bg-surface); display: flex; align-items: center; justify-content: center; }
 .info-p strong { display: block; font-size: 1rem; }
 .info-p span { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
 
@@ -231,7 +231,7 @@
     background: var(--primary);
     color: white;
     border: none;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     font-weight: 800;
     font-size: 1.1rem;
     display: flex;
@@ -247,7 +247,7 @@
 .p-bar { width: 100%; height: 6px; background: var(--border-subtle); border-radius: 100px; overflow: hidden; }
 .p-bar .fill { height: 100%; background: var(--primary); transition: width 0.3s; }
 
-.download-card { padding: 2rem; border-radius: 20px; border: 1px solid var(--border-subtle); }
+.download-card { padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); }
 .d-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
 .d-options { display: flex; flex-direction: column; gap: 0.5rem; }
 
