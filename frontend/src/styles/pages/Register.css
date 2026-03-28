@@ -64,7 +64,7 @@
   display: flex; align-items: center; gap: 1.25rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 18px; padding: 0 1.75rem;
+  border-radius: var(--radius-lg); padding: 0 1.75rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -88,7 +88,7 @@
 .auth-submit-btn {
   width: 100%; padding: 1.4rem;
   background: var(--primary-color);
-  color: #fff; border: none; border-radius: 20px;
+  color: #fff; border: none; border-radius: var(--radius-lg);
   font-weight: 900; font-size: 1.25rem;
   font-family: var(--font-display);
   display: flex; align-items: center; justify-content: center; gap: 1.25rem;
@@ -118,7 +118,7 @@
   width: 68px; height: 68px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px; color: #fff;
+  border-radius: var(--radius-lg); color: #fff;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; 
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -146,7 +146,7 @@
   color: var(--text-muted); font-weight: 900; text-decoration: none;
   font-size: 1rem; display: flex; align-items: center; gap: 1rem;
   background: rgba(255, 255, 255, 0.03); padding: 0.75rem 1.5rem;
-  border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s;
 }
 
@@ -157,7 +157,7 @@
   border: 1px solid rgba(255, 71, 87, 0.2);
   color: #ff4757;
   padding: 1.25rem;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 2rem;
