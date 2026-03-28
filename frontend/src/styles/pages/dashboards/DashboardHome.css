@@ -174,7 +174,7 @@
   grid-column: 1 / -1;
   border: 1px dashed #c5ccd7;
   background: #f8f9fb;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 1rem;
   color: #5f6674;
   font-weight: 700;
@@ -183,7 +183,7 @@
 
 .conversion-card {
   border: 1px solid var(--card-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: #f6f7f9;
   padding: 12px 10px;
   min-height: 158px;
