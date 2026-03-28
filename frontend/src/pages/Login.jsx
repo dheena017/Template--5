@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { 
   Sparkles, Mail, Lock, 
-  ChevronRight, Twitter, Github,
+  ChevronRight, Share2, Code2,
   ArrowLeft, ShieldCheck, Zap, AlertCircle
 } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -92,8 +92,8 @@ const Login = () => {
         <div className="auth-divider"><span>Or continue with</span></div>
 
         <div className="social-auth">
-           <button className="social-btn"><Twitter size={20} /></button>
-           <button className="social-btn"><Github size={20} /></button>
+           <button className="social-btn"><Share2 size={20} /></button>
+           <button className="social-btn"><Code2 size={20} /></button>
            <button className="social-btn">G</button>
         </div>
 
