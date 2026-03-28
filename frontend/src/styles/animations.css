@@ -1,0 +1,167 @@
+/* --- AURA PREMIUM ANIMATION LIBRARY --- */
+
+/* Site-Wide Animation Kill Switch */
+.no-animations *, .no-animations *::before, .no-animations *::after {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+/* -- AURA BACKGROUND ORBS -- */
+.aura-bg-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--bg-primary);
+}
+
+.aura-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  mix-blend-mode: screen;
+}
+
+.orb-1 {
+  width: 40vw; height: 40vw;
+  background: var(--accent-primary);
+  top: -10%; left: -10%;
+  animation: floatAndTilt 12s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 35vw; height: 35vw;
+  background: var(--accent-secondary);
+  bottom: -5%; right: -5%;
+  animation: floatAndTilt 18s ease-in-out infinite reverse;
+}
+
+.orb-3 {
+  width: 25vw; height: 25vw;
+  background: #ae1af7;
+  top: 30%; right: 10%;
+  animation: floatVertical 15s ease-in-out infinite;
+}
+
+/* -- ENTRANCE EFFECTS -- */
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(24px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideInRight {
+  from { 
+    transform: translateX(40px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideInLeft {
+  from { 
+    transform: translateX(-40px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+@keyframes fadeInScale {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+/* -- AMBIENT EFFECTS -- */
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2); 
+    filter: brightness(1);
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4); 
+    filter: brightness(1.15);
+  }
+}
+
+@keyframes floatVertical {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes rotateGlow {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+
+@keyframes textReveal {
+  from { clip-path: inset(100% 0 0 0); opacity: 0; transform: translateY(10px); }
+  to { clip-path: inset(0 0 0 0); opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 0px var(--accent-primary)); }
+  50% { transform: scale(1.02); filter: brightness(1.2) drop-shadow(0 0 15px var(--accent-primary)); }
+}
+
+@keyframes floatAndTilt {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-4px) rotate(2deg); }
+  66% { transform: translateY(-2px) rotate(-1deg); }
+}
+
+/* -- UTILITY CLASSES -- */
+
+.animate-text-reveal { animation: textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+.animate-float-tilt { animation: floatAndTilt 5s ease-in-out infinite; }
+.animate-hue-cycle { animation: rotateGlow 8s linear infinite; }
+
+.animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-slide-right { animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-shimmer { position: relative; overflow: hidden; }
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 80%,
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
+  pointer-events: none;
+}
+
+.animate-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+.animate-float { animation: floatVertical 4s ease-in-out infinite; }
