@@ -10,7 +10,7 @@
   max-width: 440px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 2.5rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
@@ -26,7 +26,7 @@
 }
 
 .auth-header p {
-  color: #94A3B8;
+  color: var(--text-dim);
   font-size: 0.9rem;
   margin: 0.5rem 0 0;
 }
@@ -46,7 +46,7 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #64748B;
+  color: var(--text-muted);
 }
 
 .input-group input {
@@ -54,7 +54,7 @@
   padding: 0.85rem 1rem 0.85rem 3rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   color: #fff;
   font-size: 0.95rem;
 }
@@ -72,7 +72,7 @@
   padding: 1rem;
   background: #646cff;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   color: #fff;
   font-weight: 600;
   font-size: 1rem;
@@ -91,7 +91,7 @@
   margin-top: 2rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #94A3B8;
+  color: var(--text-dim);
 }
 
 .auth-footer a {
