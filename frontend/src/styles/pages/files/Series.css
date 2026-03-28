@@ -54,7 +54,7 @@
     padding: 0.8rem 1rem 0.8rem 2.8rem;
     background: var(--card-bg-elevated);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     color: var(--text-primary);
     font-size: 0.95rem;
 }
@@ -80,7 +80,7 @@
     background: var(--primary);
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     font-size: 0.95rem;
     cursor: pointer;
@@ -308,7 +308,7 @@
 }
 
 .status-tag.active { background: #10b98120; color: #10b981; }
-.status-tag.paused { background: #94a3b820; color: #94a3b8; }
+.status-tag.paused { background: #94a3b820; color: var(--text-dim); }
 
 .manage-btn {
     display: flex;
@@ -323,7 +323,7 @@
 
 .add-series-card {
     height: 340px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     border: 2px dashed var(--border-subtle);
     background: transparent;
     display: flex;

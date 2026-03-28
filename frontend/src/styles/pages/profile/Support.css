@@ -1,0 +1,39 @@
+/* --- SUPPORT TAB STYLES --- */
+
+.tab-grid.support-grid {
+  grid-template-columns: 1fr;
+}
+
+.help-hero-section {
+  display: flex; align-items: center; gap: 1.5rem;
+  background: rgba(139, 92, 246, 0.05);
+  border-color: rgba(139, 92, 246, 0.15);
+  padding: 3.5rem; text-align: center; justify-content: center;
+}
+
+.help-hero-section input {
+  background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.25rem 2.5rem; border-radius: var(--radius-lg); width: 100%; max-width: 650px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.support-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+.action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.action-btns button {
+  padding: 2rem; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg); color: #fff; font-weight: 700;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+
+.tut-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.tut-item {
+  padding: 1rem 1.5rem; background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md); display: flex; align-items: center; gap: 1rem;
+  font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+
+.tut-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--secondary); padding-left: 2rem; }

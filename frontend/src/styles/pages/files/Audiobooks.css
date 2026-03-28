@@ -23,7 +23,7 @@
   height: 80px;
   background: var(--warning);
   color: #000;
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;

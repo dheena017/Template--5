@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Folder, Search, Filter, Plus, MoreHorizontal, Play, Check, Clock, Download, Share2, Layers, Bot, Zap, Globe, Sparkles } from 'lucide-react'
+import { Folder, Search, Filter, Plus, MoreHorizontal, Play, Check, Clock, Download, Share2, Layers, Bot, Zap, Globe, Sparkles, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import '../../styles/pages/avatar/Project.css'
 

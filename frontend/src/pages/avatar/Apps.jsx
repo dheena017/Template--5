@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { LayoutGrid, Search, Filter, Globe, Zap, ArrowRight, Sparkles, ExternalLink, Grid, LayoutGrid as LayoutIcon, MessageSquare, Bot, Share2, PlayCircle, Video, Layers, PenTool, Database, Mail, Workflow, Code2, Plus } from 'lucide-react'
+import { LayoutGrid, Search, Filter, Globe, Zap, ArrowRight, Sparkles, ExternalLink, Grid, LayoutGrid as LayoutIcon, MessageSquare, Bot, Share2, PlayCircle, Video, Layers, PenTool, Database, Mail, Workflow, Code2, Plus, Check } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import '../../styles/pages/avatar/Apps.css'
 

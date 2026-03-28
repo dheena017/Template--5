@@ -1,6 +1,6 @@
 import React from 'react'
 import { 
-  Twitter as TwitterIcon, 
+  Share2 as TwitterIcon, 
   ExternalLink, Users, 
   MessageCircle, TrendingUp, 
   ArrowRight, Heart, Share2, 

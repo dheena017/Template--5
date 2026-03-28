@@ -135,7 +135,7 @@
   align-items: center;
   padding: 1.25rem;
   background: var(--bg-elevated);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
   margin-bottom: 1rem;
   transition: var(--transition-gentle);
@@ -146,7 +146,7 @@
 .tx-icon {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -7,7 +7,7 @@
 .docs-search-header .search-bar { 
   display: flex; align-items: center; gap: 1rem; 
   padding: 1rem 2rem; width: 100%; max-width: 800px; 
-  border-radius: 20px; box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-lg); box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
 }
 .docs-search-header input { flex: 1; border: none; background: transparent; font-size: 1.15rem; color: #fff; }
 
@@ -42,7 +42,7 @@
 .docs-section p { line-height: 1.8; color: var(--text-secondary); font-size: 1.1rem; }
 
 /* Code Block */
-.code-block-wrapper { background: #000; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); }
+.code-block-wrapper { background: #000; border-radius: var(--radius-md); overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); }
 .code-header { 
   display: flex; justify-content: space-between; align-items: center; 
   background: rgba(255, 255, 255, 0.03); padding: 0.75rem 1.5rem; 
@@ -56,7 +56,7 @@
 .page-nav { 
   flex: 1; text-align: left; padding: 1.5rem; 
   background: var(--bg-surface); border: 1px solid rgba(255, 255, 255, 0.05); 
-  border-radius: 16px; color: #fff; cursor: pointer;
+  border-radius: var(--radius-md); color: #fff; cursor: pointer;
   display: flex; flex-direction: column; gap: 0.5rem;
 }
 .page-nav.next { text-align: right; border-color: var(--primary-color); }

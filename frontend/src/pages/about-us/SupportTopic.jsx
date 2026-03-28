@@ -1,6 +1,5 @@
-import React from 'react'
-import { useMemo } from 'react'
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import React from 'react';
+import { useMemo } from 'react';
 import {
   ArrowRight,
   BookOpen,
@@ -155,27 +154,34 @@ const supportTopics = {
   }
 }
 
-const ActionLink = ({ to, href, label }) => {
-  if (to) {
+const ActionLink = ({ to, href, label, onNavigate }) => {
+  if (to && onNavigate) {
     return (
-      <Link className="support-action-link" to={to}>
+      <button 
+        type="button"
+        className="support-action-link" 
+        onClick={() => {
+          // Clean the path (remove leading slash) for onTabChange
+          const tabId = to.startsWith('/') ? to.substring(1) : to;
+          onNavigate(tabId);
+        }}
+      >
         <span>{label}</span>
         <ArrowRight size={15} />
-      </Link>
+      </button>
     )
   }
 
   return (
-    <a className="support-action-link" href={href}>
+    <a className="support-action-link" href={href} target={href?.startsWith('http') ? '_blank' : '_self'} rel="noreferrer">
       <span>{label}</span>
       <ArrowRight size={15} />
     </a>
   )
 }
 
-const SupportTopic = () => {
-  const { topic } = useParams()
-  const navigate = useNavigate()
+const SupportTopic = ({ topic: propTopic, onTabChange }) => {
+  const topic = propTopic;
 
   const topicConfig = useMemo(() => {
     if (!topic || !supportTopics[topic]) return null
@@ -183,7 +189,12 @@ const SupportTopic = () => {
   }, [topic])
 
   if (!topicConfig) {
-    return <Navigate to="/faq-support" replace />
+    return (
+      <div className="support-error-state">
+        <h2>Topic not found</h2>
+        <button onClick={() => onTabChange('faq')}>Return to Support</button>
+      </div>
+    );
   }
 
   const TopicIcon = topicConfig.icon
@@ -249,14 +260,14 @@ const SupportTopic = () => {
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <ActionLink label="Open Bundle" to={bundle.to} />
+                <ActionLink label="Open Bundle" to={bundle.to} onNavigate={onTabChange} />
               </article>
             ))}
           </div>
           <aside className="guide-featured">
             <h2>{topicConfig.featured.title}</h2>
             <p>{topicConfig.featured.text}</p>
-            <ActionLink label="View Resource" to={topicConfig.featured.to} />
+            <ActionLink label="View Resource" to={topicConfig.featured.to} onNavigate={onTabChange} />
           </aside>
         </section>
       )
@@ -279,7 +290,7 @@ const SupportTopic = () => {
           </div>
           <div className="tool-jump-list">
             {topicConfig.jumps.map((jump) => (
-              <ActionLink key={jump.label} label={jump.label} to={jump.to} />
+              <ActionLink key={jump.label} label={jump.label} to={jump.to} onNavigate={onTabChange} />
             ))}
           </div>
         </section>
@@ -295,7 +306,7 @@ const SupportTopic = () => {
                 <h3>{hub.name}</h3>
                 <p>{hub.text}</p>
                 <div className="hub-meta">Members: {hub.members}</div>
-                <ActionLink label="Join Hub" to={hub.to} />
+                <ActionLink label="Join Hub" to={hub.to} onNavigate={onTabChange} />
               </article>
             ))}
           </div>
@@ -358,7 +369,7 @@ const SupportTopic = () => {
           </ol>
           <div className="chat-actions">
             {topicConfig.quickActions.map((action) => (
-              <ActionLink key={action.label} label={action.label} to={action.to} />
+              <ActionLink key={action.label} label={action.label} to={action.to} onNavigate={onTabChange} />
             ))}
           </div>
         </div>
@@ -380,10 +391,10 @@ const SupportTopic = () => {
       {renderLayout()}
 
       <div className="support-topic-actions">
-        <button type="button" className="support-back-btn" onClick={() => navigate(-1)}>
+        <button type="button" className="support-back-btn" onClick={() => onTabChange('faq')}>
           Back
         </button>
-        <button type="button" className="support-home-btn" onClick={() => navigate('/dashboard')}>
+        <button type="button" className="support-home-btn" onClick={() => onTabChange('dashboard')}>
           Go to Dashboard
         </button>
       </div>

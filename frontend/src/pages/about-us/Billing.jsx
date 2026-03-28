@@ -97,8 +97,7 @@ const Billing = () => {
             {/* Balance Card */}
             <div className="balance-card premium-card">
                <div className="bc-info">
-                  <span>Available Credits</span>
-                  <h2>{billingData?.credits.toLocaleString()}</h2>
+                  <h2>{(billingData?.credits || 0).toLocaleString()}</h2>
                </div>
                <div className="bc-visual">
                   <div className="bc-glow"></div>
@@ -142,7 +141,7 @@ const Billing = () => {
                   <h3>Transaction History</h3>
                </div>
                <div className="h-list">
-                  {billingData?.history.map((tx, i) => (
+                  {billingData?.history?.map?.((tx, i) => (
                     <div key={i} className="tx-item">
                        <div className={`tx-icon ${tx.amount > 0 ? 'up' : 'down'}`}>
                           {tx.amount > 0 ? <Plus size={14} /> : <Zap size={14} />}

@@ -1,7 +1,10 @@
-import React from 'react'
 import { FileText, Shield, Lock, Unlock, Zap, BookOpen, Pin } from 'lucide-react'
+import OnOffButton from '../../components/common/OnOffButton'
+import { useState } from 'react'
 
 const PDFSettings = () => {
+  const [smartDetection, setSmartDetection] = useState(true);
+  const [editableBlocks, setEditableBlocks] = useState(true);
   return (
     <div className="settings-content-grid">
       <section className="settings-card premium-card">
@@ -34,13 +37,13 @@ const PDFSettings = () => {
 
       <section className="settings-card premium-card">
         <h3><BookOpen size={18} /> Layout Preservation</h3>
-        <div className="toggle-row">
+        <div className="toggle-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0' }}>
           <span>Smart Detection</span>
-          <input type="checkbox" defaultChecked />
+          <OnOffButton checked={smartDetection} onChange={setSmartDetection} />
         </div>
-        <div className="toggle-row">
+        <div className="toggle-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0' }}>
           <span>Editable Text Blocks</span>
-          <input type="checkbox" defaultChecked />
+          <OnOffButton checked={editableBlocks} onChange={setEditableBlocks} />
         </div>
       </section>
     </div>

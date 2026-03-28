@@ -1,13 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Share2, TrendingUp, Users, Instagram, Twitter, Youtube, Globe } from 'lucide-react'
+import { Share2, TrendingUp, Users, Camera, Play, Globe } from 'lucide-react'
 import '../../styles/pages/dashboards/Dashboard.css' // Reuse dashboard styles for consistency
 
 const SocialMedia = () => {
   const platforms = [
-    { name: 'YouTube', icon: <Youtube />, followers: '12.4k', trend: '+1.2k', color: '#ff0000' },
-    { name: 'Instagram', icon: <Instagram />, followers: '8.1k', trend: '+850', color: '#e1306c' },
-    { name: 'Twitter', icon: <Twitter />, followers: '4.2k', trend: '+120', color: '#1da1f2' }
+    { name: 'YouTube', icon: <Play />, followers: '12.4k', trend: '+1.2k', color: '#ff0000' },
+    { name: 'Instagram', icon: <Camera />, followers: '8.1k', trend: '+850', color: '#e1306c' },
+    { name: 'Twitter', icon: <Share2 />, followers: '4.2k', trend: '+120', color: '#1da1f2' }
   ]
 
   return (

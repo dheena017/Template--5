@@ -1,5 +1,5 @@
 import React from 'react'
-import { Share2, Globe, Twitter, MessageSquare, HeartPulse, UserPlus } from 'lucide-react'
+import { Share2, Globe, MessageSquare, HeartPulse, UserPlus } from 'lucide-react'
 
 const SocialSettings = () => {
   return (

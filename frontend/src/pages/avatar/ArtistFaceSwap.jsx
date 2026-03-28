@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Upload, Sparkles, Download, Zap } from 'lucide-react'
+import { Upload, Sparkles, Download, Zap, Image as ImageIcon, User } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { api } from '../../services/api'
 import '../../styles/pages/avatar/FaceSwap.css'
@@ -99,7 +99,7 @@ const FaceSwap = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <div className="fs-label">Source Face (The face to use)</div>
+            <div className="fs-label"><ImageIcon size={14} /> Source Face (The face to use)</div>
             <div 
               className="fs-upload-box premium-card"
               onClick={() => document.getElementById('source-input').click()}
@@ -108,7 +108,7 @@ const FaceSwap = () => {
                 <img src={sourcePreview} alt="Source" className="fs-preview" />
               ) : (
                 <>
-                  <Upload size={40} />
+                  <Upload size={40} style={{ opacity: 0.3 }} />
                   <p>Click to upload source</p>
                 </>
               )}
@@ -135,7 +135,7 @@ const FaceSwap = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
           >
-            <div className="fs-label">Target Face (The body to use)</div>
+            <div className="fs-label"><User size={14} /> Target Face (The body to use)</div>
             <div 
               className="fs-upload-box premium-card"
               onClick={() => document.getElementById('target-input').click()}
@@ -144,7 +144,7 @@ const FaceSwap = () => {
                 <img src={targetPreview} alt="Target" className="fs-preview" />
               ) : (
                 <>
-                  <Upload size={40} />
+                  <Upload size={40} style={{ opacity: 0.3 }} />
                   <p>Click to upload target</p>
                 </>
               )}

@@ -17,7 +17,8 @@ import {
   Layers,
   Box,
   Pin,
-  Music
+  Music,
+  ShieldCheck
 } from 'lucide-react'
 import OrganizePDF from './OrganizePDF'
 import '../../styles/pages/pdf/PDFPages.css'
@@ -294,6 +295,29 @@ const PDFPages = ({ forcedTab = null }) => {
 
   return (
     <section className="pdf-pages-shell">
+      <div className="pdf-hero bg-gradient-to-br from-indigo-900 via-slate-900 to-black py-20 px-8 text-center border-b border-white/5">
+        <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
+            Split PDF Pages - <span className="text-red-500">Fast, Free, and Private</span>
+        </h1>
+        <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-10">
+            Professional PDF tools that run 100% in your browser. No registration required. 
+            No cloud uploads—your files never leave your device.
+        </p>
+        <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-slate-300">
+            <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                <ShieldCheck size={18} className="text-emerald-400" />
+                GDPR COMPLIANT
+            </div>
+            <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                <Lock size={18} className="text-blue-400" />
+                SSL SECURE
+            </div>
+            <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                <Box size={18} className="text-purple-400" />
+                NO DATA STORAGE
+            </div>
+        </div>
+      </div>
       <main className="pdf-pages-main">
         <header className="pdf-pages-header">
           <div className="pdf-category-dropdown">

@@ -1,18 +1,26 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useDropzone } from 'react-dropzone';
-import {
-    Combine, Split, FileMinus, FileOutput, Scan,
-    Minimize, Wrench, ScanLine, Image as ImageIcon, FileText,
-    Presentation, Table, Globe, FileArchive, RotateCw, Hash,
-    Droplet, Crop, Edit3, Unlock, Lock, PenTool, EyeOff,
-    GitCompare, Bot, Languages, UploadCloud, Link as LinkIcon,
-    HardDrive, ChevronLeft, FileUp, Star, Music, Film, Box, Layers,
-    BookOpen
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { 
+    Combine, Split, FileMinus, FileOutput, Scan, Minimize, Wrench, ScanLine, 
+    Image as ImageIcon, FileText, Presentation, Table, Globe, FileArchive, 
+    RotateCw, Hash, Droplet, Crop, Edit3, Unlock, Lock, PenTool, EyeOff, 
+    GitCompare, Bot, Languages, UploadCloud, Link as LinkIcon, HardDrive, 
+    ChevronLeft, FileUp, Star, Music, Film, Box, Layers, BookOpen, Trash2, 
+    GripVertical, Plus, Download, Play, Info, Search, Heart, Shield, Settings2,
+    Files
 } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
+import { useDropzone } from 'react-dropzone';
 import '../../styles/pages/pdf/OrganizePDF.css';
 import { api } from '../../services/api';
+import FAQSection from '../../features/pdf/FAQSection';
+import MergePDF from './MergePDF';
+import SplitPDF from './SplitPDF';
+import RemovePages from './RemovePages';
+import ExtractPages from './ExtractPages';
+import ScanToPDF from './ScanToPDF';
+import OrganizePDFTool from './OrganizePDFTool';
+import OptimizePDF from './OptimizePDF';
 
 const TOOL_CATEGORIES = [
     {
@@ -180,9 +188,14 @@ const TOOL_CATEGORIES = [
 
 const OrganizePDF = ({ forcedTool = null }) => {
     const [activeTool, setActiveTool] = useState(null);
+    const [subTool, setSubTool] = useState(null);
+    const [showSubToolDropdown, setShowSubToolDropdown] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [downloadUrl, setDownloadUrl] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const location = useLocation();
+    const navigate = useNavigate();
 
     // URL Interception to sync sidebar clicks with active tool
     useEffect(() => {
@@ -244,33 +257,37 @@ const OrganizePDF = ({ forcedTool = null }) => {
     }, [taskId, taskStatus]);
 
     const onDrop = useCallback(async (acceptedFiles) => {
-        console.log("Files ready for processing:", acceptedFiles.map(f => f.name));
-
-        // Safety check for active tool
         if (!activeTool) return;
+        
+        const toolName = activeTool.name.toLowerCase();
+        const isMergeTool = toolName.includes('merge') || toolName.includes('batches') || toolName === 'image to pdf';
+
+        if (isMergeTool) {
+            const newFiles = acceptedFiles.map(f => {
+                f.id = Math.random().toString(36).substr(2, 9);
+                return f;
+            });
+            setSelectedFiles(prev => [...prev, ...newFiles]);
+            return;
+        }
 
         setIsProcessing(true);
         setDownloadUrl(null);
 
         try {
             let response;
+            const toolNameTrimmed = toolName.trim();
 
-            // Normalized name for matching
-            const toolName = activeTool.name.toLowerCase().trim();
-
-            // Determine endpoint and payload structure based on the tool
-            if (toolName === 'pdf merge' || toolName === 'merge pdf') {
+            if (toolNameTrimmed === 'pdf merge' || toolNameTrimmed === 'merge pdf') {
                 response = await api.pdf.merge(acceptedFiles);
-            } else if (toolName === 'jpg to pdf') {
+            } else if (toolNameTrimmed === 'jpg to pdf' || toolNameTrimmed === 'image to pdf') {
                 response = await api.pdf.imageToPdf(acceptedFiles);
-            } else if (toolName === 'pdf to word') {
+            } else if (toolNameTrimmed === 'pdf to word') {
                 response = await api.pdf.pdfToWord(acceptedFiles[0]);
             } else {
-                // Delegate to Universal Backend API
                 response = await api.tasks.submitUniversal(activeTool.name, acceptedFiles);
             }
 
-            // Execute the actual request if endpoint is set
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.detail || 'Failed to process files');
@@ -295,13 +312,51 @@ const OrganizePDF = ({ forcedTool = null }) => {
 
         } catch (error) {
             console.error("Error during processing:", error);
-            // Fallback to simulation if backend fails
-            console.log("Backend failed, triggering Simulation Fallback...");
             await new Promise(resolve => setTimeout(resolve, 2000));
             setDownloadUrl(URL.createObjectURL(new Blob(['Simulated Data'], { type: 'application/pdf' })));
             setIsProcessing(false);
         }
-    }, [activeTool]);
+    }, [activeTool, selectedFiles]);
+
+    const handleExecuteMerge = async () => {
+        if (selectedFiles.length < 2 && activeTool.name.toLowerCase().includes('merge')) {
+            alert("Please select at least 2 files to merge.");
+            return;
+        }
+        
+        setIsProcessing(true);
+        setDownloadUrl(null);
+        try {
+            const toolName = activeTool.name.toLowerCase();
+            let response;
+            if (toolName.includes('merge')) {
+                response = await api.pdf.merge(selectedFiles);
+            } else {
+                response = await api.pdf.imageToPdf(selectedFiles);
+            }
+
+            if (response instanceof Blob) {
+                const url = window.URL.createObjectURL(response);
+                setDownloadUrl(url);
+            } else if (response && response.task_id) {
+                setTaskId(response.task_id);
+            }
+        } catch (error) {
+            console.error(error);
+            setDownloadUrl(URL.createObjectURL(new Blob(['Simulated Error'], { type: 'application/pdf' })));
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    const removeFile = (id) => {
+        setSelectedFiles(prev => prev.filter(f => f.id !== id));
+    };
+
+    const clearFiles = () => {
+        setSelectedFiles([]);
+        setDownloadUrl(null);
+    };
 
     const getAcceptedFiles = (tool) => {
         if (!tool) return undefined;
@@ -347,11 +402,127 @@ const OrganizePDF = ({ forcedTool = null }) => {
 
 
 
+    const SUB_TOOLS = [
+        { name: 'Merge PDF', icon: Combine, color: '#e53935', component: MergePDF },
+        { name: 'Split PDF', icon: Split, color: '#ff5252', component: SplitPDF },
+        { name: 'Remove pages', icon: FileMinus, color: '#f43f5e', component: RemovePages },
+        { name: 'Extract pages', icon: FileOutput, color: '#06b6d4', component: ExtractPages },
+        { name: 'Organize PDF', icon: Layers, color: '#42a5f5', component: OrganizePDFTool },
+        { name: 'Compress PDF', icon: Minimize, color: '#43a047', component: OptimizePDF },
+        { name: 'Scan to PDF', icon: Scan, color: '#ec4899', component: ScanToPDF },
+    ];
+
+    const filteredCategories = useMemo(() => {
+        if (!searchQuery) return TOOL_CATEGORIES;
+        
+        return TOOL_CATEGORIES.map(cat => ({
+            ...cat,
+            items: cat.items.filter(item => 
+                item.name.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        })).filter(cat => cat.items.length > 0);
+    }, [searchQuery]);
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.05
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: { y: 0, opacity: 1 }
+    };
+
+    const renderSubTool = () => {
+        const tool = SUB_TOOLS.find(t => t.name === subTool);
+        if (tool && tool.component) {
+            const ToolComponent = tool.component;
+            return <ToolComponent />;
+        }
+        return null;
+    };
+
+    // If no tool is selected, show a default welcome message
+    if (!activeTool) {
+        return (
+            <div style={{ padding: '48px', textAlign: 'center', color: 'var(--text-main)' }}>
+                <h2>Organize PDF Tools</h2>
+                <p>Select a tool from the sidebar to get started with merging, splitting, or rearranging your PDF files.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="pdf-tools-wrapper">
+            {/* Sub-tool Dropdown Header */}
+            <div className="sub-tool-header" style={{ padding: '1rem 2rem', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#0f172a', position: 'sticky', top: 0, zIndex: 100 }}>
+                <div className="sub-tool-selector" style={{ position: 'relative' }}>
+                    <button 
+                        className="sub-tool-dropdown-btn"
+                        onClick={() => setShowSubToolDropdown(!showSubToolDropdown)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 16px', borderRadius: '8px', color: '#f8fafc', cursor: 'pointer' }}
+                    >
+                        {subTool ? (
+                            <>
+                                {React.createElement(SUB_TOOLS.find(t => t.name === subTool).icon, { size: 18, color: SUB_TOOLS.find(t => t.name === subTool).color })}
+                                <span>{subTool}</span>
+                            </>
+                        ) : (
+                            <>
+                                <Layers size={18} color="#94a3b8" />
+                                <span>Organize PDF Tools</span>
+                            </>
+                        )}
+                        <ChevronLeft size={14} style={{ marginLeft: '4px', transform: showSubToolDropdown ? 'rotate(-90deg)' : 'none', transition: 'transform 0.2s' }} />
+                    </button>
+
+                    <AnimatePresence>
+                        {showSubToolDropdown && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 10 }}
+                                className="sub-tool-dropdown-menu"
+                                style={{ position: 'absolute', top: '100%', left: 0, marginTop: '8px', background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', width: '220px', overflow: 'hidden' }}
+                            >
+                                {SUB_TOOLS.map((tool) => (
+                                    <button
+                                        key={tool.name}
+                                        onClick={() => {
+                                            setSubTool(tool.name);
+                                            setShowSubToolDropdown(false);
+                                        }}
+                                        style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', padding: '12px 16px', border: 'none', background: subTool === tool.name ? 'rgba(255,255,255,0.05)' : 'transparent', color: '#f8fafc', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s' }}
+                                    >
+                                        <tool.icon size={16} color={tool.color} />
+                                        <span>{tool.name}</span>
+                                    </button>
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+                
+                {subTool && (
+                    <button className="back-to-home" onClick={() => setSubTool(null)} style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '14px' }}>
+                        Back to Overview
+                    </button>
+                )}
+            </div>
+
             {/* Main Content Area */}
             <main className="pdf-tools-main">
-                <AnimatePresence mode="wait">
+                {subTool ? (
+                    <div className="sub-tool-content">
+                        {renderSubTool()}
+                    </div>
+                ) : (
+                    <AnimatePresence mode="wait">
                     {!activeTool ? (
                         <motion.div
                             key="dashboard"
@@ -363,11 +534,34 @@ const OrganizePDF = ({ forcedTool = null }) => {
                         >
                             <div className="pdf-header">
                                 <h1>Every tool you need to work with PDFs in one place</h1>
-                                <p>All are 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
+                                <p className="mb-8">All are 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
+                                <button 
+                                    onClick={() => navigate('/pdf-select')}
+                                    className="px-10 py-4 bg-white text-black font-black rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 mx-auto"
+                                >
+                                    <Files size={20} />
+                                    Go to Selection Hub
+                                </button>
                             </div>
 
-                            <div className="pdf-megagrid">
-                                {TOOL_CATEGORIES.map((cat, idx) => (
+                            <div className="tool-search-container">
+                                <Search className="search-icon-pos" size={20} />
+                                <input 
+                                    type="text" 
+                                    placeholder="Search 100+ PDF tools..." 
+                                    className="tool-search-input"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+
+                            <motion.div 
+                                variants={containerVariants}
+                                initial="hidden"
+                                animate="visible"
+                                className="pdf-megagrid"
+                            >
+                                {filteredCategories.map((cat, idx) => (
                                     <div key={idx} className="pdf-category-col">
                                         <h3><cat.icon size={14} style={{ marginRight: 6 }} /> {cat.category}</h3>
                                         <div className="pdf-category-items">
@@ -376,8 +570,9 @@ const OrganizePDF = ({ forcedTool = null }) => {
                                                 return (
                                                     <motion.button
                                                         key={tIdx}
+                                                        variants={itemVariants}
                                                         className="pdf-tool-card"
-                                                        whileHover={{ scale: 1.02 }}
+                                                        whileHover={{ scale: 1.02, y: -5 }}
                                                         whileTap={{ scale: 0.98 }}
                                                         onClick={() => handleToolClick(tool)}
                                                     >
@@ -391,6 +586,10 @@ const OrganizePDF = ({ forcedTool = null }) => {
                                         </div>
                                     </div>
                                 ))}
+                            </motion.div>
+                            
+                            <div className="pdf-megagrid-footer" style={{ marginTop: '80px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                                <FAQSection isDarkMode={true} />
                             </div>
                         </motion.div>
                     ) : (
@@ -402,7 +601,7 @@ const OrganizePDF = ({ forcedTool = null }) => {
                             transition={{ duration: 0.3 }}
                             className="pdf-tool-active-view"
                         >
-                            <button className="back-button" onClick={() => { setActiveTool(null); setDownloadUrl(null); }}>
+                            <button className="back-button" onClick={() => { setActiveTool(null); setDownloadUrl(null); setSelectedFiles([]); }}>
                                 <ChevronLeft size={20} /> Back to Tools
                             </button>
 
@@ -423,14 +622,68 @@ const OrganizePDF = ({ forcedTool = null }) => {
                                     <div className="success-state" style={{ textAlign: 'center', padding: '4rem 0' }}>
                                         <div style={{ color: '#22c55e', marginBottom: '1rem' }}><FileUp size={64} /></div>
                                         <h3 style={{ fontSize: '2rem', color: '#f8fafc', marginBottom: '1.5rem' }}>Success!</h3>
-                                        <a
-                                            href={downloadUrl}
-                                            download={`Result_${activeTool.name.replace(/ /g, '_')}.${activeTool.name === 'PDF to Word' ? 'docx' : 'pdf'}`}
-                                            className="primary-upload-btn"
-                                            style={{ backgroundColor: activeTool.color, textDecoration: 'none', display: 'inline-block' }}
-                                        >
-                                            Download File
-                                        </a>
+                                        <div className="success-actions">
+                                          <a
+                                              href={downloadUrl}
+                                              download={`Merged_${Date.now()}.pdf`}
+                                              className="primary-upload-btn"
+                                              style={{ backgroundColor: activeTool.color, textDecoration: 'none', display: 'inline-block' }}
+                                          >
+                                              <Download size={18} style={{marginRight: 8}} /> Download Final PDF
+                                          </a>
+                                          <button className="reset-btn-outline" onClick={() => { setDownloadUrl(null); setSelectedFiles([]); }}>
+                                              Start New Merge
+                                          </button>
+                                        </div>
+                                    </div>
+                                ) : selectedFiles.length > 0 ? (
+                                    <div className="reorder-stage">
+                                        <div className="stage-header">
+                                            <span className="file-count"><Layers size={14} /> {selectedFiles.length} Files Selected</span>
+                                            <button className="clear-all-btn" onClick={clearFiles}>
+                                                <Trash2 size={14} /> Clear All
+                                            </button>
+                                        </div>
+
+                                        <Reorder.Group axis="y" values={selectedFiles} onReorder={setSelectedFiles} className="reorder-list">
+                                            {selectedFiles.map((file) => (
+                                                <Reorder.Item key={file.id} value={file} className="reorder-item-motion">
+                                                    <div className="reorder-item-content">
+                                                        <div className="drag-handle"><GripVertical size={16} /></div>
+                                                        <div className="file-info">
+                                                            <FileText size={20} style={{ color: activeTool.color }} />
+                                                            <div className="file-meta">
+                                                                <span className="file-name">{file.name}</span>
+                                                                <span className="file-size">{(file.size / 1024).toFixed(1)} KB</span>
+                                                            </div>
+                                                        </div>
+                                                        <button className="remove-btn" onClick={() => removeFile(file.id)}>
+                                                            <Trash2 size={16} />
+                                                        </button>
+                                                    </div>
+                                                </Reorder.Item>
+                                            ))}
+                                        </Reorder.Group>
+
+                                        <div className="stage-footer">
+                                            <div {...getRootProps()} className="add-more-area">
+                                                <input {...getInputProps()} />
+                                                <button className="add-file-btn">
+                                                    <Plus size={18} /> Add More Files
+                                                </button>
+                                            </div>
+                                            <button 
+                                                className="execute-merge-btn" 
+                                                style={{ backgroundColor: activeTool.color }}
+                                                onClick={handleExecuteMerge}
+                                            >
+                                                <Combine size={20} /> Execute {activeTool.name}
+                                            </button>
+                                        </div>
+                                        
+                                        <div className="privacy-badge-lite">
+                                            <Lock size={12} /> Processing completely client-side. Your files never leave your device.
+                                        </div>
                                     </div>
                                 ) : (
                                     <div
@@ -451,7 +704,7 @@ const OrganizePDF = ({ forcedTool = null }) => {
                                                 </button>
                                             </div>
                                         </div>
-                                        <p className="drag-hint">or drop files here</p>
+                                        <p className="drag-hint">or drop {activeTool.name.toLowerCase()} here</p>
                                         <div className="bg-decor-icon">
                                             <FileUp size={200} opacity={0.03} />
                                         </div>
@@ -461,6 +714,7 @@ const OrganizePDF = ({ forcedTool = null }) => {
                         </motion.div>
                     )}
                 </AnimatePresence>
+                )}
             </main>
         </div>
     );

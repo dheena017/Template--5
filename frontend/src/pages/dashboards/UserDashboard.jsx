@@ -70,41 +70,9 @@ const UserDashboard = () => {
 
   return (
     <div className="user-dashboard-wrapper">
-      {/* Prompts 4: Dark modern sidebar */}
-      <aside className="ud-sidebar">
-        <div className="ud-logo">
-          <FolderOpen size={24} className="ud-logo-icon" />
-          <span>DocsPlatform</span>
-        </div>
-        
-        <nav className="ud-nav">
-          <div className="ud-nav-item active">
-            <LayoutDashboard size={20} />
-            <span>Dashboard</span>
-          </div>
-          <div className="ud-nav-item">
-            <FileText size={20} />
-            <span>My Files</span>
-          </div>
-          <div className="ud-nav-item">
-            <Settings size={20} />
-            <span>Settings</span>
-          </div>
-        </nav>
-        
-        <div className="ud-nav" style={{ flex: 0, borderTop: '1px solid #1f2937' }}>
-          <div className="ud-nav-item" style={{ color: '#ef4444' }}>
-            <LogOut size={20} />
-            <span>Sign Out</span>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
       <main className="ud-main-content">
         <div className="ud-header">
           <h1>User Dashboard</h1>
-          {/* Prompts 4: Prominent upload button */}
           <button className="ud-upload-btn" onClick={handleUpload}>
             <UploadCloud size={20} />
             Upload New File

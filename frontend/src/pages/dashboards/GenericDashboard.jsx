@@ -7,14 +7,15 @@ import {
 import { DASHBOARD_CONFIG } from '../../constants/dashboardConfig'
 import '../../styles/pages/dashboards/Dashboard.css'
 
-const GenericDashboard = () => {
-  const { category } = useParams()
+const GenericDashboard = ({ type }) => {
+  const { category: paramCategory } = useParams()
   const navigate = useNavigate()
   const scrollRef = useRef(null)
   const [scrollProgress, setScrollProgress] = useState(0)
 
   // Default to video if not found (or handle 404)
-  const config = DASHBOARD_CONFIG[category?.toLowerCase()] || DASHBOARD_CONFIG['video']
+  const categoryKey = (type || paramCategory || 'video').toLowerCase()
+  const config = DASHBOARD_CONFIG[categoryKey] || DASHBOARD_CONFIG['video']
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -38,12 +39,12 @@ const GenericDashboard = () => {
   const getStatusStyle = (status) => {
     const s = status.toLowerCase()
     if (s === 'completed' || s === 'active' || s === 'ready' || s === 'published') {
-      return { background: '#ecfdf5', color: '#059669' }
+      return { background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }
     }
     if (s === 'rendering' || s === 'synthesizing' || s === 'processing' || s === 'drafting' || s === 'in review') {
-      return { background: '#fffbeb', color: '#d97706' }
+      return { background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b' }
     }
-    return { background: '#f8fafc', color: '#64748b' }
+    return { background: 'rgba(148, 163, 184, 0.1)', color: '#94a3b8' }
   }
 
   return (
@@ -108,8 +109,8 @@ const GenericDashboard = () => {
       </motion.div>
 
       <motion.section className="data-table-section" variants={itemVariants}>
-        <div className="section-title-box" style={{ marginBottom: '1.5rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem' }}>
-           <Play size={20} style={{ color: '#64748b' }} />
+        <div className="section-title-box" style={{ marginBottom: '1.5rem', paddingBottom: '1rem' }}>
+           <Play size={20} style={{ color: 'var(--text-muted)' }} />
            <span className="group-label">{config.recentHeader}</span>
         </div>
         
