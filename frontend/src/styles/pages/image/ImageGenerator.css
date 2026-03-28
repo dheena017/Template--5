@@ -72,7 +72,7 @@
 
 .gen-settings-sidebar {
   background: var(--bg-surface);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -120,7 +120,7 @@
 .model-selector-card {
   padding: 1.25rem;
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
@@ -166,7 +166,7 @@
 /* Upload Zones */
 .image-upload-zone, .audio-upload-zone {
   border: 2px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 2rem;
   text-align: center;
   background: rgba(255, 255, 255, 0.01);
@@ -253,7 +253,7 @@
 .toggle-lock {
   padding: 0.75rem;
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -266,7 +266,7 @@
   padding: 1rem;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   color: #fff;
   font-weight: 700;
   margin-top: 1rem;
@@ -281,7 +281,7 @@
 
 .image-generator-panel {
   background: var(--bg-surface);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.06);
   padding: 1.4rem;
   max-width: 760px;
@@ -314,7 +314,7 @@
 .select-like {
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.7rem 0.9rem;
   font-weight: 700;
 }
@@ -343,7 +343,7 @@
   width: 100%;
   min-height: 110px;
   resize: vertical;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.02);
   color: #fff;
@@ -375,7 +375,7 @@
   background: var(--primary-color);
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.75rem 1rem;
   display: inline-flex;
   align-items: center;
@@ -451,7 +451,7 @@
 .output-card {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 

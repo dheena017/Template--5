@@ -231,7 +231,7 @@
     padding: 0.9rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     color: var(--text-primary);
     cursor: pointer;
@@ -250,7 +250,7 @@
     gap: 1.5rem;
     padding: 2rem;
     background: var(--card-gradient-subtle);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
 }
 
