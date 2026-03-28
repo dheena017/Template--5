@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import './styles/theme.css';
+@import './styles/animations.css';
+@import './styles/AuraEngine.css';
+
 
 :root {
-  /* Core Colors - Aura Modern */
+  /* Core Colors - Aura Modern (Dark Default) */
   --bg-primary: #0a0b10;
   --bg-secondary: #14151d;
   --bg-tertiary: #1c1e29;
+  --bg-surface: #0f1016;
+  --bg-elevated: #1a1b26;
   
   --accent-primary: #8b5cf6; /* Electric Violet */
   --accent-secondary: #06b6d4; /* Cyan */
@@ -29,6 +36,45 @@
   
   --sidebar-width: 280px;
   --navbar-width: 72px;
+
+  /* Extended Aura Design Tokens */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; 
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px; 
+  --s-12: 48px; --s-16: 64px;
+
+  --radius-xl: 32px;
+  
+  --bg-deep: #050508;
+  --bg-surface: #0f1016;
+  --bg-elevated: #1a1b26;
+
+  --primary: #8b5cf6;
+  --secondary: #06b6d4;
+
+  --text-secondary: #94a3b8;
+  --font-display: 'Outfit', sans-serif;
+  --transition-gentle: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.light-theme {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-surface: #f8fafc;
+  --bg-elevated: #ffffff;
+  
+  --text-main: #0f172a;
+  --text-dim: #475569;
+  --text-muted: #64748b;
+  
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-strong: rgba(0, 0, 0, 0.1);
+  
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 * {
@@ -46,8 +92,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-button, input {
+button, input, select, textarea {
   font-family: inherit;
+  outline: none;
+}
+
+select {
+  background-color: var(--bg-secondary);
+  color: var(--text-main);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+}
+
+option {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
 }
 
 ::-webkit-scrollbar {
@@ -66,3 +125,5 @@ button, input {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* Site-Wide Keyframes moved to animations.css */
