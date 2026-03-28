@@ -73,7 +73,7 @@
   color: var(--text-primary);
   border: none;
   font-weight: 700;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
 }
 
 .ptv-dz-uploading {
@@ -127,7 +127,7 @@
 
 .ptv-avatar-btn {
   padding: 1.25rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
@@ -150,7 +150,7 @@
   gap: 1.25rem;
   margin-bottom: 1.25rem;
   padding: 1.25rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   cursor: pointer;
@@ -178,7 +178,7 @@
   border: none;
   font-weight: 800;
   font-size: 1.15rem;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,7 +217,7 @@
   margin: 3rem 0;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
 }
 
 .ptv-stat { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -225,5 +225,5 @@
 .ptv-stat span { color: var(--text-muted); font-size: 0.9rem; }
 
 .ptv-result-actions { display: flex; justify-content: center; gap: 1.5rem; }
-.ptv-download-btn { padding: 1.25rem 2.5rem; border-radius: 16px; background: var(--primary-color); color: #fff; font-weight: 700; border: none; }
-.ptv-restart-btn { padding: 1.25rem 2.5rem; border-radius: 16px; background: rgba(255, 255, 255, 0.05); color: #fff; font-weight: 700; border: none; }
+.ptv-download-btn { padding: 1.25rem 2.5rem; border-radius: var(--radius-md); background: var(--primary-color); color: #fff; font-weight: 700; border: none; }
+.ptv-restart-btn { padding: 1.25rem 2.5rem; border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.05); color: #fff; font-weight: 700; border: none; }

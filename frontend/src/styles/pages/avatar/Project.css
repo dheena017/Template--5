@@ -29,7 +29,7 @@
   padding: 1.25rem 2.5rem;
   font-size: 1.15rem;
   font-weight: 800;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -40,7 +40,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   margin-bottom: 3.5rem;
   gap: 4rem;
 }
@@ -53,7 +53,7 @@
   gap: 1.5rem;
   padding: 0.75rem 1.5rem;
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -73,7 +73,7 @@
 
 .pj-filter-btn {
   padding: 0.8rem 1.5rem;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
@@ -261,7 +261,7 @@
 }
 
 .pj-ab-info { display: flex; align-items: center; gap: 1.75rem; }
-.pj-ab-icon-wrap { width: 52px; height: 52px; border-radius: 16px; background: rgba(var(--primary-rgb), 0.1); color: var(--primary-color); display: flex; align-items: center; justify-content: center; }
+.pj-ab-icon-wrap { width: 52px; height: 52px; border-radius: var(--radius-md); background: rgba(var(--primary-rgb), 0.1); color: var(--primary-color); display: flex; align-items: center; justify-content: center; }
 .pj-ab-info div { display: flex; flex-direction: column; gap: 0.25rem; }
 .pj-ab-info strong { font-size: 1.15rem; font-weight: 850; }
 .pj-ab-info span { font-size: 0.9rem; color: var(--text-muted); }
