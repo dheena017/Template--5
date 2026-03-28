@@ -100,6 +100,12 @@ const DASHBOARD_CARDS = [
 
 const Dashboard = () => {
   const navigate = useNavigate()
+  const [searchQuery, setSearchQuery] = React.useState('')
+
+  const filteredCards = DASHBOARD_CARDS.filter(card => 
+    card.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    card.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -122,12 +128,31 @@ const Dashboard = () => {
       variants={containerVariants}
     >
       <motion.header className="all-dashboards-header" variants={itemVariants}>
-        <h1>All Dashboards</h1>
-        <p>Open any dashboard from here and manage every part of your platform.</p>
+        <div className="header-top-row">
+          <div className="header-text">
+            <h1>All Dashboards</h1>
+            <p>Open any dashboard from here and manage every part of your platform.</p>
+          </div>
+          <div className="dashboard-search-wrapper">
+            <div className="search-pill">
+              <span className="search-pill-icon"><Info size={18} /></span>
+              <input 
+                type="text" 
+                placeholder="Find a dashboard..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="dashboard-search-input"
+              />
+              {searchQuery && (
+                <button className="clear-search" onClick={() => setSearchQuery('')}>×</button>
+              )}
+            </div>
+          </div>
+        </div>
       </motion.header>
 
       <motion.div className="all-dashboards-grid" variants={containerVariants}>
-        {DASHBOARD_CARDS.map((card) => {
+        {filteredCards.map((card) => {
           const Icon = card.icon
           return (
             <motion.button
@@ -151,6 +176,14 @@ const Dashboard = () => {
             </motion.button>
           )
         })}
+        {filteredCards.length === 0 && (
+          <div className="no-results-dashboard">
+             <div className="no-results-icon"><Info size={48} /></div>
+             <h3>No dashboards found</h3>
+             <p>Try searching for something else or browse all categories.</p>
+             <button onClick={() => setSearchQuery('')}>Clear Search</button>
+          </div>
+        )}
       </motion.div>
     </motion.section>
   )
