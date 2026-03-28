@@ -22,11 +22,19 @@ import {
   Users2,
   CircleX,
   Calendar,
-  Eye
+  Eye,
+  Mic,
+  Video,
+  Code,
+  Database,
+  Code2,
+  X,
+  Plus
 } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { api } from '../services/api'
-import { OverviewTab, ContentTab, EngagementTab, NotificationsTab, ConnectionsTab, SettingsTab, AnalyticsTab, SupportTab } from './profile/tabs'
+import '../styles/pages/profile/common.css'
+import { OverviewTab, ContentTab, EngagementTab, NotificationsTab, ConnectionsTab, SettingsTab, AnalyticsTab, SupportTab } from './profile_sub/tabs'
 import '../styles/pages/Profile.css'
 
 const Profile = () => {
@@ -55,7 +63,11 @@ const Profile = () => {
     joined_at: '2024-02-01',
     timezone: 'Asia/Kolkata',
     creator_tier: 'Pro Creator',
-    response_time: '~2h'
+    response_time: '~2h',
+    banner_url: 'C:/Users/dheen/.gemini/antigravity/brain/15a5a6da-47ef-4566-bfd9-eaa4db11f606/ai_banner_background_1774537758105.png',
+    github_url: 'https://github.com/dheena-dev',
+    portfolio_url: 'https://dheena.tech',
+    email: 'dheen@example.com'
   })
 
   const { 
@@ -63,7 +75,15 @@ const Profile = () => {
     accentColor, setAccentColor,
     fontFamily, setFontFamily,
     borderRadius, setBorderRadius,
-    glassStrength, setGlassStrength
+    glassStrength, setGlassStrength,
+    animationsEnabled,
+    setAnimationsEnabled,
+    neonGlows,
+    setNeonGlows,
+    noiseOverlay,
+    setNoiseOverlay,
+    auraBackground,
+    setAuraBackground
   } = useTheme()
 
   useEffect(() => {
@@ -81,7 +101,7 @@ const Profile = () => {
       try {
         const [profileRes, statsRes, projectsRes] = await Promise.all([
           api.getProfile(),
-          api.getStats(),
+          api.getStats ? api.getStats() : Promise.resolve(null),
           api.getProjects()
         ])
 
@@ -131,6 +151,8 @@ const Profile = () => {
         bio: profileDraft.bio,
         location: profileDraft.location,
         email: profileDraft.email,
+        github_url: profileDraft.github_url,
+        portfolio_url: profileDraft.portfolio_url,
         timezone: profileDraft.timezone,
         status: profile.status
       }
@@ -192,8 +214,8 @@ const Profile = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'Overview': return <OverviewTab completionPercent={completionPercent} completionTasks={completionTasks} onToggleTask={toggleCompletionTask} />
-      case 'Content': return <ContentTab projectsData={projectsData} />
+      case 'Overview': return <OverviewTab completionPercent={completionPercent} completionTasks={completionTasks} onToggleTask={toggleCompletionTask} statsData={statsData} setActiveTab={setActiveTab} profile={profile} profileDraft={profileDraft} isEditingProfile={isEditingProfile} />
+      case 'Content': return <ContentTab projectsData={projectsData} setToast={setToast} />
       case 'Engagement': return <EngagementTab />
       case 'Notifications': return <NotificationsTab />
       case 'Connections': return <ConnectionsTab />
@@ -204,7 +226,17 @@ const Profile = () => {
           fontFamily={fontFamily} setFontFamily={setFontFamily}
           borderRadius={borderRadius} setBorderRadius={setBorderRadius}
           glassStrength={glassStrength} setGlassStrength={setGlassStrength}
-          setToast={setToast}
+        animationsEnabled={animationsEnabled}
+        setAnimationsEnabled={setAnimationsEnabled}
+        neonGlows={neonGlows}
+        setNeonGlows={setNeonGlows}
+        noiseOverlay={noiseOverlay}
+        setNoiseOverlay={setNoiseOverlay}
+        auraBackground={auraBackground}
+        setAuraBackground={setAuraBackground}
+        setToast={setToast}
+          profileDraft={profileDraft}
+          handleDraftChange={handleDraftChange}
         />
       )
       case 'Analytics': return <AnalyticsTab statsData={statsData} />
@@ -213,128 +245,229 @@ const Profile = () => {
     }
   }
 
+  // Banner & Photo Upload & Preview
+  const handleBannerChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setProfile(prev => ({ ...prev, banner_url: ev.target.result }));
+        setToast('Banner updated locally');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setProfileDraft(prev => ({ ...prev, photo: ev.target.result }));
+        setToast('Avatar updated');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <div className="profile-wrapper full-site">
+    <div className="profile-page-aura">
       <header className="profile-super-header">
-        <div className="banner-area">
+        <div 
+          className="banner-area" 
+          style={{ backgroundImage: `url(${profile.banner_url})` }}
+        >
           <div className="banner-overlay"></div>
-          <div className="banner-content">
-            <button className="banner-action"><Camera size={16} /> Edit Banner</button>
+          
+          <div className="banner-action-top">
+            <input 
+              type="file" 
+              id="banner-upload" 
+              className="hidden" 
+              accept="image/*" 
+              onChange={handleBannerChange} 
+            />
+            <button className="banner-action" onClick={() => document.getElementById('banner-upload').click()}>
+              <Camera size={16} /> Edit Banner
+            </button>
+          </div>
+
+          <div className="floating-banner-items">
+            <div className="floating-item cursor-pointer hover:scale-110 transition-transform" onClick={() => setActiveTab('Content')}>
+              <div className="floating-icon-circle"><Mic size={24} /></div>
+              <span className="floating-label">TTS</span>
+            </div>
+            <div className="floating-item cursor-pointer hover:scale-110 transition-transform" onClick={() => setActiveTab('Content')}>
+              <div className="floating-icon-circle"><Camera size={24} /></div>
+              <span className="floating-label">TTI</span>
+            </div>
+            <div className="floating-item cursor-pointer hover:scale-110 transition-transform" onClick={() => setActiveTab('Content')}>
+              <div className="floating-icon-circle"><Code size={24} /></div>
+              <span className="floating-label">Code</span>
+            </div>
+          </div>
+
+          <div className="banner-right-actions">
+            <button className="side-action-btn"><Users size={18} /></button>
+            <button className="side-action-btn"><Database size={18} /></button>
+            <button className="side-action-btn"><Code2 size={18} /></button>
           </div>
         </div>
         
         <div className="header-meta">
+          {/* LEFT COLUMN: Avatar & Name */}
           <div className="avatar-section">
             <motion.div 
-              className="avatar-frame"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
+              className="avatar-frame relative"
+              whileHover={{ scale: 1.02 }}
             >
               <div className="avatar-inner">DH</div>
-              <div className={`status-glow ${profile.status}`}></div>
+              <div className={`status-glow ${profile.status} absolute bottom-4 right-4`}></div>
             </motion.div>
-            <motion.div 
-              className="xp-badge"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              Level 42
-            </motion.div>
+            
+            <div className="left-identity-info">
+              <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                {profile.display_name}
+              </motion.h2>
+              <motion.div 
+                className="xp-badge cursor-pointer" 
+                onClick={() => setActiveTab('Analytics')}
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                Level {profile.experience_level || 0}
+              </motion.div>
+            </div>
           </div>
           
+          {/* CENTER COLUMN: Info Card */}
           <div className="info-section">
-            <div className="identity-block">
-              <div className="name-line">
-                {isEditingProfile ? (
-                  <input
-                    className="inline-edit-input name-edit"
-                    value={profileDraft.display_name || ''}
-                    onChange={(e) => handleDraftChange('display_name', e.target.value)}
-                    placeholder="Display name"
-                  />
-                ) : (
-                  <h1>{profile.display_name} <CheckCircle2 size={24} className="verified-icon" /></h1>
-                )}
-                <span className="handle">@{profile.username}</span>
+            <div className="info-header-row">
+              <div className="info-label-group">
+                <label className="field-label">Ecosystem Name</label>
+                <div className="field-value-wrapper group">
+                  {isEditingProfile ? (
+                    <input 
+                      className="bg-transparent border-none text-white focus:outline-none w-full"
+                      value={profileDraft.display_name || ''}
+                      onChange={(e) => handleDraftChange('display_name', e.target.value)}
+                    />
+                  ) : (
+                    <span className="field-value">{profile.display_name}</span>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={16} className="text-emerald-500" />
+                    {!isEditingProfile && <Edit3 size={14} className="text-dim opacity-0 group-hover:opacity-100 cursor-pointer" onClick={() => setIsEditingProfile(true)} />}
+                  </div>
+                </div>
               </div>
-              <div className="status-badge-container">
-                <select value={profile.status} onChange={(e) => handleStatusChange(e.target.value)} className="status-select">
-                  <option value="online">🟢 Online</option>
-                  <option value="busy">🔴 Busy</option>
-                  <option value="offline">⚪ Offline</option>
+              <div className="info-label-group">
+                <label className="field-label">Domain Username</label>
+                <div className="field-value-wrapper">
+                  <span className="field-value">@{profile.username}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="info-body-content">
+              <div className="mission-block">
+                <div className="flex justify-between items-center mb-2">
+                  <label className="field-label mb-0">Platform Mission</label>
+                  {!isEditingProfile && <Edit3 size={14} className="text-dim cursor-pointer opacity-50 hover:opacity-100" onClick={() => setIsEditingProfile(true)} />}
+                </div>
+                <div className="description-box">
+                  {isEditingProfile ? (
+                    <textarea 
+                      className="bg-transparent border-none text-white focus:outline-none w-full resize-none h-20"
+                      value={profileDraft.bio || ''}
+                      onChange={(e) => handleDraftChange('bio', e.target.value)}
+                    />
+                  ) : (
+                    profile.bio
+                  )}
+                </div>
+              </div>
+
+              <div className="links-grid">
+                <div className="input-with-icon group">
+                  <Globe size={16} />
+                  {isEditingProfile ? (
+                    <input 
+                      className="bg-transparent border-none text-white focus:outline-none w-full"
+                      value={profileDraft.location || ''}
+                      onChange={(e) => handleDraftChange('location', e.target.value)}
+                    />
+                  ) : (
+                    <span>{profile.location}</span>
+                  )}
+                  {!isEditingProfile && <Edit3 size={14} className="text-dim opacity-0 group-hover:opacity-100 cursor-pointer ml-auto" onClick={() => setIsEditingProfile(true)} />}
+                </div>
+                <div className="input-with-icon">
+                  <LinkIcon size={16} />
+                  <span>textai.com/{profile.username}</span>
+                </div>
+              </div>
+
+              <div className="streak-bar">
+                <Flame size={16} className="text-orange-500" />
+                <span>{profile.joined_at ? Math.floor((new Date() - new Date(profile.joined_at)) / (1000 * 60 * 60 * 24)) : 0} Days Stable Uptime</span>
+              </div>
+
+              <div className="info-tags-row">
+                <span className="info-tag" onClick={() => setActiveTab('Content')} style={{ cursor: 'pointer' }}><Mic size={14} /> Text-to-Speech</span>
+                <span className="info-tag" onClick={() => setActiveTab('Content')} style={{ cursor: 'pointer' }}><Camera size={14} /> Text-to-Image</span>
+                <span className="info-tag" onClick={() => setActiveTab('Content')} style={{ cursor: 'pointer' }}><Code size={14} /> Code Generation</span>
+              </div>
+
+              <div className="plan-info-row">
+                <Award size={16} className="plan-icon" />
+                <span>Plan: {profile.creator_tier} | Joined {profile.joined_at}</span>
+              </div>
+
+              <div className="visibility-box">
+                <Eye size={16} />
+                <span className="field-label" style={{ marginBottom: 0 }}>Visibility</span>
+                <select className="visibility-select-styled" value={profileVisibility} onChange={(e) => setProfileVisibility(e.target.value)}>
+                  <option value="public">Public</option>
+                  <option value="private">Private</option>
                 </select>
               </div>
             </div>
-            {isEditingProfile ? (
-              <textarea
-                className="inline-edit-input bio-edit"
-                value={profileDraft.bio || ''}
-                onChange={(e) => handleDraftChange('bio', e.target.value)}
-                placeholder="Tell people about your profile"
-              />
-            ) : (
-              <p className="super-bio">{profile.bio}</p>
-            )}
-            <div className="links-row">
-              <span className="link-item"><MapPin size={14} /> {isEditingProfile ? <input className="inline-edit-input tiny-edit" value={profileDraft.location || ''} onChange={(e) => handleDraftChange('location', e.target.value)} /> : profile.location}</span>
-              <span className="link-item"><LinkIcon size={14} /> textai.com/{profile.username}</span>
-              <span className="link-item"><Mail size={14} /> {isEditingProfile ? <input className="inline-edit-input tiny-edit" value={profileDraft.email || ''} onChange={(e) => handleDraftChange('email', e.target.value)} /> : profile.email}</span>
-              <span className="link-item"><Flame size={14} /> 125 Day Streak</span>
-            </div>
-            <div className="trust-signals">
-              <span className="link-item"><Award size={14} /> {profile.creator_tier}</span>
-              <span className="link-item"><Clock size={14} /> Response: {profile.response_time}</span>
-              <span className="link-item"><Globe size={14} /> {profile.timezone}</span>
-              <span className="link-item"><Calendar size={14} /> Joined {profile.joined_at}</span>
-            </div>
-            <div className="visibility-row">
-              <label className="visibility-label"><Eye size={14} /> Visibility</label>
-              <select className="status-select" value={profileVisibility} onChange={(e) => setProfileVisibility(e.target.value)}>
-                <option value="public">Public</option>
-                <option value="private">Private</option>
-              </select>
-            </div>
           </div>
           
-          <div className="quick-stats-bar">
-            {isLoadingData ? (
-              <div className="loading-inline">Loading stats...</div>
-            ) : (
-              quickStats.map((item) => (
-                <motion.div key={item.label} className="stat-card" whileHover={{ scale: 1.05 }}>
+          {/* RIGHT COLUMN: Stats & Actions */}
+          <div className="right-profile-block">
+            <div className="quick-stats-bar">
+              {quickStats.map((item, idx) => (
+                <motion.div key={item.label} className="stat-card" whileHover={{ y: -5 }}>
+                  <div className="stat-card-icon">
+                    {idx === 0 && <Users2 size={20} />}
+                    {idx === 1 && <Globe size={20} />}
+                    {idx === 2 && <Settings size={20} />}
+                    {idx === 3 && <FileText size={20} />}
+                  </div>
                   <div className="stat-value">{item.value}</div>
-                  <div className="stat-label">{item.label}</div>
+                  <div className="stat-label">{item.label} Accounts</div>
                 </motion.div>
-              ))
-            )}
-          </div>
-          
-          <div className="action-section">
-            <motion.button 
-              className="primary-action-btn"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Share2 size={18} /> Share Profile
-            </motion.button>
-            <motion.button 
-              className="secondary-action-btn"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsEditingProfile((prev) => !prev)}
-            >
-              <Edit3 size={18} /> {isEditingProfile ? 'Close Edit' : 'Edit Profile'}
-            </motion.button>
-            {isEditingProfile && (
-              <>
-                <button className="primary-action-btn" onClick={handleSaveProfile}>
-                  <CheckCircle2 size={16} /> {saveState === 'saving' ? 'Saving...' : 'Save'}
+              ))}
+            </div>
+
+            <div className="action-section">
+              <button className="btn-action-wide btn-share" onClick={() => setToast('Profile link copied!')}>
+                <Share2 size={18} /> Share Platform
+              </button>
+              <button className="btn-action-wide btn-config" onClick={() => setIsEditingProfile(!isEditingProfile)}>
+                <Settings size={18} /> {isEditingProfile ? 'Close Configuration' : 'Platform Configuration'}
+              </button>
+              <div className="actions-bottom-row">
+                <button className="btn-action-wide btn-apply" onClick={handleSaveProfile} disabled={saveState === 'saving'}>
+                  <CheckCircle2 size={18} /> {saveState === 'saving' ? 'Applying...' : 'Apply Changes'}
                 </button>
-                <button className="secondary-action-btn" onClick={handleCancelEdit}>
-                  <CircleX size={16} /> Cancel
+                <button className="btn-action-wide btn-discard" onClick={() => setIsEditingProfile(false)}>
+                  <X size={18} /> {isEditingProfile ? 'Cancel' : 'Discard'}
                 </button>
-              </>
-            )}
+              </div>
+            </div>
           </div>
         </div>
 
