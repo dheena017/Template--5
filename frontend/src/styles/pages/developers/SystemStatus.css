@@ -155,7 +155,7 @@
 
 .service-item {
     padding: 1.5rem 2rem;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -227,7 +227,7 @@
 
 .incident-card {
     padding: 2.5rem;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
 }
 
@@ -307,7 +307,7 @@
     padding: 1.1rem 2.25rem;
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     color: var(--text-primary);
     display: flex;

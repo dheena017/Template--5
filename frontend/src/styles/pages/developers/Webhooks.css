@@ -17,7 +17,7 @@
 .lh-head h3 { font-size: 1.15rem; font-family: var(--font-display); margin: 0; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
 
 .hooks-grid { display: flex; flex-direction: column; gap: 1rem; }
-.hook-item { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-radius: 20px; transition: all 0.2s; border: 1px solid rgba(255, 255, 255, 0.04); }
+.hook-item { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-radius: var(--radius-lg); transition: all 0.2s; border: 1px solid rgba(255, 255, 255, 0.04); }
 .hook-item:hover { border-color: var(--primary-color); background: rgba(var(--primary-rgb), 0.03); transform: translateY(-4px); }
 
 .hook-info strong { font-size: 1.15rem; color: #fff; display: block; margin-bottom: 0.75rem; }

@@ -57,7 +57,7 @@
   padding: 0.6rem 1.25rem;
   background: var(--da-card);
   border: 1px solid var(--da-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }

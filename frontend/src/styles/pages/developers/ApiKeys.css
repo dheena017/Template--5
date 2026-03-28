@@ -26,7 +26,7 @@
 .k-row { display: grid; grid-template-columns: 200px 1fr 100px 120px 120px; align-items: center; padding: 1rem 1.5rem; gap: 2rem; }
 .k-row.label-row { border-bottom: 2px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); }
 
-.item-row { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; transition: all 0.2s; }
+.item-row { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-md); transition: all 0.2s; }
 .item-row:hover { border-color: var(--primary-color); background: rgba(var(--primary-rgb), 0.03); }
 
 .k-name strong { display: block; font-size: 1rem; color: #fff; margin-bottom: 0.25rem; }
@@ -65,7 +65,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .create-key-form input {

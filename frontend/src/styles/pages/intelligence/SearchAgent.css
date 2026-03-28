@@ -69,7 +69,7 @@
   align-items: center;
   gap: 1.25rem;
   padding: 1.25rem 2.5rem;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   background: #ffffff;
   border: 1.5px solid rgba(148, 163, 184, 0.2);
   box-shadow: 0 40px 60px -20px rgba(15, 23, 42, 0.12);
@@ -93,7 +93,7 @@
 }
 
 .agent-search-box input::placeholder {
-  color: #94a3b8;
+  color: var(--text-dim);
 }
 
 .agent-send-btn {
@@ -102,7 +102,7 @@
   background: #8b5cf6;
   color: #fff;
   border: none;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,7 +129,7 @@
   background: rgba(148, 163, 184, 0.05);
   border: 1px solid rgba(148, 163, 184, 0.12);
   padding: 0.65rem 1.25rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-weight: 600;
   color: #475569;
@@ -218,7 +218,7 @@
   border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 800;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .summary-text {
@@ -243,7 +243,7 @@
   font-weight: 950;
   text-transform: uppercase;
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 1.25rem;
   letter-spacing: 0.1em;
 }
@@ -259,7 +259,7 @@
 .insight-cluster li {
   padding: 1rem 1.25rem;
   background: rgba(148, 163, 184, 0.05);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 600;
   color: #334155;
@@ -288,7 +288,7 @@
   gap: 0.5rem;
   font-weight: 800;
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--text-dim);
 }
 
 .cit-list {
@@ -302,7 +302,7 @@
   border-radius: 8px;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #64748b;
+  color: var(--text-muted);
   border: 1px solid #e2e8f0;
 }
 
@@ -320,7 +320,7 @@
   background: #ffffff;
   border: 1px solid rgba(148, 163, 184, 0.2);
   padding: 1rem 2rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   font-weight: 800;
   color: #0f172a;
   cursor: pointer;
@@ -341,7 +341,7 @@
 
 .feature-card {
   padding: 2.5rem;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   text-align: center;
   background: #ffffff;
   transition: transform 0.3s ease;

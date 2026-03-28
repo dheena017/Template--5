@@ -101,7 +101,7 @@
     background: linear-gradient(135deg, var(--api-primary), #6366f1);
     color: white;
     border: none;
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     font-weight: 800;
     font-size: 1.05rem;
     display: flex;
@@ -118,7 +118,7 @@
     padding: 1rem 2rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--api-border);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     font-weight: 800;
     font-size: 1.05rem;
     color: white;
@@ -138,7 +138,7 @@
     padding: 0.75rem 1.25rem;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--api-border);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -150,7 +150,7 @@
 /* Terminal Styling */
 .hero-terminal {
     background: #020617;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--api-border);
     box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.7);
     overflow: hidden;
@@ -178,7 +178,7 @@
 .t-dots span:nth-child(2) { background: #ffbd2e; }
 .t-dots span:nth-child(3) { background: #27c93f; }
 
-.t-title { font-size: 0.8rem; font-weight: 700; color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
+.t-title { font-size: 0.8rem; font-weight: 700; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
 .t-lang { font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.1em; }
 
 .terminal-body {
@@ -197,7 +197,7 @@
     display: flex;
     justify-content: space-around;
     padding: 3rem;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     background: var(--api-card);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
@@ -220,7 +220,7 @@
 
 .feature-card {
     padding: 3rem;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     background: var(--api-card);
     border: 1px solid var(--api-border);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -236,7 +236,7 @@
     width: 64px;
     height: 64px;
     background: rgba(255, 255, 255, 0.03);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,7 +258,7 @@
     padding: 2.5rem;
     background: var(--api-card);
     border: 1px solid var(--api-border);
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
 }
 
 .provider-grid {
@@ -270,7 +270,7 @@
 .provider-item {
     border: 1px solid var(--api-border);
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
     display: flex;
     flex-direction: column;
@@ -323,7 +323,7 @@
 
 .provider-empty {
     border: 1px dashed var(--api-border);
-    border-radius: 14px;
+    border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
     color: var(--api-text-muted);
     font-weight: 600;
@@ -359,7 +359,7 @@
     padding: 1.25rem 2rem;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--api-border);
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     transition: all 0.2s;
 }
 
@@ -394,7 +394,7 @@
 }
 
 .cta-left { display: flex; align-items: center; gap: 3rem; }
-.cta-icon-wrap { width: 80px; height: 80px; background: var(--api-primary); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(129, 140, 248, 0.4); }
+.cta-icon-wrap { width: 80px; height: 80px; background: var(--api-primary); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(129, 140, 248, 0.4); }
 
 .cta-left h2 { font-size: 2.5rem; font-weight: 950; margin-bottom: 0.75rem; }
 .cta-left p { color: var(--api-text-muted); font-size: 1.25rem; max-width: 480px; }
@@ -404,7 +404,7 @@
     background: #fff;
     color: #000;
     border: none;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     font-weight: 900;
     font-size: 1.25rem;
     cursor: pointer;
@@ -427,14 +427,14 @@
     padding: 2.5rem;
     background: var(--api-card);
     border: 1px solid var(--api-border);
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     cursor: pointer;
     transition: all 0.3s;
 }
 
 .support-card:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
 
-.s-icon { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--api-border); display: flex; align-items: center; justify-content: center; color: var(--api-primary); }
+.s-icon { width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--api-border); display: flex; align-items: center; justify-content: center; color: var(--api-primary); }
 .support-card strong { display: block; font-size: 1.15rem; margin-bottom: 0.25rem; }
 .support-card span { font-size: 0.9rem; color: var(--api-text-muted); font-weight: 600; }
 

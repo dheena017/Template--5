@@ -112,7 +112,7 @@
 .featured-image {
     position: relative;
     height: 400px;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     overflow: hidden;
 }
 
@@ -186,7 +186,7 @@
     padding: 1rem 2rem;
     background: var(--primary);
     color: white;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     border: none;
     cursor: pointer;
@@ -347,7 +347,7 @@
     height: 80px;
     background: var(--primary-alpha-10);
     color: var(--primary);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -371,7 +371,7 @@
 
 .newsletter-form input {
     padding: 1rem 1.5rem;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
     background: var(--bg-surface);
     color: var(--text-primary);
@@ -383,7 +383,7 @@
     background: var(--primary);
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     cursor: pointer;
     white-space: nowrap;
