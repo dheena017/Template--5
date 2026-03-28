@@ -39,106 +39,6 @@
   padding: 1rem 2rem;
 }
 
-.pdf-category-dropdown {
-  position: relative;
-}
-
-.pdf-dropdown-trigger {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  background: transparent;
-  border: none;
-  color: var(--pdf-text);
-  font-weight: 700;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-  transition: background 0.2s;
-}
-
-.pdf-dropdown-trigger:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.trigger-content {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-}
-
-.current-label {
-  color: var(--pdf-muted);
-  font-weight: 600;
-}
-
-.current-value {
-  color: #fff;
-}
-
-.dropdown-chevron {
-  color: var(--pdf-muted);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dropdown-chevron.rotate {
-  transform: rotate(180deg);
-}
-
-.pdf-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 1rem);
-  left: 0;
-  width: 280px;
-  background: #1e293b;
-  border: 1px solid var(--pdf-border);
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  padding: 0.75rem;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  animation: dropdownEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes dropdownEnter {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.pdf-dropdown-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  background: transparent;
-  border: none;
-  color: var(--pdf-muted);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-}
-
-.pdf-dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-}
-
-.pdf-dropdown-item.active {
-  background: var(--pdf-primary);
-  color: #fff;
-}
-
-.pdf-dropdown-item small {
-  background: rgba(0, 0, 0, 0.2);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-}
 
 /* Search Box */
 .pdf-pages-search {
@@ -217,7 +117,7 @@
   padding: 1.25rem;
   background: var(--pdf-card);
   border: 1px solid var(--pdf-border);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   text-align: left;
@@ -233,7 +133,7 @@
 .pdf-page-icon {
   width: 52px;
   height: 52px;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,14 +159,14 @@
   font-size: 1.2rem;
   font-weight: 600;
   background: var(--pdf-header);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   border: 1px dashed var(--pdf-border);
 }
 
 @media (max-width: 768px) {
   .pdf-pages-header {
     flex-direction: column;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     padding: 1.5rem;
     align-items: stretch;
   }

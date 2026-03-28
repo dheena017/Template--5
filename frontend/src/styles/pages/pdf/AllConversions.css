@@ -2,7 +2,7 @@
   min-height: 100vh;
   padding: 2rem;
   background: #070b14;
-  color: #f8fafc;
+  color: var(--text-main);
 }
 
 .all-conversions-main {
@@ -18,7 +18,7 @@
 
 .all-conversions-header p {
   margin: 0.35rem 0 0;
-  color: #94a3b8;
+  color: var(--text-dim);
 }
 
 .all-conversions-toolbar {
@@ -32,7 +32,7 @@
   display: flex;
   gap: 0.55rem;
   border: 1px solid #334155;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.65rem 0.85rem;
   background: #0f172a;
 }
@@ -59,7 +59,7 @@
 .all-conversions-list,
 .all-conversions-panel {
   border: 1px solid #334155;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   background: #0f172a;
 }
 
@@ -115,7 +115,7 @@
 
 .all-conversions-panel .engine {
   margin: 0;
-  color: #94a3b8;
+  color: var(--text-dim);
 }
 
 .support-row {
@@ -141,7 +141,7 @@
   border-radius: 10px;
   padding: 0.55rem 0.8rem;
   background: #1e293b;
-  color: #f8fafc;
+  color: var(--text-main);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -154,9 +154,9 @@
 
 .all-conversions-empty {
   border: 1px dashed #334155;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 1.2rem;
-  color: #94a3b8;
+  color: var(--text-dim);
 }
 
 .spin {
