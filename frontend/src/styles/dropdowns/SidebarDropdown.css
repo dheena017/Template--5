@@ -1,0 +1,49 @@
+/* --- SIDEBAR DROPDOWN STYLES --- */
+
+.dropdown-trigger-aura {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdown-arrow-aura {
+  color: var(--text-muted);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dropdown-trigger-aura.open .dropdown-arrow-aura {
+  color: var(--accent-primary);
+  transform: rotate(180deg);
+}
+
+.nav-sub-list-aura {
+  list-style: none;
+  padding: 0 0 0 16px;
+  margin: 4px 0 12px 12px;
+  border-left: 1px solid var(--border-strong);
+}
+
+.sub-item-aura {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  margin-bottom: 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-dim);
+  gap: 12px;
+  font-size: 13px;
+}
+
+.sub-item-aura:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: var(--text-main);
+  padding-left: 18px;
+}
+
+.sub-item-aura.active {
+  background-color: rgba(139, 92, 246, 0.08);
+  color: var(--accent-primary);
+  font-weight: 600;
+}

@@ -3,10 +3,12 @@ export { default as Dashboard } from './dashboards/Dashboard'
 export { default as Profile } from './Profile'
 export { default as Login } from './Login'
 export { default as Register } from './Register'
-export { default as Settings } from './Settings'
-export { default as SettingsHub } from './dashboards/SettingsHub'
 export { default as GenericDashboard } from './dashboards/GenericDashboard'
 export { default as HubDashboard } from './dashboards/HubDashboard'
+export { default as UserDashboard } from './dashboards/UserDashboard'
+export * from './dashboards/CategoryDashboards'
+export { default as SettingsHub } from './dashboards/SettingsHub'
+export * from './settings'
 
 // Primary Category Star Exports (The 10 Sections)
 export * from './image'
@@ -22,4 +24,4 @@ export * from './about-us'
 export { default as AIOrchestrator } from './studio/AIOrchestrator'
 
 // Subsection Tabs & Layouts
-export * as ProfileTabs from './profile/tabs' 
+export * as ProfileTabs from './profile_sub/tabs' 

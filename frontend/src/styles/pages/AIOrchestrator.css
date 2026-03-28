@@ -61,8 +61,8 @@
 
 /* Typography & Colors */
 .text-white { color: #fff; }
-.text-slate-400 { color: #94a3b8; }
-.text-slate-500 { color: #64748b; }
+.text-slate-400 { color: var(--text-dim); }
+.text-slate-500 { color: var(--text-muted); }
 .text-indigo-400 { color: #818cf8; }
 .text-emerald-400 { color: #34d399; }
 .text-rose-400 { color: #fb7185; }

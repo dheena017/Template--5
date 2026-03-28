@@ -1,0 +1,12 @@
+export { default as AboutSettings } from './AboutSettings';
+export { default as AvatarSettings } from './AvatarSettings';
+export { default as DevSettings } from './DevSettings';
+export { default as FileSettings } from './FileSettings';
+export { default as GeneralSettings } from './GeneralSettings';
+export { default as ImageSettings } from './ImageSettings';
+export { default as PDFSettings } from './PDFSettings';
+export { default as SocialSettings } from './SocialSettings';
+export { default as SpeechSettings } from './SpeechSettings';
+export { default as StudioSettings } from './StudioSettings';
+export { default as TextSettings } from './TextSettings';
+export * from './SettingWrappers';

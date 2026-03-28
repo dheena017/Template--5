@@ -87,9 +87,10 @@ function PDFTools({ initialView }) {
   };
 
   const getTitle = () => {
-      if (initialView === 'merge') return 'Merge PDF Files';
-      if (initialView === 'compress') return 'Compress PDF File';
-      if (initialView === 'extract') return 'Extract Text from PDF';
+      if (initialView === 'merge' || initialView === 'organize-pdf') return 'Merge PDF Files';
+      if (initialView === 'compress' || initialView === 'optimize-pdf') return 'Compress PDF File';
+      if (initialView === 'extract' || initialView === 'pdf-intelligence') return 'Extract Text from PDF';
+      if (initialView === 'edit-pdf') return 'Edit PDF Document';
       return 'PDF Tools';
   }
 
@@ -119,7 +120,7 @@ function PDFTools({ initialView }) {
       
       {error && <p style={{ color: '#ef4444', background: '#fef2f2', padding: '12px', borderRadius: '8px', marginBottom: '24px' }}>{error}</p>}
       
-      {initialView === 'merge' && (
+      {(initialView === 'merge' || initialView === 'organize-pdf') && (
         <PDFMerge 
           onFilesChange={handleMergeFilesChange}
           onMerge={handleMerge}
@@ -129,7 +130,7 @@ function PDFTools({ initialView }) {
         />
       )}
 
-      {initialView === 'compress' && (
+      {(initialView === 'compress' || initialView === 'optimize-pdf') && (
         <PDFCompress 
           onCompress={handleCompress}
           file={file}
@@ -138,7 +139,7 @@ function PDFTools({ initialView }) {
         />
       )}
 
-      {initialView === 'extract' && (
+      {(initialView === 'extract' || initialView === 'pdf-intelligence') && (
         <PDFExtractText 
           onExtractText={handleExtractText}
           file={file}

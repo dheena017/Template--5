@@ -388,7 +388,7 @@
   padding: 0.4rem 0.55rem;
   border-radius: 8px;
   background: #0f172a;
-  color: #f8fafc;
+  color: var(--text-main);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -403,7 +403,7 @@
   margin: 1.5rem 0;
   padding: 1.25rem;
   background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -463,7 +463,7 @@
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   background: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(100, 116, 139, 0.35);

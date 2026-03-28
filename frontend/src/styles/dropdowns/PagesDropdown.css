@@ -1,0 +1,71 @@
+/* --- PAGES-SPECIFIC DROPDOWN STYLES --- */
+
+/* PDF Category Dropdown */
+.pdf-category-dropdown {
+  position: relative;
+}
+
+.pdf-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--pdf-text, #fff);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+
+.pdf-dropdown-trigger:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pdf-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 0;
+  width: 280px;
+  background: #1e293b;
+  border: 1px solid var(--pdf-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  padding: 0.75rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  animation: dropdownEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pdf-dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: var(--pdf-muted, #94a3b8);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.pdf-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.pdf-dropdown-item.active {
+  background: var(--pdf-primary, #ef4444);
+  color: #fff;
+}

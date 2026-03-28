@@ -1,3 +1,4 @@
+@import "./Dropdown.css";
 /* Specific component styles for App, mostly reset or global helpers */
 .App {
   width: 100%;
@@ -9,7 +10,7 @@
 button {
   font-family: var(--font-main);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -179,13 +180,13 @@ button {
 .btn-lg {
   padding: 1.125rem 2.5rem;
   font-size: 1.125rem;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
 }
 
 .btn-md {
   padding: 0.875rem 1.75rem;
   font-size: 1rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .btn-sm {
@@ -229,7 +230,7 @@ button {
 .btn-icon-lg {
   width: 52px;
   height: 52px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 /* Rounded Pill Button */
@@ -745,23 +746,6 @@ main,
   animation: modal-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dropdown/Menu Entry */
-@keyframes dropdown-enter {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dropdown,
-.menu,
-[role="menu"] {
-  animation: dropdown-enter 0.3s ease-out;
-}
 
 /* Toast/Notification Entry */
 @keyframes toast-enter {

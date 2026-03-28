@@ -1,9 +1,11 @@
+/* --- PDF Tool Actions (Dark Aura) --- */
+
 .pdf-tool-section {
-  background: #fff;
-  border: 1px solid #f1f1f1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
   padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   margin-bottom: 24px;
 }
 
@@ -12,7 +14,7 @@
   margin-bottom: 24px;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #111;
+  color: var(--text-main);
 }
 
 .tool-controls {
@@ -24,29 +26,31 @@
 
 .selected-files-list {
   margin-top: 24px;
-  background-color: #f9f9fb;
-  border-radius: 12px;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
   padding: 16px;
+  border: 1px solid var(--border-subtle);
 }
 
 .selected-files-list p {
   font-weight: 600;
   font-size: 0.875rem;
   margin-bottom: 8px;
+  color: var(--text-main);
 }
 
 .selected-files-list ul {
   padding-left: 20px;
   margin: 0;
   font-size: 0.8125rem;
-  color: #555;
+  color: var(--text-dim);
   list-style: disc;
 }
 
 .result-container {
   margin-top: 32px;
   padding-top: 32px;
-  border-top: 1px dashed #e0e0e0;
+  border-top: 1px dashed var(--border-strong);
 }
 
 .text-result-container {
@@ -57,17 +61,17 @@
 }
 
 .text-preview {
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-strong);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   max-height: 300px;
   overflow-y: auto;
   font-family: inherit;
   font-size: 0.875rem;
   line-height: 1.6;
   white-space: pre-wrap;
-  color: #333;
+  color: var(--text-main);
 }
 
 .preview-frame {
@@ -77,4 +81,9 @@
 /* Custom file upload styling hides the standard input */
 .custom-file-upload {
     display: inline-block;
+    cursor: pointer;
+}
+
+input[type="file"]#merge-upload {
+    display: none !important;
 }

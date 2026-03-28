@@ -82,7 +82,7 @@
   height: 56px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;

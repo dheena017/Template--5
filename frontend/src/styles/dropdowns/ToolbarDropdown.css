@@ -1,0 +1,76 @@
+/* --- TOOLBAR DROPDOWN STYLES (DARK AURA) --- */
+
+/* Search Results Dropdown - used in Toolbar.jsx search container */
+.search-results-dropdown-aura {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 12px;
+  z-index: 1200;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: dropdown-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Menu headers used in profile menu, etc. */
+.menu-header {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 8px;
+}
+
+.menu-header strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.menu-header span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+
+/* Profile menu specific items */
+.menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-item:hover {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--text-main);
+  transform: translateX(4px);
+}
+
+.menu-item.logout {
+    color: #ef4444;
+}
+
+.menu-item.logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}

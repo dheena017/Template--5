@@ -6,6 +6,13 @@ export { default as ConvertFromPDFPage } from './ConvertFromPDF.jsx'
 export { default as EditPDF } from './EditPDF.jsx'
 export { default as PDFSecurity } from './PDFSecurity.jsx'
 export { default as PDFIntelligence } from './PDFIntelligence.jsx'
+export { default as MergePDF } from './MergePDF.jsx'
+export { default as SplitPDF } from './SplitPDF.jsx'
+export { default as RemovePages } from './RemovePages.jsx'
+export { default as ExtractPages } from './ExtractPages.jsx'
+export { default as ScanToPDF } from './ScanToPDF.jsx'
+export { default as OrganizePDFTool } from './OrganizePDFTool.jsx'
+export { default as PDFSelectDashboard } from './PDFSelectDashboard.jsx'
 
 // Folder-based sub-pages
 export { default as PopularConversions } from './PopularConversions/index'

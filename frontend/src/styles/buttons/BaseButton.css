@@ -1,0 +1,78 @@
+/* --- BASE BUTTON STYLES --- */
+
+.aura-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  outline: none;
+  overflow: hidden;
+  text-transform: capitalize;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+/* Sizes */
+.aura-btn-sm { padding: 8px 16px; font-size: 13px; }
+.aura-btn-md { padding: 12px 24px; font-size: 14px; }
+.aura-btn-lg { padding: 16px 32px; font-size: 16px; }
+
+/* Effects */
+.aura-btn-shine {
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.aura-btn:hover .aura-btn-shine { left: 200%; }
+
+.aura-btn-content { position: relative; z-index: 1; }
+
+.aura-btn:active { transform: scale(0.96); }
+
+/* Full width support */
+.aura-btn-fullwidth {
+  width: 100%;
+  display: flex;
+}
+
+/* Icon support */
+.aura-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.aura-btn-icon-left { margin-right: 8px; }
+.aura-btn-icon-right { margin-left: 8px; }
+
+/* Loader (spinner) */
+.aura-btn-loader {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-top: 2px solid #a3a3a3;
+  border-radius: 50%;
+  animation: aura-btn-spin 0.7s linear infinite;
+  margin-left: 10px;
+  z-index: 2;
+}
+@keyframes aura-btn-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Disabled state */
+.aura-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
