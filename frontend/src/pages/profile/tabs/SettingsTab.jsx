@@ -1,5 +1,6 @@
 import React from 'react'
-import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type } from 'lucide-react'
+import '../../../styles/pages/profile/Settings.css'
+import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type, Sparkles, ExternalLink, Zap, RotateCcw, Github, Globe, Mail } from 'lucide-react'
 
 const SettingsTab = ({
   theme,
@@ -12,7 +13,17 @@ const SettingsTab = ({
   setBorderRadius,
   glassStrength,
   setGlassStrength,
-  setToast
+  animationsEnabled,
+  setAnimationsEnabled,
+  neonGlows,
+  setNeonGlows,
+  noiseOverlay,
+  setNoiseOverlay,
+  auraBackground,
+  setAuraBackground,
+  setToast,
+  profileDraft,
+  handleDraftChange
 }) => {
   const accents = ['#646cff', '#2ed573', '#ff4757', '#ffa502', '#ae1af7', '#00d2d3']
   const fonts = [
@@ -100,22 +111,135 @@ const SettingsTab = ({
         </section>
 
         <section className="premium-card">
-          <h3>Advanced Customization</h3>
+          <div className="section-head">
+            <h3>Advanced Customization</h3>
+              <div className="flex items-center gap-2 text-[10px] text-muted-secondary uppercase tracking-widest font-bold">
+                <Sparkles size={12} className="text-secondary" /> Cinematic Engine
+              </div>
+            </div>
+          <div className="settings-stack advanced-controls">
+            <div className="setting-row-flex">
+              <div className="info">
+                <label><Zap size={14} className="text-secondary" /> Fluid Animations <span className="setting-badge motion">Motion</span></label>
+                <p>Silky transitions for page fades and component entries. Disabling this optimizes performance on low-power devices.</p>
+              </div>
+              <div 
+                className={`toggle-switch ${animationsEnabled ? 'on' : 'off'}`}
+                onClick={() => {
+                  setAnimationsEnabled(!animationsEnabled);
+                  setToast?.(!animationsEnabled ? 'Animations active' : 'Performance mode active');
+                }}
+              >
+                <span className="toggle-text-on">ON</span>
+                <span className="toggle-text-off">OFF</span>
+                <div className="toggle-thumb" />
+              </div>
+            </div>
+            
+            <div className="setting-row-flex">
+              <div className="info">
+                <label><Sparkles size={14} className="text-accent" /> Aura Neon Glow <span className="setting-badge visual">Visual</span></label>
+                <p>Enables ultra-soft light bloom and vibrant shadows for cards. Disabling this creates a clean, flat aesthetic.</p>
+              </div>
+              <div 
+                className={`toggle-switch ${neonGlows ? 'on' : 'off'}`}
+                onClick={() => {
+                  setNeonGlows(!neonGlows);
+                  setToast?.(!neonGlows ? 'Neon glows enabled' : 'Clean aesthetic active');
+                }}
+              >
+                <span className="toggle-text-on">ON</span>
+                <span className="toggle-text-off">OFF</span>
+                <div className="toggle-thumb" />
+              </div>
+            </div>
+
+            <div className="setting-row-flex">
+              <div className="info">
+                <label><Palette size={14} className="text-muted" /> Organic Noise Overlay <span className="setting-badge texture">Texture</span></label>
+                <p>Applies a subtle film-grain texture to the interface, giving surfaces a professional, physical, "analog" studio feel.</p>
+              </div>
+              <div 
+                className={`toggle-switch ${noiseOverlay ? 'on' : 'off'}`}
+                onClick={() => {
+                  setNoiseOverlay(!noiseOverlay);
+                  setToast?.(!noiseOverlay ? 'Grain texture applied' : 'Solid colors restored');
+                }}
+              >
+                <span className="toggle-text-on">ON</span>
+                <span className="toggle-text-off">OFF</span>
+                <div className="toggle-thumb" />
+              </div>
+            </div>
+
+            <div className="setting-row-flex">
+              <div className="info">
+                <label><Maximize size={14} className="text-secondary" /> Cinematic Backdrop <span className="setting-badge atmosphere">Atmosphere</span></label>
+                <p>Activates the multi-axis "Aura Orbs" in the background. Disabling this clears the visual field for focused creative tasks.</p>
+              </div>
+              <div 
+                className={`toggle-switch ${auraBackground ? 'on' : 'off'}`}
+                onClick={() => {
+                  setAuraBackground(!auraBackground);
+                  setToast?.(!auraBackground ? 'Atmosphere enabled' : 'Clean background active');
+                }}
+              >
+                <span className="toggle-text-on">ON</span>
+                <span className="toggle-text-off">OFF</span>
+                <div className="toggle-thumb" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="premium-card">
+          <div className="section-head">
+            <h3>Digital Identity</h3>
+            <div className="flex items-center gap-2 text-[10px] text-muted-secondary uppercase tracking-widest font-bold">
+              <Globe size={12} className="text-secondary" /> Network Hub
+            </div>
+          </div>
           <div className="settings-stack">
-            <div className="setting-row-flex">
-              <div className="info"><label>Animations</label><p>Smooth transitions site-wide.</p></div>
-              <input type="checkbox" defaultChecked />
-            </div>
-            <div className="setting-row-flex">
-              <div className="info"><label>Compact Density</label><p>Higher information density for power users.</p></div>
-              <input type="checkbox" defaultChecked />
-            </div>
             <div className="setting-block">
-              <label><LayoutGrid size={14} /> Presets</label>
-              <div className="pills-container">
-                {['Minimal', 'Creator', 'Studio'].map((preset) => (
-                  <button key={preset} className="pill" onClick={() => applyPreset(preset)}>{preset}</button>
-                ))}
+              <label><Github size={14} /> GitHub Identifier</label>
+              <div className="flex gap-3">
+                <input 
+                  className="premium-input flex-1" 
+                  placeholder="github.com/yourname" 
+                  value={profileDraft.github_url || ''} 
+                  onChange={(e) => handleDraftChange('github_url', e.target.value)} 
+                />
+                <button className="action-icon-btn" onClick={() => window.open(profileDraft.github_url, '_blank')}>
+                  <ExternalLink size={16} />
+                </button>
+              </div>
+            </div>
+            <div className="setting-block mt-4">
+              <label><Globe size={14} /> Portfolio Showcase</label>
+              <div className="flex gap-3">
+                <input 
+                  className="premium-input flex-1" 
+                  placeholder="https://yourportfolio.com" 
+                  value={profileDraft.portfolio_url || ''} 
+                  onChange={(e) => handleDraftChange('portfolio_url', e.target.value)} 
+                />
+                <button className="action-icon-btn" onClick={() => window.open(profileDraft.portfolio_url, '_blank')}>
+                  <ExternalLink size={16} />
+                </button>
+              </div>
+            </div>
+            <div className="setting-block mt-4">
+              <label><Mail size={14} /> Contact Ecosystem Email</label>
+              <div className="flex gap-3">
+                <input 
+                  className="premium-input flex-1" 
+                  placeholder="email@example.com" 
+                  value={profileDraft.email || ''} 
+                  onChange={(e) => handleDraftChange('email', e.target.value)} 
+                />
+                <button className="action-icon-btn" onClick={() => window.open(`mailto:${profileDraft.email}`, '_blank')}>
+                  <ExternalLink size={16} />
+                </button>
               </div>
             </div>
           </div>
@@ -136,8 +260,16 @@ const SettingsTab = ({
         </section>
 
         <section className="premium-card">
-          <div className="info"><label>Reset All</label><p>Restore system defaults.</p></div>
-          <button className="danger-btn" onClick={() => window.location.reload()}>Restore Defaults</button>
+          <div className="section-head mb-4">
+            <div className="info">
+              <label className="text-danger flex items-center gap-2">Danger Zone</label>
+              <h3>Reset All</h3>
+              <p className="text-muted text-sm mt-1">Restore all platform settings to system defaults. This action is permanent.</p>
+            </div>
+          </div>
+          <button className="danger-btn mt-4" onClick={() => window.location.reload()}>
+            <RotateCcw size={16} /> Restore Defaults
+          </button>
         </section>
       </div>
     </div>
