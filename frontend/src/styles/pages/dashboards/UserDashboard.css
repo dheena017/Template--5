@@ -1,42 +1,63 @@
 .user-dashboard-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   width: 100%;
   background-color: var(--bg-primary);
   font-family: var(--font-main);
   animation: page-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  gap: 2rem;
-  padding: 1.5rem;
+  padding: 6rem 3rem;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Redefined Layout without Redundant Sidebar */
-.ud-main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
+/* Studio Aura Background Elements */
+.user-dashboard-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
 }
 
+/* Studio Grain Texture Overlay */
+.user-dashboard-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.012;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 5;
+}
+
+/* Header Studio Upgrade */
 .ud-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  margin-bottom: 5rem;
+  position: relative;
+  z-index: 10;
 }
 
 .ud-header h1 {
-  font-size: 2.5rem;
-  font-weight: 900;
-  letter-spacing: -1.5px;
-  background: var(--accent-gradient);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 1000;
+  letter-spacing: -0.05em;
+  background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
+  line-height: 1;
 }
 
 .ud-upload-btn {
@@ -170,4 +191,78 @@
   flex-direction: column;
   gap: 1.5rem;
   align-items: center;
+}
+
+/* SYSTEM PULSE ANIMATED WIDGET */
+.system-pulse-strip {
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+}
+
+.pulse-dot-aura {
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
+
+.pulse-dot-aura .dot {
+  width: 100%;
+  height: 100%;
+  background: #10b981;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.pulse-dot-aura .ping {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #10b981;
+  border-radius: 50%;
+  z-index: 1;
+  animation: aura-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes aura-ping {
+  75%, 100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+.pulse-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pulse-metric .label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.pulse-metric .value {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.spinner-center {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255,255,255,0.05);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: ud-spin 1s linear infinite;
+}
+
+@keyframes ud-spin {
+  to { transform: rotate(360deg); }
 }
