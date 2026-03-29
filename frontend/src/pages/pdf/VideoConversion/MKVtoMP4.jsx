@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const MKVtoMP4 = () => <OrganizePDF forcedTool="MKV to MP4" />
-export default MKVtoMP4
+import React from 'react';
+import VideoConversionTool from './VideoConversionTool';
+
+const MKVtoMP4 = () => <VideoConversionTool fromFormat='MKV' toFormat='MP4' />;
+
+export default MKVtoMP4;
