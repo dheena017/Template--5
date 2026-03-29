@@ -1,0 +1,78 @@
+.select-step-container {
+    width: 100%;
+    position: relative;
+}
+
+.upload-dropzone {
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(255, 255, 255, 0.01);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-dropzone:hover {
+    border-color: var(--accent-primary);
+    background: rgba(var(--accent-rgb), 0.05);
+    transform: translateY(-2px);
+}
+
+.upload-dropzone.drag-active {
+    border-color: var(--accent-primary);
+    background: rgba(var(--accent-rgb), 0.1);
+    transform: scale(1.01);
+}
+
+.upload-icon-wrapper {
+    width: 6rem;
+    height: 6rem;
+    background: rgba(var(--accent-rgb), 0.1);
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    transition: all 0.5s var(--transition-bounce);
+}
+
+.upload-dropzone:hover .upload-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(var(--accent-rgb), 0.2);
+}
+
+.feature-pill-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    opacity: 0.4;
+    margin-top: 3rem;
+}
+
+.feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feature-pill span {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 21, 29, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    border-radius: inherit;
+}
