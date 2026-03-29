@@ -1,0 +1,42 @@
+[
+  {
+    "id": "heic-to-jpeg",
+    "name": "HEIC to JPEG",
+    "desc": "Convert HEIC images to JPEG format"
+  },
+  {
+    "id": "heic-to-jpg",
+    "name": "HEIC to JPG",
+    "desc": "Convert HEIC images to JPG format"
+  },
+  {
+    "id": "heic-to-png",
+    "name": "HEIC to PNG",
+    "desc": "Convert HEIC images to PNG format"
+  },
+  {
+    "id": "heic-to-webp",
+    "name": "HEIC to WEBP",
+    "desc": "Convert HEIC images to WEBP format"
+  },
+  {
+    "id": "svg-to-jpeg",
+    "name": "SVG to JPEG",
+    "desc": "Convert SVG images to JPEG format"
+  },
+  {
+    "id": "svg-to-jpg",
+    "name": "SVG to JPG",
+    "desc": "Convert SVG images to JPG format"
+  },
+  {
+    "id": "svg-to-png",
+    "name": "SVG to PNG",
+    "desc": "Convert SVG images to PNG format"
+  },
+  {
+    "id": "svg-to-webp",
+    "name": "SVG to WEBP",
+    "desc": "Convert SVG images to WEBP format"
+  }
+]
