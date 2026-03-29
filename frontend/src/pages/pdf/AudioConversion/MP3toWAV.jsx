@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const MP3toWAV = () => <OrganizePDF forcedTool="MP3 to WAV" />
-export default MP3toWAV
+import React from 'react';
+import AudioConversionTool from './AudioConversionTool';
+
+const MP3toWAV = () => <AudioConversionTool fromFormat='MP3' toFormat='WAV' />;
+
+export default MP3toWAV;
