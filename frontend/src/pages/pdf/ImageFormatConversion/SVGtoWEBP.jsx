@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const SVGtoWEBP = () => <OrganizePDF forcedTool="SVG to WEBP" />
-export default SVGtoWEBP
+import React from 'react';
+import ImageFormatConversionTool from './ImageFormatConversionTool';
+
+const SVGtoWEBP = () => <ImageFormatConversionTool fromFormat="SVG" toFormat="WEBP" />;
+
+export default SVGtoWEBP;
