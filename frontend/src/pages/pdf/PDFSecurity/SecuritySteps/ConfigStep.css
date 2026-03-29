@@ -1,0 +1,22 @@
+.config-step-container {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.quality-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.quality-btn:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.quality-btn.active {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2) inset;
+}
+
+.convert-btn:not(:disabled):hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}

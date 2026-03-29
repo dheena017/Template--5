@@ -1,0 +1,260 @@
+/* AudioCard.css - Premium Card Styles for Audio Conversion Pages */
+
+/* Base Container Styling */
+.audio-conversion-card {
+    background: rgba(15, 23, 42, 0.75);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 2.5rem;
+    padding: 3rem;
+    box-shadow: 
+        0 40px 100px -20px rgba(0, 0, 0, 0.7),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.5s ease,
+                border-color 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.audio-conversion-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.audio-conversion-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 
+        0 30px 60px -15px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+.audio-conversion-card:hover::before {
+    opacity: 1;
+}
+
+/* File Info Header Section */
+.audio-file-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.audio-icon-container {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+}
+
+.audio-icon-container.success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    animation: iconPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes iconPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.1), inset 0 4px 12px rgba(0, 0, 0, 0.5); transform: scale(1); }
+    50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.3), inset 0 4px 12px rgba(0, 0, 0, 0.5); transform: scale(1.04); }
+}
+
+.audio-icon-glow {
+    position: absolute;
+    inset: 0;
+    filter: blur(12px);
+    opacity: 0.3;
+    border-radius: inherit;
+}
+
+/* Quality Selection Buttons within the Card */
+.quality-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.quality-option-card {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: left;
+    position: relative;
+}
+
+.quality-option-card:hover {
+    background: rgba(30, 41, 59, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.quality-option-card.active {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: #8b5cf6;
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.15);
+}
+
+.quality-option-card .icon-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.quality-option-card.active .icon-circle {
+    background: #8b5cf6;
+    color: white;
+}
+
+/* Metadata Labels */
+.audio-meta-badge {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.4rem 0.8rem;
+    border-radius: 99rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Progress Status in Card */
+.audio-process-status {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.audio-progress-bar-bg {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.75rem;
+}
+
+.audio-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    transition: width 0.3s ease;
+}
+
+/* Premium Button Refinements for Aura */
+.btn-premium-aura {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    font-weight: 800 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-premium-aura::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: rotate(35deg);
+    transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-premium-aura:hover {
+    transform: translateY(-4px);
+    filter: brightness(1.15);
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-premium-aura:hover::after {
+    left: 150%;
+}
+
+.btn-premium-aura:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Metadata Labels */
+.audio-meta-badge {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.45rem 0.9rem;
+    border-radius: 99rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Success Inner File Box */
+.aura-card-inner.success-file-box {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 1.5rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.6) !important;
+    padding: 1.5rem 2rem !important;
+    margin: 2rem 0 !important;
+}
+
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.audio-conversion-card {
+    animation: cardEntrance 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .audio-conversion-card {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+    }
+    .quality-card-grid {
+        grid-template-columns: 1fr;
+    }
+}

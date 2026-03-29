@@ -1,0 +1,270 @@
+.security-aura-upload {
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.security-drop-area {
+    border: 2px dashed rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.02);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.security-drop-area:hover, .security-drop-area.drag-active {
+    border-color: rgba(16, 185, 129, 0.8);
+    background: rgba(16, 185, 129, 0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1);
+}
+
+.security-upload-visual {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.security-glow-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, transparent 70%);
+    animation: pulseGlow 3s infinite alternate;
+}
+
+.security-upload-icon-main {
+    color: #10b981;
+    z-index: 2;
+}
+
+.security-file-icon-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    background: #1e293b;
+    border-radius: 50%;
+    padding: 4px;
+    z-index: 3;
+    border: 2px solid #0f172a;
+}
+
+.security-drop-area h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.security-drop-area p {
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+.security-browse-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.security-browse-btn:hover {
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.security-format-badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.security-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Config & Result Steps */
+.security-file-summary-card, .security-settings-panel, .security-result-file-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.security-file-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.security-file-icon {
+    color: #10b981;
+}
+
+.security-file-details h4 {
+    color: white;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.security-file-details p {
+    color: #94a3b8;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.security-change-file-btn {
+    margin-left: auto;
+    background: transparent;
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.security-change-file-btn:hover {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.security-settings-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #10b981;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 12px;
+}
+
+.security-settings-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.security-start-process-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.security-start-process-btn:hover {
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    transform: translateY(-2px);
+}
+
+.security-processing-status {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.security-progress-bar-container {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.security-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #34d399, #10b981);
+    transition: width 0.3s ease;
+}
+
+.security-progress-text {
+    color: #6ee7b7;
+    font-weight: 600;
+    animation: pulseText 1.5s infinite;
+}
+
+.security-result-file-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02));
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.security-download-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #10b981;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.security-download-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.security-success-icon-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.security-success-icon {
+    color: #10b981;
+    z-index: 2;
+}
+
+.security-success-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.5) 0%, transparent 70%);
+    animation: successPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.security-success-message {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+@keyframes pulseGlow {
+    from { transform: scale(0.9); opacity: 0.5; }
+    to { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes pulseText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes successPulse {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
