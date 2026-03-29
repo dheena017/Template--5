@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const PDFEnglishToChinese = () => <OrganizePDF forcedTool="PDF English to Chinese" />
-export default PDFEnglishToChinese
+import React from 'react';
+import PDFTranslationTool from './PDFTranslationTool';
+
+const PDFEnglishToChinese = () => <PDFTranslationTool fromLang="English" toLang="Chinese" />;
+
+export default PDFEnglishToChinese;
