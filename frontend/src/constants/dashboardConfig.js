@@ -7,7 +7,8 @@ import {
   Globe, Code2, Key, Webhook,
   History, Music, Video, Star, Users, CheckCircle2,
   Box, Eye, Layers, Combine, Split,
-  Play, Clock, Download, User
+  Play, Clock, Download, User, Trash2, RotateCw, 
+  Hash, Lock, Unlock, PenTool, EyeOff
 } from 'lucide-react';
 
 export const DASHBOARD_CONFIG = {
@@ -246,6 +247,223 @@ export const DASHBOARD_CONFIG = {
     recentItems: [
       { id: 1, name: 'Dheena v.', specs: 'Updated Root Access', status: 'Admin' },
       { id: 2, name: 'Alex Rover', specs: 'Joined Workspace', status: 'Editor' }
+    ]
+  },
+  studio: {
+    title: 'Creative Studio',
+    subtitle: 'Full-suite production orchestration and batch processing.',
+    color: '#a855f7',
+    rgb: '168, 85, 247',
+    actionText: 'New Project',
+    actionPath: '/ai-orchestrator',
+    icon: React.createElement(Clapperboard, { size: 24 }),
+    groupLabel: 'Studio Engines',
+    badge: 'Production',
+    version: 'v1.2',
+    recentHeader: 'Studio Projects',
+    recentCols: ['Project', 'Specs', 'Status', 'Actions'],
+    stats: [
+      { label: 'Render Time', value: '1.2h', sub: 'Optimized', subColor: '#10b981', subIcon: React.createElement(Zap, { size: 12 }) },
+      { label: 'Projects', value: '25', sub: 'Active', subColor: '#7c3aed', subIcon: React.createElement(Activity, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'AI Orchestrator', desc: 'Automated multi-track video generation.', path: '/ai-orchestrator', icon: React.createElement(Layers, { size: 20 }) },
+      { name: 'Video Highlights', desc: 'Extract viral moments with AI analytics.', path: '/highlights', icon: React.createElement(Star, { size: 20 }) },
+      { name: 'Face Swap AI', desc: 'Realistic identity migration in video.', path: '/face-swap-ai', icon: React.createElement(User, { size: 20 }) }
+    ],
+    recentItems: [
+      { id: 1, name: 'Cinematic Reel #1', specs: '4K • 60fps', status: 'Completed' },
+      { id: 2, name: 'Batch Interview Set', specs: '1080p • 30fps', status: 'Processing' }
+    ]
+  },
+  files: {
+    title: 'Asset Library',
+    subtitle: 'Universal file storage and document organization.',
+    color: '#64748b',
+    rgb: '100, 116, 139',
+    actionText: 'Upload Assets',
+    actionPath: '/files',
+    icon: React.createElement(HardDrive, { size: 24 }),
+    groupLabel: 'Storage Nodes',
+    badge: 'Unlimited',
+    version: 'v3.0',
+    recentHeader: 'Library History',
+    recentCols: ['Asset', 'Size', 'Status', 'Actions'],
+    stats: [
+      { label: 'Total Files', value: '542', sub: 'Healthy', subColor: '#10b981', subIcon: React.createElement(CheckCircle2, { size: 12 }) },
+      { label: 'Storage', value: '1.2TB', sub: 'Cloud', subColor: '#0ea5e9', subIcon: React.createElement(Globe, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Library', desc: 'Manage and search your global asset list.', path: '/files', icon: React.createElement(HardDrive, { size: 20 }) },
+      { name: 'Productions', desc: 'Active workspace for ongoing projects.', path: '/productions', icon: React.createElement(Box, { size: 20 }) }
+    ],
+    recentItems: [
+      { id: 1, name: 'Raw_Video_Archive.zip', specs: '4.5 GB', status: 'Synced' },
+      { id: 2, name: 'Project_Alpha_Docs', specs: '240 MB', status: 'Healthy' }
+    ]
+  },
+  resources: {
+    title: 'Resources & Support',
+    subtitle: 'Documentation, community, and billing management.',
+    color: '#334155',
+    rgb: '51, 65, 85',
+    actionText: 'Browse Docs',
+    actionPath: '/docs',
+    icon: React.createElement(Info, { size: 24 }),
+    groupLabel: 'Help & Assets',
+    badge: 'Knowledge',
+    version: 'v1.0',
+    recentHeader: 'Recent Support',
+    recentCols: ['Subject', 'Category', 'Status', 'Actions'],
+    stats: [
+      { label: 'Knowledge Base', value: '1.2K', sub: 'Articles', subColor: '#10b981', subIcon: React.createElement(FileText, { size: 12 }) },
+      { label: 'Status', value: 'Online', sub: '99.9%', subColor: '#0ea5e9', subIcon: React.createElement(Shield, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Documentation', desc: 'Deep-dive into API and platform guides.', path: '/docs', icon: React.createElement(Info, { size: 20 }) },
+      { name: 'Billing', desc: 'Manage invoices and subscription tiers.', path: '/billing', icon: React.createElement(Key, { size: 20 }) }
+    ],
+    recentItems: [
+      { id: 1, name: 'API v5 Integration', specs: 'Guide', status: 'Published' },
+      { id: 2, name: 'March 2026 Invoice', specs: 'Billing', status: 'Paid' }
+    ]
+  },
+  pdf_organize: {
+    title: 'Organize PDF',
+    subtitle: 'Reorder, merge, and split documents with precision.',
+    color: '#e53935',
+    rgb: '229, 57, 53',
+    actionText: 'Process PDF',
+    actionPath: '/pdf-select',
+    icon: React.createElement(Layers, { size: 24 }),
+    groupLabel: 'Organization Tools',
+    badge: 'Structure',
+    version: 'v2.1',
+    recentHeader: 'Recent Tasks',
+    recentCols: ['File', 'Pages', 'Status', 'Actions'],
+    stats: [
+      { label: 'Merged', value: '1.4K', sub: 'Healthy', subColor: '#10b981', subIcon: React.createElement(CheckCircle2, { size: 12 }) },
+      { label: 'Split', value: '850', sub: 'In Sync', subColor: '#0ea5e9', subIcon: React.createElement(Shield, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Merge PDF', desc: 'Combine multiple files into one.', path: '/merge', icon: React.createElement(Combine, { size: 20 }) },
+      { name: 'Split PDF', desc: 'Divide files into parts.', path: '/split', icon: React.createElement(Split, { size: 20 }) },
+      { name: 'Organize PDF', desc: 'Rearrange and reorder pages.', path: '/organize-pdf', icon: React.createElement(Layers, { size: 20 }) },
+      { name: 'Remove Pages', desc: 'Delete unwanted document pages.', path: '/remove-pages', icon: React.createElement(Trash2, { size: 20 }) }
+    ],
+    recentItems: [
+        { id: 1, name: 'Report_Draft.pdf', specs: '12 pgs', status: 'Merged' },
+        { id: 2, name: 'Invoice_Set.pdf', specs: '45 pgs', status: 'Split' }
+    ]
+  },
+  pdf_optimize: {
+    title: 'Optimize PDF',
+    subtitle: 'Shrink and repair documents for better performance.',
+    color: '#10b981',
+    rgb: '16, 185, 129',
+    actionText: 'Compress Now',
+    actionPath: '/compress',
+    icon: React.createElement(Zap, { size: 24 }),
+    groupLabel: 'Optimization',
+    badge: 'Smart v2',
+    version: 'v4.0',
+    recentHeader: 'Optimization History',
+    recentCols: ['File', 'Reduction', 'Status', 'Actions'],
+    stats: [
+      { label: 'Storage Saved', value: '12GB', sub: '+15%', subColor: '#10b981', subIcon: React.createElement(Activity, { size: 12 }) },
+      { label: 'Avg Shrink', value: '72%', sub: 'High', subColor: '#0ea5e9', subIcon: React.createElement(Shield, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Compress PDF', desc: 'Reduce file size without quality loss.', path: '/compress', icon: React.createElement(Zap, { size: 20 }) },
+      { name: 'Repair PDF', desc: 'Fix corrupted document structures.', path: '/repair', icon: React.createElement(History, { size: 20 }) }
+    ],
+    recentItems: [
+        { id: 1, name: 'Archive_2024.pdf', specs: '85% saved', status: 'Ready' },
+        { id: 2, name: 'Backup_v1.pdf', specs: '40% saved', status: 'Ready' }
+    ]
+  },
+  pdf_edit: {
+    title: 'Edit PDF Pages',
+    subtitle: 'Rotate, watermark, and crop your documents.',
+    color: '#7c3aed',
+    rgb: '124, 58, 237',
+    actionText: 'Launch Editor',
+    actionPath: '/edit',
+    icon: React.createElement(Layout, { size: 24 }),
+    groupLabel: 'Visual Tools',
+    badge: 'Creative',
+    version: 'v1.5',
+    recentHeader: 'Creative History',
+    recentCols: ['File', 'Edit Type', 'Status', 'Actions'],
+    stats: [
+      { label: 'Watermarks', value: '450', sub: 'Secure', subColor: '#10b981', subIcon: React.createElement(Shield, { size: 12 }) },
+      { label: 'Rotations', value: '1.2K', sub: 'Manual', subColor: '#2563eb', subIcon: React.createElement(RotateCw, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Edit PDF', desc: 'Comprehensive page editor.', path: '/edit', icon: React.createElement(Layout, { size: 20 }) },
+      { name: 'Rotate PDF', desc: 'Orient pages correctly.', path: '/rotate', icon: React.createElement(RotateCw, { size: 20 }) },
+      { name: 'Add Watermark', desc: 'Secure branding on pages.', path: '/watermark', icon: React.createElement(Star, { size: 20 }) },
+      { name: 'Add Page Number', desc: 'Paginate your documents.', path: '/page-numbers', icon: React.createElement(Hash, { size: 20 }) }
+    ],
+    recentItems: [
+        { id: 1, name: 'Branded_Sales.pdf', specs: 'Watermark', status: 'Published' },
+        { id: 2, name: 'Upside_Down.pdf', specs: 'Rotation', status: 'Completed' }
+    ]
+  },
+  pdf_security: {
+    title: 'PDF Security Hub',
+    subtitle: 'Protect and sign your documents with ease.',
+    color: '#0ea5e9',
+    rgb: '14, 165, 233',
+    actionText: 'Protect PDF',
+    actionPath: '/lock',
+    icon: React.createElement(Shield, { size: 24 }),
+    groupLabel: 'Security Suite',
+    badge: 'Secure',
+    version: 'v3.0',
+    recentHeader: 'Security Activity',
+    recentCols: ['File', 'Protocol', 'Status', 'Actions'],
+    stats: [
+      { label: 'Shielded', value: '2.5K', sub: 'Healthy', subColor: '#10b981', subIcon: React.createElement(CheckCircle2, { size: 12 }) },
+      { label: 'Encryptions', value: '45', sub: 'AES-256', subColor: '#0ea5e9', subIcon: React.createElement(Shield, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Protect PDF', desc: 'Password protect your files.', path: '/lock', icon: React.createElement(Lock, { size: 20 }) },
+      { name: 'Unlock PDF', desc: 'Remove document passwords.', path: '/unlock', icon: React.createElement(Unlock, { size: 20 }) },
+      { name: 'Sign PDF', desc: 'Add digital signatures.', path: '/sign', icon: React.createElement(PenTool, { size: 20 }) },
+      { name: 'Redact PDF', desc: 'Securely hide sensitive data.', path: '/redact', icon: React.createElement(EyeOff, { size: 20 }) }
+    ],
+    recentItems: [
+        { id: 1, name: 'NDA_Confidential.pdf', specs: 'Password Set', status: 'Encrypted' },
+        { id: 2, name: 'Invoice_Signed.pdf', specs: 'Signatures', status: 'Ready' }
+    ]
+  },
+  pdf_intelligence: {
+    title: 'PDF Intelligence',
+    subtitle: 'Analyze and extract data using neural OCR.',
+    color: '#f59e0b',
+    rgb: '245, 158, 11',
+    actionText: 'Launch OCR',
+    actionPath: '/ocr-pdf',
+    icon: React.createElement(Bot, { size: 24 }),
+    groupLabel: 'Neural Engine',
+    badge: 'AI Powered',
+    version: 'v5.0',
+    recentHeader: 'Extraction Logs',
+    recentCols: ['File', 'Data Pts', 'Status', 'Actions'],
+    stats: [
+      { label: 'Extracts', value: '1.2M', sub: 'Growing', subColor: '#10b981', subIcon: React.createElement(Activity, { size: 12 }) },
+      { label: 'Accuracy', value: '99.5%', sub: 'High', subColor: '#f59e0b', subIcon: React.createElement(Zap, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'OCR PDF', desc: 'Automated text recognition.', path: '/ocr-pdf', icon: React.createElement(Box, { size: 20 }) },
+      { name: 'Chat with PDF', desc: 'AI-driven Q&A on documents.', path: '/chat', icon: React.createElement(Bot, { size: 20 }) },
+      { name: 'Summarize', desc: 'Get quick document insights.', path: '/summarize', icon: React.createElement(FileText, { size: 20 }) },
+      { name: 'Extract Data', desc: 'Table and form data extraction.', path: '/extract-data', icon: React.createElement(Layers, { size: 20 }) }
+    ],
+    recentItems: [
+        { id: 1, name: 'Bank_Statement.pdf', specs: 'Table data', status: 'Ready' },
+        { id: 2, name: 'Research_Paper.pdf', specs: 'Summary', status: 'Processed' }
     ]
   }
 };
