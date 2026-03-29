@@ -130,3 +130,21 @@ async def split_pdf(
         media_type="application/zip",
         headers={"Content-Disposition": 'attachment; filename="split_pdfs.zip"'}
     )
+
+@router.post("/to-pdf")
+async def convert_to_pdf(files: List[UploadFile] = File(...)):
+    """Convert multiple images into a combined PDF document."""
+    buffers = [io.BytesIO(await f.read()) for f in files]
+    output = pdf_service.convert_images_to_pdf(buffers)
+    
+    analytics_service.record_activity(
+        action="Image to PDF",
+        target=f"{len(files)} files",
+        engine="api"
+    )
+
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="converted.pdf"'}
+    )
