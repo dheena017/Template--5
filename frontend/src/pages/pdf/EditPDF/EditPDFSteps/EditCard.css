@@ -1,0 +1,270 @@
+.edit-aura-upload {
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.edit-drop-area {
+    border: 2px dashed rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.02);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-drop-area:hover, .edit-drop-area.drag-active {
+    border-color: rgba(245, 158, 11, 0.8);
+    background: rgba(245, 158, 11, 0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(245, 158, 11, 0.1);
+}
+
+.edit-upload-visual {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-glow-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%);
+    animation: pulseGlow 3s infinite alternate;
+}
+
+.edit-upload-icon-main {
+    color: #f59e0b;
+    z-index: 2;
+}
+
+.edit-file-icon-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    background: #1e293b;
+    border-radius: 50%;
+    padding: 4px;
+    z-index: 3;
+    border: 2px solid #0f172a;
+}
+
+.edit-drop-area h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.edit-drop-area p {
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+.edit-browse-btn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.edit-browse-btn:hover {
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.edit-format-badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.edit-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #cbd5e1;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Config & Result Steps */
+.edit-file-summary-card, .edit-settings-panel, .edit-result-file-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-file-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.edit-file-icon {
+    color: #f59e0b;
+}
+
+.edit-file-details h4 {
+    color: white;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.edit-file-details p {
+    color: #94a3b8;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.edit-change-file-btn {
+    margin-left: auto;
+    background: transparent;
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.edit-change-file-btn:hover {
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.edit-settings-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #f59e0b;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 12px;
+}
+
+.edit-settings-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.edit-start-process-btn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.edit-start-process-btn:hover {
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+    transform: translateY(-2px);
+}
+
+.edit-processing-status {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.edit-progress-bar-container {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.edit-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    transition: width 0.3s ease;
+}
+
+.edit-progress-text {
+    color: #fcd34d;
+    font-weight: 600;
+    animation: pulseText 1.5s infinite;
+}
+
+.edit-result-file-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to right, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.02));
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.edit-download-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f59e0b;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.edit-download-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.edit-success-icon-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-success-icon {
+    color: #f59e0b;
+    z-index: 2;
+}
+
+.edit-success-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.5) 0%, transparent 70%);
+    animation: successPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.edit-success-message {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+@keyframes pulseGlow {
+    from { transform: scale(0.9); opacity: 0.5; }
+    to { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes pulseText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes successPulse {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}

@@ -1,0 +1,138 @@
+.edit-customization-panel {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-custom-header {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    padding-bottom: 0;
+}
+
+.edit-custom-header h4 {
+    color: white;
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+.edit-custom-icon {
+    color: #f59e0b;
+}
+
+.edit-custom-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .edit-custom-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .full-width {
+        grid-column: 1 / -1;
+    }
+}
+
+.edit-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.edit-form-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-left: 0.25rem;
+}
+
+.edit-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 0 1rem;
+    height: 50px;
+    transition: all 0.3s ease;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.edit-input-wrapper:focus-within {
+    border-color: #f59e0b;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.edit-input, .edit-select {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    font-size: 1rem;
+}
+
+.edit-input::placeholder {
+    color: #64748b;
+}
+
+.edit-select {
+    appearance: none;
+    cursor: pointer;
+}
+
+.edit-select-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.edit-color-picker {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    outline: none;
+    background: transparent;
+}
+
+.edit-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.edit-color-picker::-webkit-color-swatch {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.edit-color-value {
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.edit-range-slider {
+    width: 100%;
+    cursor: pointer;
+    accent-color: #f59e0b;
+}
