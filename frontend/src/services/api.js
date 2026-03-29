@@ -5,6 +5,16 @@ import { PDFConverterService } from '../utils/pdfConverter';
 import { PDFOptimizerService } from '../utils/pdfOptimizer';
 const API_URL = 'http://localhost:8000';
 
+const checkResponse = async (res, defaultMsg = 'Request failed') => {
+    if (res.ok) return;
+    let errorDetail = defaultMsg;
+    try {
+        const body = await res.json();
+        errorDetail = body.detail || body.message || defaultMsg;
+    } catch (e) {}
+    throw new Error(errorDetail);
+};
+
 export const api = {
     // Core Profile & Auth
     getProfile: async () => {
@@ -35,8 +45,8 @@ export const api = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),
             });
-            if (res.ok) return await res.json();
-            throw new Error('Profile update failed');
+            await checkResponse(res, 'Could not update profile preferences');
+            return await res.json();
         } catch (e) {
             console.error('[API] Profile update error:', e.message);
             return { status: 'mock_success', ...data };
@@ -101,17 +111,42 @@ export const api = {
         } catch (e) {}
         return [];
     },
+    // Assets & Files
+    getFiles: async () => {
+        try {
+            const res = await fetch(`${API_URL}/api/files/`);
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.error('[API] Failed to fetch assets:', e.message);
+        }
+        return [];
+    },
     uploadFile: async (file) => {
-        // console.log('[API] Mock uploading file:', file.name);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({ 
-                    status: 'success', 
-                    url: URL.createObjectURL(file), // Local preview as mock URL
-                    file_id: Math.random().toString(36).substr(2, 9)
-                });
-            }, 1000);
-        });
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const res = await fetch(`${API_URL}/api/files/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+            await checkResponse(res, 'File upload failed');
+            return await res.json();
+        } catch (e) {
+            console.error('[API] File upload error:', e.message);
+            throw e;
+        }
+    },
+    deleteFile: async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/api/files/${id}`, {
+                method: 'DELETE',
+            });
+            await checkResponse(res, 'Failed to delete file from workspace');
+            return await res.json();
+        } catch (e) {
+            console.error('[API] File deletion error:', e.message);
+            throw e;
+        }
     },
 
     // Billing & Credits
