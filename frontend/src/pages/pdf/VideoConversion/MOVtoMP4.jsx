@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const MOVtoMP4 = () => <OrganizePDF forcedTool="MOV to MP4" />
-export default MOVtoMP4
+import React from 'react';
+import VideoConversionTool from './VideoConversionTool';
+
+const MOVtoMP4 = () => <VideoConversionTool fromFormat='MOV' toFormat='MP4' />;
+
+export default MOVtoMP4;
