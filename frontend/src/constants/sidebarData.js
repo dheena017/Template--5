@@ -6,7 +6,8 @@ import {
   Zap, Settings, Activity, Shield,
   Globe, Code2, Key, Webhook,
   History, Music, Video, Star,
-  Box, Eye, Layers, Combine, Split
+  Box, Eye, Layers, Combine, Split,
+  Scissors, Trash2, Search, Scan
 } from 'lucide-react';
 
 export const SIDEBAR_CATEGORIES = [
@@ -76,7 +77,10 @@ export const SIDEBAR_CATEGORIES = [
     links: [
       { name: 'Merge PDF', path: '/merge', icon: React.createElement(Combine, { size: 16 }) },
       { name: 'Split PDF', path: '/split', icon: React.createElement(Split, { size: 16 }) },
-      { name: 'Edit PDF', path: '/edit-pdf', icon: React.createElement(FileText, { size: 16 }) }
+      { name: 'Organize PDF', path: '/organize-pdf', icon: React.createElement(Layers, { size: 16 }) },
+      { name: 'Remove Pages', path: '/remove-pages', icon: React.createElement(Trash2, { size: 16 }) },
+      { name: 'Extract Pages', path: '/extract-pages', icon: React.createElement(Scissors, { size: 16 }) },
+      { name: 'Scan to PDF', path: '/scan-to-pdf', icon: React.createElement(Scan, { size: 16 }) }
     ]
   },
   {
@@ -100,6 +104,7 @@ export const SIDEBAR_CATEGORIES = [
     name: 'About us',
     icon: React.createElement(Info, { size: 18 }),
     links: [
+      { name: 'Platform Stats', path: '/analytics', icon: React.createElement(Activity, { size: 16 }) },
       { name: 'Documentation', path: '/docs', icon: React.createElement(Info, { size: 16 }) },
       { name: 'FAQ & Support', path: '/faq', icon: React.createElement(Info, { size: 16 }) }
     ]
