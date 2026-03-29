@@ -1,34 +1,40 @@
 import React from 'react';
 import '../styles/Toolbar.css';
-import { Bell, HelpCircle, LogOut, MessageSquare, Settings, User, Search, X, ChevronRight, Share, Zap } from 'lucide-react';
+import { Bell, HelpCircle, LogOut, MessageSquare, Settings, User, Search, X, ChevronRight, Share, Zap, Maximize2 } from 'lucide-react';
 import { Dropdown, DropdownItem, DropdownDivider } from './dropdowns';
 
-const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange }) => {
+const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDeepFocus, setIsDeepFocus }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [showResults, setShowResults] = React.useState(false);
 
   // Flat list of all searchable items - updated to match App.jsx cases
   const ALL_FEATURES = React.useMemo(() => [
-    { name: 'Video Workspace', path: 'video-dashboard', cat: 'Studio' },
-    { name: 'Image Studio', path: 'image-dashboard', cat: 'Design' },
-    { name: 'Avatar AI', path: 'avatar-dashboard', cat: 'AI Tools' },
-    { name: 'Speech & Audio', path: 'speech-dashboard', cat: 'Audio' },
-    { name: 'Merge PDF', path: 'merge', cat: 'Files' },
-    { name: 'Split PDF', path: 'split', cat: 'Files' },
-    { name: 'Edit PDF', path: 'edit-pdf', cat: 'Files' },
-    { name: 'API Keys', path: 'api-keys', cat: 'Dev' },
-    { name: 'System Settings', path: 'settings-hub', cat: 'System' },
-    { name: 'Billing', path: 'billing', cat: 'Account' },
-    { name: 'Documentation', path: 'docs', cat: 'Resources' },
-    { name: 'Smart Text', path: 'text-dashboard', cat: 'AI Text' },
-    { name: 'Social Media', path: 'social-dashboard', cat: 'Marketing' },
+    { name: 'Video Workspace', path: 'video-dashboard', cat: 'Studio', keywords: ['edit', 'movie', 'production', 'cut', 'clip', 'render'] },
+    { name: 'Image Studio', path: 'image-dashboard', cat: 'Design', keywords: ['photo', 'generate', 'picture', 'create', 'draw', 'art'] },
+    { name: 'Avatar AI', path: 'avatar-dashboard', cat: 'AI Tools', keywords: ['deepfake', 'person', 'actor', 'talk', 'human', 'face'] },
+    { name: 'Speech & Audio', path: 'speech-dashboard', cat: 'Audio', keywords: ['voice', 'mp3', 'sound', 'tts', 'listen', 'speak'] },
+    { name: 'Merge PDF', path: 'merge', cat: 'Files', keywords: ['combine', 'join', 'add files', 'collective', 'attach'] },
+    { name: 'Split PDF', path: 'split', cat: 'Files', keywords: ['cut', 'separate', 'pages', 'divide', 'break'] },
+    { name: 'Compress PDF', path: 'compress', cat: 'Files', keywords: ['shrink', 'small', 'reduce size', 'optimize', 'lightweight'] },
+    { name: 'Remove Pages', path: 'remove-pages', cat: 'Files', keywords: ['delete', 'clean', 'scrub', 'filter', 'erase'] },
+    { name: 'Extract Pages', path: 'extract-pages', cat: 'Files', keywords: ['specific', 'pull', 'select', 'individual', 'isolate'] },
+    { name: 'Organize PDF', path: 'organize-pdf', cat: 'Files', keywords: ['rearrange', 'sort', 'order', 'pages', 'move'] },
+    { name: 'Scan to PDF', path: 'scan-to-pdf', cat: 'Files', keywords: ['camera', 'photo', 'picture', 'capture', 'document'] },
+    { name: 'API Keys', path: 'api-keys', cat: 'Dev', keywords: ['developer', 'sdk', 'tokens', 'integration', 'backend'] },
+    { name: 'System Settings', path: 'settings-hub', cat: 'System', keywords: ['config', 'preferences', 'customize', 'aura', 'ui'] },
+    { name: 'Billing', path: 'billing', cat: 'Account', keywords: ['money', 'pay', 'credits', 'subscription', 'invoice'] },
+    { name: 'Documentation', path: 'docs', cat: 'Resources', keywords: ['help', 'guide', 'howto', 'learn', 'support'] },
+    { name: 'Smart Text', path: 'text-dashboard', cat: 'AI Text', keywords: ['write', 'blog', 'copy', 'script', 'assist', 'letters'] },
+    { name: 'Social Media', path: 'social-dashboard', cat: 'Marketing', keywords: ['post', 'share', 'market', 'facebook', 'instagram', 'ads'] },
   ], []);
 
   const results = React.useMemo(() => {
     if (!searchQuery) return [];
+    const query = searchQuery.toLowerCase();
     return ALL_FEATURES.filter(f => 
-      f.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      f.cat.toLowerCase().includes(searchQuery.toLowerCase())
+      f.name.toLowerCase().includes(query) || 
+      f.cat.toLowerCase().includes(query) ||
+      (f.keywords && f.keywords.some(k => k.toLowerCase().includes(query)))
     );
   }, [searchQuery, ALL_FEATURES]);
 
@@ -110,6 +116,14 @@ const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange }) => 
         <div className="toolbar-actions-aura">
           <button className="icon-btn-aura" title="Share Project">
             <Share size={18} />
+          </button>
+          
+          <button 
+            className={`icon-btn-aura ${isDeepFocus ? 'active' : ''}`} 
+            title="Deep Focus Mode"
+            onClick={() => setIsDeepFocus(!isDeepFocus)}
+          >
+            <Maximize2 size={18} />
           </button>
           
           <button className="icon-btn-aura" title="Shortcuts">
