@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const AC3toWAV = () => <OrganizePDF forcedTool="AC3 to WAV" />
-export default AC3toWAV
+import React from 'react';
+import AudioConversionTool from './AudioConversionTool';
+
+const AC3toWAV = () => <AudioConversionTool fromFormat='AC3' toFormat='WAV' />;
+
+export default AC3toWAV;
