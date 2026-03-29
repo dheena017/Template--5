@@ -6,6 +6,8 @@ import {
 } from 'lucide-react'
 import { DASHBOARD_CONFIG } from '../../constants/dashboardConfig'
 import '../../styles/pages/dashboards/Dashboard.css'
+import '../../styles/pages/dashboards/DashboardIndex.css'
+import { PrimaryButton } from '../../components/buttons'
 
 const GenericDashboard = ({ type }) => {
   const { category: paramCategory } = useParams()
@@ -60,7 +62,11 @@ const GenericDashboard = ({ type }) => {
           <h1>{config.title}</h1>
           <p>{config.subtitle}</p>
         </div>
-        <div className="dash-actions">
+        <div className="dash-actions" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+           <div className="system-pulse" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(255,255,255,0.03)', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.05)' }}>
+             <div className="pulse-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 12px #10b981', animation: 'pulse 2s infinite' }}></div>
+             <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Engine Live</span>
+           </div>
            <button className="premium-btn" onClick={() => navigate(config.actionPath)}>{config.actionText}</button>
         </div>
       </motion.header>
@@ -83,27 +89,48 @@ const GenericDashboard = ({ type }) => {
            {React.cloneElement(config.icon, { style: { color: config.color } })}
            <span className="group-label">{config.groupLabel}</span>
         </div>
-        <motion.div className="tool-cards-grid" variants={containerVariants}>
+        <motion.div className="portal-tools-main-grid" variants={containerVariants}>
           {config.tools.map((tool) => (
-            <motion.div 
+            <button 
               key={tool.name} 
-              className="tool-card premium-card" 
+              className="portal-tool-card" 
+              style={{ 
+                  backgroundColor: '#0f1016',
+                  border: '1px solid rgba(255, 255, 255, 0.04)'
+              }}
               onClick={() => navigate(tool.path)}
-              variants={itemVariants}
             >
-               <div className="tool-header-row">
-                  <div className="tool-icon-box">{tool.icon}</div>
-                  <div className="launch-badge">{config.badge}</div>
-               </div>
-               <div className="tool-info">
+              <div className="tool-card-top">
+                  <div className="tool-suite-info">
+                      <div className="suite-icon-mini" style={{ color: config.color }}>
+                          {React.cloneElement(tool.icon, { size: 14 })}
+                      </div>
+                      <span className="suite-name-tag">{config.title.toUpperCase()}</span>
+                  </div>
+                  <div className="tool-action-indicator">
+                      <ArrowUpRight size={14} />
+                  </div>
+              </div>
+
+              <div className="tool-card-body">
                   <h3>{tool.name}</h3>
-                  <p>{tool.desc}</p>
-               </div>
-               <div className="tool-footer">
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, opacity: 0.6 }}>{config.version}</span>
-                  <ArrowUpRight size={16} style={{ opacity: 0.5 }} />
-               </div>
-            </motion.div>
+                  <div className="tool-card-footer">
+                      <div className="tool-status-dot" style={{ backgroundColor: config.color }}></div>
+                      <span className="tool-ready-text">Ready to use</span>
+                  </div>
+
+                  <div className="card-launch-aura">
+                      <PrimaryButton 
+                          className="launch-btn-premium"
+                          size="md"
+                          style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
+                      >
+                          Open Tool
+                      </PrimaryButton>
+                  </div>
+              </div>
+              <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${config.color}15, transparent)` }}></div>
+            </button>
           ))}
         </motion.div>
       </motion.div>
