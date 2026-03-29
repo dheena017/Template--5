@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const BatchJPGToPDF = () => <OrganizePDF forcedTool="Convert JPG to PDF in batches" />
-export default BatchJPGToPDF
+import React from 'react';
+import ImageToPDFTool from './ImageToPDFTool';
+
+const BatchJPGToPDF = () => <ImageToPDFTool fromFormat="JPG" isBatch={true} />;
+
+export default BatchJPGToPDF;
