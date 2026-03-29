@@ -13,181 +13,363 @@ import {
   Share2,
   Info,
   HardDrive,
-  ArrowUpRight
+  ArrowUpRight,
+  Combine,
+  Zap,
+  Plus,
+  Search,
+  CheckCircle,
+  Clock
 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import '../../styles/pages/dashboards/DashboardIndex.css'
+import { PrimaryButton } from '../../components/buttons'
 
-const DASHBOARD_CARDS = [
+const FEATURED_TOOLS = [
   {
-    title: 'Video Workspace',
-    description: 'Production, dubbing, podcasts, and batch pipelines.',
-    path: '/dashboard/video',
-    icon: Film,
-    color: '#ef4444'
+    title: 'Merge PDF',
+    description: 'Combine multiple PDF files into one.',
+    path: '/merge',
+    icon: Combine,
+    color: '#ef4444',
+    suite: 'Document Intelligence'
   },
   {
-    title: 'Image Studio',
-    description: 'Creative systems, brand assets and synthesis labs.',
-    path: '/dashboard/image',
-    icon: Palette,
-    color: '#db2777'
-  },
-  {
-    title: 'Avatar & Identity',
-    description: 'Avatar creation, character labs, and digital twins.',
-    path: '/dashboard/avatar',
-    icon: Bot,
-    color: '#2563eb'
-  },
-  {
-    title: 'Speech & Audio',
-    description: 'Vocal cloning, changer, and soundscape generation.',
-    path: '/dashboard/speech',
+    title: 'Text to Speech',
+    description: 'Convert any text into natural sounding voices.',
+    path: '/text-to-speech',
     icon: Mic,
-    color: '#f59e0b'
+    color: '#f59e0b',
+    suite: 'Voice & Audio'
   },
   {
-    title: 'Text Intelligence',
-    description: 'Transcription, translation, and narrative synthesis.',
-    path: '/dashboard/text',
-    icon: FileText,
-    color: '#10b981'
-  },
-  {
-    title: 'Creative Studio',
-    description: 'Unified orchestrator for multi-modal production.',
-    path: '/dashboard/studio',
-    icon: Clapperboard,
-    color: '#7c3aed'
-  },
-  {
-    title: 'Files & Assets',
-    description: 'Manage library, series, and production deliveries.',
-    path: '/dashboard/files',
-    icon: HardDrive,
-    color: '#64748b'
-  },
-  {
-    title: 'PDF Engineering',
-    description: 'Specialized document conversion and processing.',
-    path: '/dashboard/pdf',
-    icon: FileText,
-    color: '#ec4899'
-  },
-  {
-    title: 'Developers Hub',
-    description: 'API console, security keys, and system logs.',
-    path: '/dashboard/developers',
-    icon: Terminal,
-    color: '#475569'
-  },
-  {
-    title: 'Social Network',
-    description: 'Community hubs, X/Twitter, and integrations.',
-    path: '/dashboard/social-media',
-    icon: Share2,
-    color: '#0ea5e9'
-  },
-  {
-    title: 'About Platform',
-    description: 'Documentation, FAQ, and company resources.',
-    path: '/dashboard/about-us',
-    icon: Info,
-    color: '#4b5563'
+    title: 'Image Creator',
+    description: 'Generate stunning AI images from text prompts.',
+    path: '/image-generator',
+    icon: Palette,
+    color: '#db2777',
+    suite: 'Visual Arts'
   }
+]
+
+const TOOL_SUITES = [
+  {
+    id: 'docs',
+    title: 'Document Intelligence',
+    icon: FileText,
+    color: '#ec4899',
+    tools: [
+      { id: 'pdf-dashboard', label: 'PDF Master Dashboard', path: '/pdf-dashboard', color: '#ec4899' },
+      { id: 'merge', label: 'Merge Documents', path: '/merge', color: '#ef4444' },
+      { id: 'split', label: 'Split PDF', path: '/split', color: '#ff5252' },
+      { id: 'organize-pdf', label: 'Organize Pages', path: '/organize-pdf', color: '#42a5f5' },
+    ]
+  },
+  {
+    id: 'media',
+    title: 'Creative Studio',
+    icon: Clapperboard,
+    color: '#7c3aed',
+    tools: [
+      { id: 'artists-home', label: 'Studio Dashboard', path: '/artists-home', color: '#7c3aed' },
+      { id: 'video-dashboard', label: 'Video Production', path: '/video-dashboard', color: '#ef4444' },
+      { id: 'image-dashboard', label: 'Image Studio', path: '/image-dashboard', color: '#db2777' },
+      { id: 'avatar-dashboard', label: 'Avatar Lab', path: '/avatar-dashboard', color: '#2563eb' },
+    ]
+  },
+  {
+    id: 'voice',
+    title: 'Voice & Speech',
+    icon: Mic,
+    color: '#f59e0b',
+    tools: [
+      { id: 'speech-dashboard', label: 'Audio Dashboard', path: '/speech-dashboard', color: '#f59e0b' },
+      { id: 'text-to-speech', label: 'AI Voiceover', path: '/text-to-speech', color: '#f59e0b' },
+      { id: 'voice-changer', label: 'Voice Changer', path: '/voice-changer', color: '#f59e0b' },
+      { id: 'podcast-creator', label: 'Podcast Lab', path: '/podcast-creator', color: '#f59e0b' },
+    ]
+  },
+  {
+    id: 'intelligence',
+    title: 'Smart Intelligence',
+    icon: Bot,
+    color: '#10b981',
+    tools: [
+      { id: 'text-dashboard', label: 'Text Hub', path: '/text-dashboard', color: '#10b981' },
+      { id: 'translate', label: 'Translation', path: '/translate', color: '#10b981' },
+      { id: 'summarize', label: 'AI Summarizer', path: '/summarize', color: '#10b981' },
+    ]
+  },
+  {
+    id: 'system',
+    title: 'System & Cloud',
+    icon: HardDrive,
+    color: '#64748b',
+    tools: [
+      { id: 'files', label: 'Library & Assets', path: '/files', color: '#64748b' },
+      { id: 'dev-dashboard', label: 'Developer Console', path: '/dev-dashboard', color: '#475569' },
+      { id: 'analytics', label: 'Usage Insights', path: '/analytics', color: '#8b5cf6' },
+      { id: 'settings/general', label: 'Account Settings', path: '/settings/general', color: '#f59e0b' },
+    ]
+  }
+]
+
+const FEATURE_TAGS = ['PDF', 'Video', 'Voice', 'Avatar', 'Transcription', 'API']
+
+const TURBO_RECIPES = [
+  { id: 'recipe-1', label: 'Scan + OCR + Translate', desc: 'Universal document digitizer', colors: ['#10b981', '#7c3aed'], icon: Zap },
+  { id: 'recipe-2', label: 'Merge + Optimize + Sign', desc: 'Pro contract production', colors: ['#ef4444', '#f59e0b'], icon: Plus },
+  { id: 'recipe-3', label: 'Text → Voice → Canvas', desc: 'Creative b-roll generator', colors: ['#3b82f6', '#db2777'], icon: Sparkles }
 ]
 
 const Dashboard = () => {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = React.useState('')
+  const [activeCategory, setActiveCategory] = React.useState('all')
+  const [hoveredTool, setHoveredTool] = React.useState(null)
 
-  const filteredCards = DASHBOARD_CARDS.filter(card => 
-    card.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    card.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const allTools = React.useMemo(() => {
+    const list = []
+    TOOL_SUITES.forEach(suite => {
+      suite.tools.forEach(tool => {
+        list.push({ ...tool, suiteId: suite.id, suiteName: suite.title, suiteIcon: suite.icon })
+      })
+    })
+    return list
+  }, [])
+
+  const filteredTools = allTools.filter(tool => {
+    const matchesSearch = tool.label.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          tool.suiteName.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = activeCategory === 'all' || tool.suiteId === activeCategory
+    return matchesSearch && matchesCategory
+  })
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { staggerChildren: 0.08 } 
+      transition: { staggerChildren: 0.05 } 
     }
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, translateY: 20 },
-    visible: { opacity: 1, translateY: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
+    hidden: { opacity: 0, scale: 0.95, y: 10 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
   }
 
   return (
     <motion.section 
-      className="all-dashboards-shell"
+      className="aura-portal-shell"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      <motion.header className="all-dashboards-header" variants={itemVariants}>
-        <div className="header-top-row">
-          <div className="header-text">
-            <h1>All Dashboards</h1>
-            <p>Open any dashboard from here and manage every part of your platform.</p>
+      <div className="portal-glow"></div>
+      
+      <div className="portal-content-container">
+        <motion.header className="portal-hero-section" variants={itemVariants}>
+          <div className="hero-top">
+            <motion.div 
+              className="aura-chip"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Sparkles size={14} /> System v2.4 Active
+            </motion.div>
+            <h1>What can we <span className="text-gradient">automate</span> for you?</h1>
           </div>
-          <div className="dashboard-search-wrapper">
-            <div className="search-pill">
-              <span className="search-pill-icon"><Info size={18} /></span>
+
+          <div className="universal-search-hub">
+            <div className="search-box-large">
+              <div className="search-icon-anim">
+                <Search size={24} />
+              </div>
               <input 
                 type="text" 
-                placeholder="Find a dashboard..." 
+                placeholder="Search for any tool, action, or document process..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="dashboard-search-input"
+                autoFocus
               />
-              {searchQuery && (
-                <button className="clear-search" onClick={() => setSearchQuery('')}>×</button>
-              )}
+              <div className="keyboard-hint">
+                <span>⌘</span><span>K</span>
+              </div>
+            </div>
+            
+            <div className="portal-filter-rail">
+              <button 
+                className={`filter-pill ${activeCategory === 'all' ? 'active' : ''}`}
+                onClick={() => setActiveCategory('all')}
+              >
+                All Tools
+              </button>
+              {TOOL_SUITES.map(suite => (
+                <button 
+                  key={suite.id}
+                  className={`filter-pill ${activeCategory === suite.id ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(suite.id)}
+                >
+                  {suite.title.split(' ')[0]}
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-      </motion.header>
+        </motion.header>
 
-      <motion.div className="all-dashboards-grid" variants={containerVariants}>
-        {filteredCards.map((card) => {
-          const Icon = card.icon
-          return (
-            <motion.button
-              key={card.title}
-              type="button"
-              className="all-dashboard-card"
-              onClick={() => navigate(card.path)}
-              variants={itemVariants}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="all-dashboard-card-head">
-                <span className="all-dashboard-icon" style={{ color: card.color, backgroundColor: `${card.color}20` }}>
-                  <Icon size={20} />
-                </span>
-                <ArrowUpRight size={16} className="all-dashboard-arrow" />
-              </div>
-
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
-            </motion.button>
-          )
-        })}
-        {filteredCards.length === 0 && (
-          <div className="no-results-dashboard">
-             <div className="no-results-icon"><Info size={48} /></div>
-             <h3>No dashboards found</h3>
-             <p>Try searching for something else or browse all categories.</p>
-             <button onClick={() => setSearchQuery('')}>Clear Search</button>
+        <motion.div className="quick-resume-workspace" variants={itemVariants}>
+          <div className="resume-header">
+            <div className="flex items-center gap-3">
+              <Clock size={16} className="text-secondary" />
+              <span className="text-xs uppercase font-black tracking-widest text-slate-500">Quick Resume</span>
+            </div>
+            <div className="resume-divider"></div>
           </div>
+          
+          <div className="resume-grid">
+             {[
+               { id: 'merge', label: 'Merge Documents', path: '/merge', icon: Combine, color: '#ef4444', lastUsed: '2m ago', config: '4 Files' },
+               { id: 'image', label: 'Image Studio', path: '/image-dashboard', icon: Palette, color: '#db2777', lastUsed: '15m ago', config: 'Flux 1.1 Pro' },
+               { id: 'pdf-dashboard', label: 'PDF Master', path: '/pdf-dashboard', icon: FileText, color: '#ec4899', lastUsed: '1h ago', config: 'Active System' }
+             ].map(tool => (
+               <motion.button 
+                 key={tool.id} 
+                 className="resume-pill-card"
+                 whileHover={{ x: 5, backgroundColor: 'rgba(255,255,255,0.05)' }}
+                 onClick={() => navigate(tool.path)}
+               >
+                 <div className="pill-icon" style={{ backgroundColor: `${tool.color}15`, color: tool.color }}>
+                   <tool.icon size={20} />
+                 </div>
+                 <div className="pill-content">
+                    <span className="pill-title">{tool.label}</span>
+                    <span className="pill-meta">{tool.config} • {tool.lastUsed}</span>
+                 </div>
+                 <ArrowUpRight size={14} className="pill-arrow" />
+               </motion.button>
+             ))}
+          </div>
+        </motion.div>
+
+        <motion.div className="turbo-recipes-workspace" variants={itemVariants}>
+           <div className="flex items-center gap-3 mb-6">
+              <Zap size={16} className="text-secondary" />
+              <span className="text-xs uppercase font-black tracking-widest text-slate-500">Turbo Recipes</span>
+           </div>
+           <div className="recipe-grid">
+              {TURBO_RECIPES.map(recipe => (
+                <motion.button 
+                  key={recipe.id}
+                  className="recipe-card-aura"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  onClick={() => navigate('/orchestrator')}
+                >
+                  <div className="recipe-icon-stack">
+                     <recipe.icon size={24} style={{ color: recipe.colors[0] }} />
+                     <div className="recipe-icon-glow" style={{ background: recipe.colors[0] }}></div>
+                  </div>
+                  <div className="recipe-info">
+                     <span className="recipe-title">{recipe.label}</span>
+                     <p className="recipe-desc">{recipe.desc}</p>
+                  </div>
+                  <div className="recipe-badge">Fast</div>
+                </motion.button>
+              ))}
+           </div>
+        </motion.div>
+
+        <motion.div className="portal-tools-main-grid" variants={containerVariants}>
+          <AnimatePresence mode="popLayout">
+            {filteredTools.map((tool) => {
+              const SuiteIcon = tool.suiteIcon
+              return (
+                <motion.button
+                  layout
+                  key={tool.id}
+                  className="portal-tool-card aura-card-premium"
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  onClick={() => navigate(tool.path)}
+                  onMouseEnter={() => setHoveredTool(tool.id)}
+                  onMouseLeave={() => setHoveredTool(null)}
+                  whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)' }}
+                >
+                  {hoveredTool === tool.id && (
+                    <motion.div 
+                      className="live-signal-overlay"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                    >
+                      <SuiteIcon size={80} strokeWidth={0.5} style={{ color: tool.color }} />
+                    </motion.div>
+                  )}
+                  <div className="tool-card-top">
+                    <div className="tool-suite-info">
+                      <div className="suite-icon-mini" style={{ color: tool.color }}>
+                        <SuiteIcon size={14} />
+                      </div>
+                      <span className="suite-name-tag">{tool.suiteName}</span>
+                    </div>
+                    <div className="tool-action-indicator">
+                      <ArrowUpRight size={14} />
+                    </div>
+                  </div>
+                  
+                  <div className="tool-card-body">
+                    <h3>{tool.label}</h3>
+                    <div className="tool-card-footer">
+                      <div className="tool-status-dot" style={{ backgroundColor: tool.color }}></div>
+                      <span className="tool-ready-text">Ready to use</span>
+                    </div>
+
+                    <div className="card-launch-aura">
+                        <PrimaryButton 
+                            className="w-full launch-btn-premium"
+                            size="md"
+                            style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)' }}
+                        >
+                            Open Tool
+                        </PrimaryButton>
+                    </div>
+                  </div>
+                  
+                  <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
+                </motion.button>
+              )
+            })}
+          </AnimatePresence>
+        </motion.div>
+
+        {filteredTools.length === 0 && (
+          <motion.div className="portal-empty-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className="empty-icon"><Info size={48} /></div>
+            <h3>No tools match your search</h3>
+            <p>Try searching for core terms like "PDF", "Video", or "Text".</p>
+            <button onClick={() => { setSearchQuery(''); setActiveCategory('all') }}>View All Tools</button>
+          </motion.div>
         )}
-      </motion.div>
+      </div>
+
+      <motion.footer className="portal-quick-info" variants={itemVariants}>
+        <div className="quick-stat">
+          <span className="stat-label">System Load</span>
+          <div className="stat-bar"><div className="stat-fill" style={{ width: '24%' }}></div></div>
+        </div>
+        <div className="quick-stat">
+          <span className="stat-label">Active Processes</span>
+          <span className="stat-value">0 Active</span>
+        </div>
+        <div className="quick-stat">
+          <span className="stat-label">Security</span>
+          <span className="stat-value"><CheckCircle size={14} color="#10b981" /> Encrypted</span>
+        </div>
+      </motion.footer>
     </motion.section>
   )
 }
+
 
 export default Dashboard
 
