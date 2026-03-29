@@ -4,6 +4,8 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
+import { SettingsProvider } from './context/SettingsContext'
+import ErrorBoundary from './components/ErrorBoundary'
 
 const rootElement = document.getElementById('root')
 
@@ -11,11 +13,15 @@ if (rootElement) {
   const root = createRoot(rootElement)
   root.render(
     <StrictMode>
-      <ThemeProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
+      <ErrorBoundary>
+        <ThemeProvider>
+          <SettingsProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </SettingsProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
     </StrictMode>
   )
 } else {
