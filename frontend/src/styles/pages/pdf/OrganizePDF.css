@@ -19,6 +19,35 @@
   background-color: var(--tool-bg);
   color: var(--tool-text-main);
   font-family: 'Outfit', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Studio Aura Background Elements */
+.pdf-tools-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 40%;
+    height: 40%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pdf-tools-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 40%;
+    height: 40%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .pdf-tools-main {
@@ -218,18 +247,32 @@
 }
 
 .tool-upload-center {
-  background: var(--tool-card);
-  border: 1px solid var(--tool-border);
-  border-radius: var(--tool-radius-lg);
-  padding: 5rem 4rem;
-  -webkit-backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
-  box-shadow: var(--tool-shadow);
+  background: rgba(18, 20, 31, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 48px;
+  padding: 6rem 5rem;
+  -webkit-backdrop-filter: blur(60px);
+  backdrop-filter: blur(60px);
+  box-shadow: 
+    0 40px 100px -30px rgba(0, 0, 0, 0.7),
+    inset 0 0 40px 0 rgba(255, 255, 255, 0.02);
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   overflow: hidden;
+}
+
+/* Glass Grain Overlay */
+.tool-upload-center::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 1;
 }
 
 .tool-upload-center::after {
