@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTasks } from '../context/TaskContext';
+import { Search, Zap, Sliders } from 'lucide-react';
+import { useSettings } from '../context/SettingsContext';
 import '../styles/Sidebar.css';
+import '../styles/MissionControl.css';
 import OrganizePDFSidebar from './sidebars/OrganizePDFSidebar';
 import OptimizePDFSidebar from './sidebars/OptimizePDFSidebar';
 import ConvertToPDFSidebar from './sidebars/ConvertToPDFSidebar';
 import ConvertFromPDFSidebar from './sidebars/ConvertFromPDFSidebar';
+import PDFToolSwitcher from './dropdowns/PDFToolSwitcher';
 import EditPDFSidebar from './sidebars/EditPDFSidebar';
 import PDFSecuritySidebar from './sidebars/PDFSecuritySidebar';
 import PDFIntelligenceSidebar from './sidebars/PDFIntelligenceSidebar';
+import VideoConversionSidebar from './sidebars/VideoConversionSidebar';
+import AudioConversionSidebar from './sidebars/AudioConversionSidebar';
+import ImageFormatConversionSidebar from './sidebars/ImageFormatConversionSidebar';
+import DocumentConversionSidebar from './sidebars/DocumentConversionSidebar';
 
 // Bespoke Aura Modern SVG Icons
 const Icons = {
@@ -28,11 +38,16 @@ const Icons = {
   Dev: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
   Intel: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 22 4-10 4 10"/><path d="M12 18H2"/></svg>,
   Settings: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>,
+  More: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>,
 };
 
 const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
+  const { toggleApp } = useSettings();
+  const { tasks } = useTasks();
+  const [isToolsOpenMobile, setIsToolsOpenMobile] = useState(false);
   const [sidebarView, setSidebarView] = useState('main'); 
   const [isPdfOpen, setIsPdfOpen] = useState(false);
+  const [isConversionOpen, setIsConversionOpen] = useState(false);
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isSpeechOpen, setIsSpeechOpen] = useState(false);
@@ -61,6 +76,13 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
     { id: 'pdf-security', label: 'PDF security' },
     { id: 'pdf-intelligence', label: 'PDF Intelligence' },
     { id: 'settings/pdf', label: '📑 PDF Settings' },
+  ];
+
+  const conversionCategories = [
+    { id: 'video-conversion', label: 'Video Conversion' },
+    { id: 'audio-conversion', label: 'Audio Conversion' },
+    { id: 'image-conversion', label: 'Image Conversion' },
+    { id: 'document-conversion', label: 'Document Conversion' },
   ];
 
   const avatarCategories = [
@@ -111,7 +133,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
 
   const aboutCategories = [
     { id: 'billing', label: 'Billing Dashboard' },
-    { id: 'docs', label: 'Documentation' },
+    { id: 'docs', label: 'Documentation', url: 'http://localhost:8000/docs' },
     { id: 'faq', label: 'FAQ & Support' },
     { id: 'ask', label: 'Ask AI Assistant' },
     { id: 'feedback', label: 'Feedback' },
@@ -146,6 +168,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const devCategories = [
     { id: 'dev-dashboard', label: 'Dev Hub' },
     { id: 'api-keys', label: 'API Keys' },
+    { id: 'developer-api-hub', label: 'API Console', url: 'http://localhost:8000/docs' },
     { id: 'dev-analytics', label: 'Analytics' },
     { id: 'dev-logs', label: 'Logs & Debug' },
     { id: 'system-status', label: 'System' },
@@ -169,6 +192,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   );
 
   const filteredPdf = filterLinks(pdfCategories);
+  const filteredConversion = filterLinks(conversionCategories);
   const filteredAvatar = filterLinks(avatarCategories);
   const filteredSpeech = filterLinks(speechCategories);
   const filteredStudio = filterLinks(studioCategories);
@@ -179,7 +203,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const filteredDev = filterLinks(devCategories);
 
   const isAnyResult = sidebarSearch ? (
-    filteredMenuItems.length > 0 || filteredPdf.length > 0 || filteredAvatar.length > 0 ||
+    filteredMenuItems.length > 0 || filteredPdf.length > 0 || filteredConversion.length > 0 || filteredAvatar.length > 0 ||
     filteredSpeech.length > 0 || filteredStudio.length > 0 || filteredAbout.length > 0 ||
     filteredImage.length > 0 || filteredText.length > 0 || filteredSocial.length > 0 ||
     filteredDev.length > 0
@@ -194,6 +218,11 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
       case 'edit-pdf': return <EditPDFSidebar activeTab={activeTab} onTabChange={onTabChange} />;
       case 'pdf-security': return <PDFSecuritySidebar activeTab={activeTab} onTabChange={onTabChange} />;
       case 'pdf-intelligence': return <PDFIntelligenceSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'video-conversion': return <VideoConversionSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'audio-conversion': return <AudioConversionSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'document-conversion': return <DocumentConversionSidebar activeTab={activeTab} onTabChange={onTabChange} />;
+      case 'image-conversion':
+      case 'image-conversion-tools': return <ImageFormatConversionSidebar activeTab={activeTab} onTabChange={onTabChange} />;
       default: return renderMainNavigation();
     }
   };
@@ -241,11 +270,17 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             </li>
           ))}
           
-          {(sidebarSearch || (!sidebarSearch && true)) && <div className="nav-section-title-aura">Essentials</div>}
+          {(sidebarSearch || (!sidebarSearch && true)) && (
+            <>
+              <div className="nav-section-divider-aura"></div>
+              <div className="nav-section-title-aura">Essentials</div>
+            </>
+          )}
           
           {/* PDF SECTION */}
           {(sidebarSearch ? filteredPdf.length > 0 : true) && (
             <>
+              <div className="nav-section-divider-aura"></div>
               <li className={`dropdown-trigger-aura ${(isPdfOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
                 if (!sidebarSearch) setIsPdfOpen(!isPdfOpen);
                 onTabChange('pdf-select'); 
@@ -273,9 +308,42 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             </>
           )}
 
+          
+          {/* CONVERSION SECTION */}
+          {(sidebarSearch ? filteredConversion.length > 0 : true) && (
+            <>
+              <div className="nav-section-divider-aura"></div>
+              <li className={`dropdown-trigger-aura ${(isConversionOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
+                if (!sidebarSearch) setIsConversionOpen(!isConversionOpen);
+                onTabChange('universal-conversion'); 
+              }}>
+                 <span className="item-icon-aura"><Icons.Flows /></span>
+                 <span className="label-aura">Universal Converters</span>
+                 {!sidebarSearch && (
+                   <span className="dropdown-arrow-aura">
+                     {isConversionOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                   </span>
+                 )}
+              </li>
+              {(isConversionOpen || sidebarSearch) && (
+                <ul className="nav-sub-list-aura">
+                  {filteredConversion.map((item, idx) => (
+                    <li key={item.id} 
+                        className={`sub-item-aura ${sidebarView === item.id ? 'active' : ''} animate-slide-right`} 
+                        style={{ animationDelay: `${idx * 0.03}s` }}
+                        onClick={() => { setSidebarView(item.id); onTabChange(item.id); }}>
+                      <span className="label-aura">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
           {/* AVATAR SECTION */}
           {(sidebarSearch ? filteredAvatar.length > 0 : true) && (
             <>
+              <div className="nav-section-divider-aura"></div>
               <li className={`dropdown-trigger-aura ${(isAvatarOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsAvatarOpen(!isAvatarOpen); onTabChange('avatar-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Avatar /></span>
                  <span className="label-aura">Avatar AI</span>
@@ -300,6 +368,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* SPEECH SECTION */}
           {(sidebarSearch ? filteredSpeech.length > 0 : true) && (
             <>
+              <div className="nav-section-divider-aura"></div>
               <li className={`dropdown-trigger-aura ${(isSpeechOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsSpeechOpen(!isSpeechOpen); onTabChange('speech-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Voices /></span>
                  <span className="label-aura">Voice & Speech</span>
@@ -324,6 +393,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* STUDIO SECTION */}
           {(sidebarSearch ? filteredStudio.length > 0 : true) && (
             <>
+              <div className="nav-section-divider-aura"></div>
               <li className={`dropdown-trigger-aura ${(isStudioOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsStudioOpen(!isStudioOpen); onTabChange('artists-home'); }}>
                  <span className="item-icon-aura"><Icons.Studio /></span>
                  <span className="label-aura">Creation Studio</span>
@@ -408,7 +478,13 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               {(isDevOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
                   {filteredDev.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => {
+                      if (item.url) {
+                        window.open(item.url, '_blank');
+                      } else {
+                        onTabChange(item.id);
+                      }
+                    }}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -456,7 +532,13 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               {(isAboutOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
                   {filteredAbout.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => {
+                      if (item.url) {
+                        window.open(item.url, '_blank');
+                      } else {
+                        onTabChange(item.id);
+                      }
+                    }}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -478,56 +560,173 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   );
 
 
+  const EssentialsGrid = () => (
+    <div className={`essentials-mobile-hub ${isToolsOpenMobile ? 'open' : ''}`}>
+      <div className="hub-header">
+        <h2>Essential Tools</h2>
+        <button onClick={() => setIsToolsOpenMobile(false)}>×</button>
+      </div>
+      <div className="hub-grid">
+        <div className="hub-item" onClick={() => { onTabChange('pdf-select'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon pdf"><Icons.PDF /></div>
+          <span>PDF Tools</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('avatar-dashboard'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon avatar"><Icons.Avatar /></div>
+          <span>Avatar AI</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('speech-dashboard'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon speech"><Icons.Voices /></div>
+          <span>Voice & Audio</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('artists-home'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon studio"><Icons.Studio /></div>
+          <span>Creation Studio</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('image-dashboard'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon image"><Icons.Image /></div>
+          <span>Visual Design</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('social-dashboard'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon social"><Icons.Social /></div>
+          <span>Marketing Hub</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('dev-dashboard'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon dev"><Icons.Dev /></div>
+          <span>Developer Hub</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('text-dashboard'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon text"><Icons.Text /></div>
+          <span>Smart Text</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('audiobooks'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon books"><Icons.Books /></div>
+          <span>Audiobooks</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('billing'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon about"><Icons.Info /></div>
+          <span>Resources</span>
+        </div>
+        <div className="hub-item" onClick={() => { onTabChange('settings-hub'); setIsToolsOpenMobile(false); }}>
+          <div className="hub-icon settings"><Icons.Settings /></div>
+          <span>System Settings</span>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <aside className={`sidebar ${!isOpen ? 'sidebar-collapsed' : ''}`}>
-      <div className="sidebar-header">
-         {sidebarView === 'main' ? (
-           <>
-             <div className="aura-logo" onClick={() => onTabChange('dashboard')} style={{ cursor: 'pointer' }}>
-               <div className="logo-icon"></div>
-               <h1 className="logo-text">Aura</h1>
+    <>
+      <aside className={`sidebar ${!isOpen ? 'sidebar-collapsed' : ''}`}>
+        <div className="sidebar-header">
+           {sidebarView === 'main' ? (
+             <>
+               <div className="aura-logo" onClick={() => onTabChange('dashboard')} style={{ cursor: 'pointer' }}>
+                 <div className="logo-icon"></div>
+                 <h1 className="logo-text">Aura</h1>
+               </div>
+               <button className="sidebar-close-btn-aura" onClick={onToggle}>
+                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6"/></svg>
+               </button>
+             </>
+           ) : (
+             <div className="sidebar-view-header" onClick={() => setSidebarView('main')}>
+               <div className="back-btn-aura"><Icons.Back /></div>
+               <span className="view-title-aura">
+                  {pdfCategories.find(c => c.id === sidebarView)?.label || 'Back'}
+               </span>
              </div>
-             <button className="sidebar-close-btn-aura" onClick={onToggle}>
-               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6"/></svg>
-             </button>
-           </>
-         ) : (
-           <div className="sidebar-view-header" onClick={() => setSidebarView('main')}>
-             <div className="back-btn-aura"><Icons.Back /></div>
-             <span className="view-title-aura">
-                {pdfCategories.find(c => c.id === sidebarView)?.label || 'Back'}
-             </span>
-           </div>
-         )}
-      </div>
+           )}
+        </div>
 
-      <div className="sidebar-scroll-aura">
-        {renderCurrentView()}
-      </div>
+        <div className="sidebar-scroll-aura">
+          {renderCurrentView()}
+        </div>
 
-      <div className="sidebar-footer-aura">
-        <div className="sidebar-settings-aura" onClick={() => onTabChange('settings-hub')} style={{ cursor: 'pointer', padding: '12px 16px', borderRadius: '12px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.6)', transition: 'all 0.2s' }}>
-          <Icons.Settings />
-          <span style={{ fontSize: '14px', fontWeight: '500' }}>System Settings</span>
-        </div>
-        <div className="usage-card-aura">
-          <div className="usage-header">
-            <span>Aura Credits</span>
-            <span>85%</span>
+        <div className="sidebar-footer-aura">
+          {/* Mission Control Widget */}
+          <AnimatePresence>
+            {tasks.length > 0 && (
+              <motion.div 
+                className="mission-control-aura"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+              >
+                <div className="mc-header">
+                  <span className="mc-title">Mission Control</span>
+                  <span className="mc-count">{tasks.filter(t => t.status === 'running').length} Active</span>
+                </div>
+                <div className="mc-tasks-list">
+                  {tasks.map(task => (
+                    <div key={task.id} className="mc-task-item">
+                      <div className="mc-task-info">
+                        <span className="mc-task-name">{task.name}</span>
+                        <span className="mc-task-pct">{task.progress}%</span>
+                      </div>
+                      <div className="mc-progress-track">
+                        <motion.div 
+                          className="mc-progress-fill" 
+                          animate={{ width: `${task.progress}%` }} 
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="sidebar-settings-aura" onClick={toggleApp} style={{ cursor: 'pointer', padding: '12px 16px', borderRadius: '12px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.6)', transition: 'all 0.2s' }}>
+            <Icons.Settings />
+            <span style={{ fontSize: '14px', fontWeight: '500' }}>App Settings</span>
           </div>
-          <div className="usage-bar-bg">
-             <div className="usage-bar-fill" style={{ width: '85%' }}></div>
+          <div className="usage-card-aura">
+            <div className="usage-header">
+              <span>Aura Credits</span>
+              <span>85%</span>
+            </div>
+            <div className="usage-bar-bg">
+               <div className="usage-bar-fill" style={{ width: '85%' }}></div>
+            </div>
+          </div>
+          <div className="user-profile-footer-aura" onClick={() => { onTabChange('profile'); setSidebarView('main'); }}>
+            <div className="user-avatar-aura">KJ</div>
+            <div className="user-details-aura">
+               <span className="user-name">Kj. Dheena</span>
+               <span className="user-plan">Pro Plan</span>
+            </div>
           </div>
         </div>
-        <div className="user-profile-footer-aura" onClick={() => { onTabChange('profile'); setSidebarView('main'); }}>
-          <div className="user-avatar-aura">KJ</div>
-          <div className="user-details-aura">
-             <span className="user-name">Kj. Dheena</span>
-             <span className="user-plan">Pro Plan</span>
-          </div>
-        </div>
-      </div>
-    </aside>
+
+        {/* Mobile Bottom Bar Overrides */}
+        <nav className="mobile-bottom-bar-nav">
+          <ul className="mobile-nav-list">
+            <li className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => onTabChange('dashboard')}>
+              <Icons.Home />
+              <span>Home</span>
+            </li>
+            <li className={activeTab === 'studio' ? 'active' : ''} onClick={() => onTabChange('studio')}>
+              <Icons.Studio />
+              <span>Studio</span>
+            </li>
+            <li className={isToolsOpenMobile ? 'active' : ''} onClick={() => setIsToolsOpenMobile(true)}>
+              <Icons.More />
+              <span>Tools</span>
+            </li>
+            <li className={activeTab === 'files' ? 'active' : ''} onClick={() => onTabChange('files')}>
+              <Icons.Files />
+              <span>Files</span>
+            </li>
+            <li className={activeTab === 'profile' ? 'active' : ''} onClick={() => onTabChange('profile')}>
+              <Icons.Avatar />
+              <span>Profile</span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <EssentialsGrid />
+    </>
   );
 };
 
