@@ -1,9 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Box, Info } from 'lucide-react'
+import { ArrowRight, Box, Info, ArrowUpRight } from 'lucide-react'
 import { SIDEBAR_CATEGORIES } from '../../constants/sidebarData'
 import '../../styles/pages/dashboards/HubDashboards.css'
+import '../../styles/pages/dashboards/DashboardIndex.css'
+import { PrimaryButton } from '../../components/buttons'
 
 const HubDashboard = ({ type = 'main' }) => {
   const navigate = useNavigate()
@@ -14,7 +16,7 @@ const HubDashboard = ({ type = 'main' }) => {
       subtitle: 'Explore and launch our industry-leading AI processing engines.',
       className: 'main-tools-dashboard',
       headerClass: 'main-tools-header',
-      gridClass: 'categories-container',
+      gridClass: 'portal-tools-main-grid',
       categories: ['Video', 'Image', 'Avatar', 'Speech', 'Text', 'Studio'],
       isToolGrid: true
     },
@@ -97,28 +99,48 @@ const HubDashboard = ({ type = 'main' }) => {
                   <span style={{ color: catColor }}>{category.icon}</span>
                   <h2>{catName} Tools</h2>
                 </div>
-                <div className="tools-grid">
+                <div className="portal-tools-main-grid">
                   {category.links.slice(0, 4).map((tool, idx) => (
-                    <motion.button
+                    <button
                       key={`${catName}-${idx}`}
-                      className="tool-card"
-                      style={{ '--cat-color': catColor }}
-                      variants={itemVariants}
+                      className="portal-tool-card"
+                      style={{ 
+                          backgroundColor: '#0f1016',
+                          border: '1px solid rgba(255, 255, 255, 0.04)'
+                      }}
                       onClick={() => navigate(tool.path)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
                     >
-                      <div className="tool-icon-wrapper">
-                        {tool.icon ? React.cloneElement(tool.icon, { size: 24 }) : <Box size={24} />}
+                      <div className="tool-card-top">
+                          <div className="tool-suite-info">
+                              <div className="suite-icon-mini" style={{ color: catColor }}>
+                                  {tool.icon ? React.cloneElement(tool.icon, { size: 14 }) : <Box size={14} />}
+                              </div>
+                              <span className="suite-name-tag">{catName.toUpperCase()} TOOLS</span>
+                          </div>
+                          <div className="tool-action-indicator">
+                              <ArrowUpRight size={14} />
+                          </div>
                       </div>
-                      <div className="tool-info">
-                        <h3>{tool.name}</h3>
-                        <p>High-performance AI engine for advanced {tool.name.toLowerCase()} processing.</p>
+
+                      <div className="tool-card-body">
+                          <h3>{tool.name}</h3>
+                          <div className="tool-card-footer">
+                              <div className="tool-status-dot" style={{ backgroundColor: catColor }}></div>
+                              <span className="tool-ready-text">Ready to use</span>
+                          </div>
+
+                          <div className="card-launch-aura">
+                              <PrimaryButton 
+                                  className="launch-btn-premium"
+                                  size="md"
+                                  style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
+                              >
+                                  Open Tool
+                              </PrimaryButton>
+                          </div>
                       </div>
-                      <div className="tool-footer">
-                        <ArrowRight size={18} />
-                      </div>
-                    </motion.button>
+                      <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${catColor}15, transparent)` }}></div>
+                    </button>
                   ))}
                 </div>
               </section>
