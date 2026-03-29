@@ -11,5 +11,11 @@ export { default as HEICtoJPG } from './HEICtoJPG'
 export { default as HEICtoPNG } from './HEICtoPNG'
 export { default as HEICtoJPEG } from './HEICtoJPEG'
 export { default as HEICtoWEBP } from './HEICtoWEBP'
+export { default as PNGtoJPG } from './PNGtoJPG'
+export { default as JPGtoPNG } from './JPGtoPNG'
+export { default as WEBPtoJPG } from './WEBPtoJPG'
+export { default as WEBPtoPNG } from './WEBPtoPNG'
+export { default as WEBPtoJPEG } from './WEBPtoJPEG'
+export { default as JPGtoWEBP } from './JPGtoWEBP'
 
 export default ImageFormatConversionHub
