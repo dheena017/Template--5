@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const MP4toWMV = () => <OrganizePDF forcedTool="MP4 to WMV" />
-export default MP4toWMV
+import React from 'react';
+import VideoConversionTool from './VideoConversionTool';
+
+const MP4toWMV = () => <VideoConversionTool fromFormat='MP4' toFormat='WMV' />;
+
+export default MP4toWMV;
