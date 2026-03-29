@@ -148,3 +148,65 @@ async def convert_to_pdf(files: List[UploadFile] = File(...)):
         media_type="application/pdf",
         headers={"Content-Disposition": 'attachment; filename="converted.pdf"'}
     )
+
+@router.post("/remove-pages")
+async def remove_pages(
+    file: UploadFile = File(...),
+    pages: str = Form(...) # comma-separated 0-indexed ints
+):
+    if file.content_type != "application/pdf":
+        raise HTTPException(400, detail="Invalid file type")
+    contents = await file.read()
+    pages_list = [int(p.strip()) for p in pages.split(',')]
+    output = pdf_service.remove_pages(io.BytesIO(contents), pages_list)
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="removed_pages.pdf"'}
+    )
+
+@router.post("/extract-pages")
+async def extract_pages(
+    file: UploadFile = File(...),
+    pages: str = Form(...) # comma-separated 0-indexed ints
+):
+    if file.content_type != "application/pdf":
+        raise HTTPException(400, detail="Invalid file type")
+    contents = await file.read()
+    pages_list = [int(p.strip()) for p in pages.split(',')]
+    output = pdf_service.extract_pages(io.BytesIO(contents), pages_list)
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="extracted_pages.pdf"'}
+    )
+
+@router.post("/rotate")
+async def rotate(
+    file: UploadFile = File(...),
+    degrees: int = Form(...)
+):
+    if file.content_type != "application/pdf":
+        raise HTTPException(400, detail="Invalid file type")
+    contents = await file.read()
+    output = pdf_service.rotate_pdf(io.BytesIO(contents), degrees)
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="rotated.pdf"'}
+    )
+
+@router.post("/unlock")
+async def unlock(
+    file: UploadFile = File(...),
+    password: str = Form(...)
+):
+    if file.content_type != "application/pdf":
+        raise HTTPException(400, detail="Invalid file type")
+    contents = await file.read()
+    output = pdf_service.unlock_pdf(io.BytesIO(contents), password)
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="unlocked.pdf"'}
+    )
