@@ -163,5 +163,55 @@
   pointer-events: none;
 }
 
+/* -- PREMIUM SHINE CORE (Buttons & Cards) -- */
+.primary-btn, .submit-btn, .recovery-btn, 
+.premium-card, .glass-card, .feature-card-aura,
+.balance-card-refined, .plan-card-refined, .history-card-refined {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.primary-btn::after, .submit-btn::after, .recovery-btn::after,
+.premium-card::after, .glass-card::after, .feature-card-aura::after,
+.balance-card-refined::after, .plan-card-refined::after, .history-card-refined::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0) 80%,
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: auraShine 6s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Specific Faster Shimmer for Buttons */
+.primary-btn::after, .submit-btn::after, .recovery-btn::after {
+  animation-duration: 3s;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent
+  );
+}
+
+@keyframes auraShine {
+  0% { left: -150%; }
+  25%, 100% { left: 150%; }
+}
+
 .animate-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
 .animate-float { animation: floatVertical 4s ease-in-out infinite; }
