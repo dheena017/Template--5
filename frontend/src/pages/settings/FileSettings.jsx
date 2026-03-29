@@ -1,61 +1,146 @@
-import React from 'react'
-import { HardDrive, Library, Layers, CheckCircle, Box, Trash2 } from 'lucide-react'
+import React, { useState } from 'react'
+import { 
+  HardDrive, Library, Layers, CheckCircle, Box, Trash2, 
+  Database, RefreshCw, FolderTree, FileSearch, Cloud, 
+  ShieldCheck, Clock
+} from 'lucide-react'
+import OnOffButton from '../../components/common/OnOffButton'
 
 const FileSettings = () => {
+  const [storageMode, setStorageMode] = useState('cloud');
+  const [namingConvention, setNamingConvention] = useState('date_tool');
+  const [versioning, setVersioning] = useState(true);
+  const [autoOrganize, setAutoOrganize] = useState(true);
+  const [metadataStrip, setMetadataStrip] = useState(false);
+  const [smartSearch, setSmartSearch] = useState(true);
+  const [thumbnailPregen, setThumbnailPregen] = useState(true);
+  const [ocrIndexing, setOcrIndexing] = useState(true);
+  const [forceSanitize, setForceSanitize] = useState(true);
+  const [cloudSync, setCloudSync] = useState(true);
+  const [retention, setRetention] = useState('30');
+  const [autoCleanup, setAutoCleanup] = useState(true);
+
   return (
     <div className="settings-content-grid">
-      <section className="settings-card premium-card">
-        <h3><HardDrive size={18} /> Storage Provider</h3>
-        <p className="setting-desc">Primary location for raw and master assets.</p>
-        <div className="segment-row">
-          <button className="seg-btn active">Platform Cloud</button>
-          <button className="seg-btn">Local Browser (Session)</button>
+      <section className="premium-card lg:col-span-2">
+        <div className="card-icon-header">
+           <Database size={32} className="text-primary" />
+           <div className="header-info">
+             <h3 className="text-2xl font-black">Storage Architecture</h3>
+             <p className="text-sm text-slate-500">Universal file management and cloud synchronization defaults.</p>
+           </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+           {[
+             { id: 'cloud', label: 'Aura Cloud Storage', icon: Cloud, desc: 'Encrypted, multi-device sync.' },
+             { id: 'local', label: 'Browser Cache', icon: HardDrive, desc: 'Ultra-fast, ephemeral sessions.' },
+             { id: 'hybrid', label: 'Hybrid Mesh', icon: RefreshCw, desc: 'Local draft + Cloud backup.' }
+           ].map(opt => (
+             <button 
+               key={opt.id}
+               className={`theme-selection-card ${storageMode === opt.id ? 'active' : ''}`}
+               onClick={() => setStorageMode(opt.id)}
+             >
+                <opt.icon size={20} className="mb-3" />
+                <span className="font-bold block text-sm">{opt.label}</span>
+                <p className="text-[9px] opacity-60 leading-tight">{opt.desc}</p>
+             </button>
+           ))}
         </div>
       </section>
 
-      <section className="settings-card premium-card">
-        <h3><Trash2 size={18} /> Auto-Cleanup Policy</h3>
-        <p className="setting-desc">Control automatic deletion of temporary renders.</p>
-        <select className="setting-select">
-          <option>Never delete (Manual only)</option>
-          <option>After 30 days of inactivity</option>
-          <option>After 7 days of inactivity</option>
-          <option>Delete on project export</option>
-        </select>
-      </section>
-
-      <section className="settings-card premium-card">
-        <h3><Library size={18} /> Library Organization</h3>
-        <div className="toggle-row">
-          <span>Sort by Date (Default)</span>
-          <input type="checkbox" defaultChecked />
+      <section className="premium-card">
+        <div className="card-icon-header">
+          <FolderTree size={24} />
+          <h3>Naming &amp; Hierarchy</h3>
         </div>
-        <div className="toggle-row">
-          <span>Group by Production Folder</span>
-          <input type="checkbox" />
-        </div>
-      </section>
-
-      <section className="settings-card premium-card">
-        <h3><Layers size={18} /> Asset Versioning</h3>
-        <p className="setting-desc">Save up to 10 previous versions of a file.</p>
-        <div className="toggle-row">
-          <span>Keep Version History</span>
-          <input type="checkbox" defaultChecked />
+        <p className="setting-desc">Universal directory and file naming conventions.</p>
+        <div className="space-y-4 mt-4">
+           <select
+             className="setting-select"
+             value={namingConvention}
+             onChange={e => setNamingConvention(e.target.value)}
+           >
+              <option value="date_tool">{'{date}_{tool}_{id}'}</option>
+              <option value="tool_project">{'{tool}_{project}_{v}'}</option>
+              <option value="original">{'Original Filename (Suffix)'}</option>
+           </select>
+           <div className="toggle-list mt-8">
+              <div className="toggle-row">
+                <label>Auto-Group by Category</label>
+                <OnOffButton checked={autoOrganize} onChange={setAutoOrganize} />
+              </div>
+           </div>
         </div>
       </section>
 
-      <section className="settings-card premium-card">
-        <h3><Box size={18} /> Default Export Type</h3>
-        <select className="setting-select">
-          <option>MPEG-4 (Best Quality)</option>
-          <option>MOV (Production Post)</option>
-          <option>MKV (Multi-audio)</option>
-        </select>
+      <section className="premium-card">
+        <div className="card-icon-header">
+          <FileSearch size={24} />
+          <h3>Intelligent Indexing</h3>
+        </div>
+        <div className="toggle-list space-y-4 mt-4">
+           <div className="toggle-row">
+             <label>Deep Semantic Search</label>
+             <OnOffButton checked={smartSearch} onChange={setSmartSearch} />
+           </div>
+           <div className="toggle-row">
+             <label>Thumbnail Pre-gen</label>
+             <OnOffButton checked={thumbnailPregen} onChange={setThumbnailPregen} />
+           </div>
+           <div className="toggle-row">
+             <label>OCR Auto-indexing</label>
+             <OnOffButton checked={ocrIndexing} onChange={setOcrIndexing} />
+           </div>
+        </div>
+      </section>
+
+      <section className="premium-card">
+        <div className="card-icon-header">
+          <ShieldCheck size={24} />
+          <h3>Privacy &amp; Scrubbing</h3>
+        </div>
+        <p className="setting-desc">Universal file sanitation on export.</p>
+        <div className="toggle-list space-y-4 mt-4">
+          <div className="toggle-row">
+            <label>Strip GPS &amp; EXIF Data</label>
+            <OnOffButton checked={metadataStrip} onChange={setMetadataStrip} />
+          </div>
+          <div className="toggle-row">
+             <label>Force Filename Sanitation</label>
+             <OnOffButton checked={forceSanitize} onChange={setForceSanitize} />
+          </div>
+        </div>
+      </section>
+
+      <section className="premium-card">
+        <div className="card-icon-header">
+          <Clock size={24} />
+          <h3>Persistence &amp; Lifecycle</h3>
+        </div>
+        <div className="toggle-list space-y-4 mt-4">
+          <div className="toggle-row">
+            <label>Master Version History</label>
+            <OnOffButton checked={versioning} onChange={setVersioning} />
+          </div>
+          <select
+            className="setting-select mt-2"
+            value={retention}
+            onChange={e => setRetention(e.target.value)}
+          >
+            <option value="30">Retention: 30 Days (Standard)</option>
+            <option value="never">Retention: Never Delete (Safe)</option>
+            <option value="weekly">Retention: Delete Weekly (Privacy)</option>
+          </select>
+          <div className="toggle-row">
+             <label>Auto-Cleanup Ghost Assets</label>
+             <OnOffButton checked={autoCleanup} onChange={setAutoCleanup} />
+          </div>
+        </div>
       </section>
     </div>
   )
 }
 
 export default FileSettings
-
