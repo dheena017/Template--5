@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const OGGtoAAC = () => <OrganizePDF forcedTool="OGG to AAC" />
-export default OGGtoAAC
+import React from 'react';
+import AudioConversionTool from './AudioConversionTool';
+
+const OGGtoAAC = () => <AudioConversionTool fromFormat='OGG' toFormat='AAC' />;
+
+export default OGGtoAAC;
