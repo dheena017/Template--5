@@ -287,3 +287,32 @@
   backdrop-filter: blur(4px);
   z-index: 90;
 }
+
+@media (max-width: 768px) {
+  .aura-toolbar {
+    padding: 0 16px;
+    height: 60px;
+  }
+
+  .breadcrumb-folder:not(:last-child),
+  .breadcrumb-separator {
+    display: none;
+  }
+
+  .search-container-aura {
+    display: none;
+  }
+
+  .toolbar-actions-aura {
+    gap: 8px;
+  }
+
+  .icon-btn-aura {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .icon-btn-aura:not(:last-child) {
+    display: none;
+  }
+}
