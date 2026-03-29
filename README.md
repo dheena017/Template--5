@@ -1,57 +1,50 @@
-# Template 5 - High-Performance AI & PDF Platform
+# Aura Platform - High-Performance AI & Orchestration Hub
 
-Template 5 is a robust, full-stack application template designed for ultra-low latency, scalable cloud-native architectures. This project features a state-of-the-art PDF management tool suite built with a **Client-Side First** philosophy.
+Aura Platform is a robust, full-stack application template designed for ultra-low latency, scalable cloud-native architectures. This project features a state-of-the-art PDF management tool suite, generative AI integrations, and a deeply optimized developer console.
 
 ## 🚀 Key Features
-
-*   **Advanced PDF Suite:** Visual Organize, Merge, Split, and Compress PDF tools.
-*   **Privacy-First Design:** All document processing occurs in the browser using `pdf-lib` and `pdf.js`.
-*   **AI Integration:** Optimized for AI-assisted document workflows (OCR, translation - incoming).
-*   **Cloud-Native Hosting:** Architected for deployment on AWS/Cloudflare (CDN + S3 + Lambda).
+*   **Aura Command Hub:** Visual Organize, Merge, Split, and Compress PDF tools directly integrated with frontend/backend orchestration.
+*   **Privacy-First Design:** Sensitive document processing offloaded to the browser, with heavy-lifting capabilities structured on the backend.
+*   **AI Integration:** Framework set up for AI-assisted workflows (Neural synthesis, voice generation).
+*   **Premium "Button-Card" Aesthetics:** Deep glassmorphism, dynamic lighting, and a modern 'Studio' application feel.
 
 ## 🛠 Project Structure
-
-- `frontend/`: React + Vite application with Tailwind CSS and Framer Motion.
-- `backend/`: Django/Python backend for heavy processing and data management. (Service tier).
-- `SYSTEM_ARCHITECTURE.md`: Deep dive into the cloud infrastructure and data flow.
-- `docker-compose.yml`: Local Development environment using standard containers (MySQL, Django, Vite).
+- `frontend/`: React + Vite application boasting Framer Motion liquid physics and an immersive dark mode theme.
+- `backend/`: FastAPI + SQLAlchemy backend serving as the hyper-fast capability engine.
+- `SYSTEM_ARCHITECTURE.md`: Deep dive into the cloud infrastructure and intended data flow.
+- `aura_platform.db`: The provisioned SQLite backend database driving features and live telemetry.
 
 ## 🏗 System Architecture
 
-For a detailed look at the cloud-native design, see our [SYSTEM_ARCHITECTURE.md](./SYSTEM_ARCHITECTURE.md).
-
 ```mermaid
 graph LR
-    CDN[CDN] --> Frontend[S3 Frontend]
-    CDN --> Gateway[API Gateway]
-    Gateway --> Clientside[Client-Side Wasm]
-    Gateway --> Serverless[Lambda Functions]
-    Gateway --> Microservices[EKS/ECS Services]
+    CDN[CDN] --> Frontend[Vite Frontend]
+    Frontend --> Auth[Auth Gate]
+    Auth --> API[FastAPI Orchestrator]
+    API --> DB[(SQLite / SQLBase)]
+    API --> Background[Background Synthesis]
 ```
 
 ## 💻 Local Development
 
 1. **Clone the repository.**
-2. **Start the local infrastructure with Docker:**
-   ```bash
-   docker-compose up --build
-   ```
-3. **Frontend Development:**
+2. **Frontend Development:**
    ```bash
    cd frontend
    npm install
    npm run dev
    ```
-4. **Backend Development:**
+3. **Backend Development:**
+   Navigate back to the project root:
    ```bash
-   cd backend
-   pip install -r requirements.txt
-   python manage.py runserver
+   pip install -r backend/requirements.txt
+   python -m backend.init_db
+   python -m uvicorn backend.main:app --reload --port 8000
    ```
+   *Your live API Documentation will be hosted at `/docs`!*
 
 ## ☁️ Deployment Philosophy
-
-This project aims for a zero-server approach for document processing (via WebAssembly/JS) and a serverless-focused backend to minimize maintenance and maximize scalability.
+This project currently acts as an extensible monolithic template. In production, the FastAPI core can separate into modular serverless functions while the React application pushes instantly via Cloudflare Pages or AWS Amplify.
 
 ---
-*Developed for Template development - Template 5*
+*Developed as the high-fidelity Aura template*
