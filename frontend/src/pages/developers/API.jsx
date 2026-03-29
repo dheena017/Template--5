@@ -102,10 +102,12 @@ const API = () => {
     ]
 
     const endpoints = [
+        { method: 'POST', path: '/api/pdf/merge', desc: 'Expert-level PDF Merging of multiple files', cost: '10' },
+        { method: 'POST', path: '/api/pdf/split', desc: 'Dynamic PDF Split & Extraction to ZIP', cost: '15' },
+        { method: 'POST', path: '/api/pdf/optimize', desc: 'Compress and clean PDF metadata', cost: '5' },
+        { method: 'POST', path: '/api/pdf/protect', desc: 'Apply AES-256 password protection', cost: 'Free' },
         { method: 'POST', path: '/v1/neural/faceswap', desc: 'Perform AI-driven facial replacement', cost: '15' },
-        { method: 'POST', path: '/v1/video/ugc', desc: 'Create a video from script or topic', cost: '20' },
-        { method: 'POST', path: '/v1/audio/dubbing', desc: 'High-fidelity audio synthesis', cost: '5' },
-        { method: 'GET', path: '/v1/jobs/:id', desc: 'Poll status of active executions', cost: 'Free' }
+        { method: 'GET', path: '/api/health', desc: 'Poll status of active system engines', cost: 'Free' }
     ]
 
     return (
@@ -125,7 +127,7 @@ const API = () => {
                     <p>Integrate our state-of-the-art video, audio, and neural processing capabilities directly into your production application with enterprise-grade reliability.</p>
                     
                     <div className="hero-actions">
-                        <button className="primary-btn" onClick={() => navigate('/docs')}>
+                        <button className="primary-btn" onClick={() => window.open('http://localhost:8000/docs', '_blank')}>
                             Explore Docs <ArrowRight size={18} />
                         </button>
                         <button className="secondary-btn" onClick={() => navigate('/dev/api-keys')}>
@@ -305,7 +307,7 @@ job = client.neural.faceswap(
             >
                 <div className="ref-header">
                     <h3>Operational Endpoints</h3>
-                    <button className="view-all" onClick={() => navigate('/docs')}>
+                    <button className="view-all" onClick={() => window.open('http://localhost:8000/docs', '_blank')}>
                         Technical Reference <ExternalLink size={14} />
                     </button>
                 </div>
