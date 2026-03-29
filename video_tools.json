@@ -1,0 +1,97 @@
+[
+  {
+    "id": "avi-to-mkv",
+    "name": "AVI to MKV",
+    "desc": "Convert AVI videos to MKV format"
+  },
+  {
+    "id": "avi-to-mov",
+    "name": "AVI to MOV",
+    "desc": "Convert AVI videos to MOV format"
+  },
+  {
+    "id": "avi-to-mp4",
+    "name": "AVI to MP4",
+    "desc": "Convert AVI videos to MP4 format"
+  },
+  {
+    "id": "avi-to-wmv",
+    "name": "AVI to WMV",
+    "desc": "Convert AVI videos to WMV format"
+  },
+  {
+    "id": "mkv-to-avi",
+    "name": "MKV to AVI",
+    "desc": "Convert MKV videos to AVI format"
+  },
+  {
+    "id": "mkv-to-mov",
+    "name": "MKV to MOV",
+    "desc": "Convert MKV videos to MOV format"
+  },
+  {
+    "id": "mkv-to-mp4",
+    "name": "MKV to MP4",
+    "desc": "Convert MKV videos to MP4 format"
+  },
+  {
+    "id": "mkv-to-wmv",
+    "name": "MKV to WMV",
+    "desc": "Convert MKV videos to WMV format"
+  },
+  {
+    "id": "mov-to-avi",
+    "name": "MOV to AVI",
+    "desc": "Convert MOV videos to AVI format"
+  },
+  {
+    "id": "mov-to-mkv",
+    "name": "MOV to MKV",
+    "desc": "Convert MOV videos to MKV format"
+  },
+  {
+    "id": "mov-to-mp4",
+    "name": "MOV to MP4",
+    "desc": "Convert MOV videos to MP4 format"
+  },
+  {
+    "id": "mov-to-wmv",
+    "name": "MOV to WMV",
+    "desc": "Convert MOV videos to WMV format"
+  },
+  {
+    "id": "mp4-to-avi",
+    "name": "MP4 to AVI",
+    "desc": "Convert MP4 videos to AVI format"
+  },
+  {
+    "id": "mp4-to-mkv",
+    "name": "MP4 to MKV",
+    "desc": "Convert MP4 videos to MKV format"
+  },
+  {
+    "id": "mp4-to-mov",
+    "name": "MP4 to MOV",
+    "desc": "Convert MP4 videos to MOV format"
+  },
+  {
+    "id": "mp4-to-wmv",
+    "name": "MP4 to WMV",
+    "desc": "Convert MP4 videos to WMV format"
+  },
+  {
+    "id": "wmv-to-avi",
+    "name": "WMV to AVI",
+    "desc": "Convert WMV videos to AVI format"
+  },
+  {
+    "id": "wmv-to-mkv",
+    "name": "WMV to MKV",
+    "desc": "Convert WMV videos to MKV format"
+  },
+  {
+    "id": "wmv-to-mp4",
+    "name": "WMV to MP4",
+    "desc": "Convert WMV videos to MP4 format"
+  }
+]
