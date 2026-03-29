@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const AVItoMOV = () => <OrganizePDF forcedTool="AVI to MOV" />
-export default AVItoMOV
+import React from 'react';
+import VideoConversionTool from './VideoConversionTool';
+
+const AVItoMOV = () => <VideoConversionTool fromFormat='AVI' toFormat='MOV' />;
+
+export default AVItoMOV;
