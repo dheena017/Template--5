@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Info, BookOpen, CircleHelp, Activity, Sparkles, HeartPulse } from 'lucide-react'
+import OnOffButton from '../../components/common/OnOffButton'
 
 const AboutSettings = () => {
+  const [healthCheck, setHealthCheck] = useState(true);
+  const [releaseChannel, setReleaseChannel] = useState('stable');
+
   return (
     <div className="settings-content-grid">
       <section className="settings-card premium-card wide">
-        <h3><Info size={18} /> Platform Information</h3>
+        <div className="card-icon-header">
+          <Info size={24} />
+          <h3>Platform Information</h3>
+        </div>
         <p className="setting-desc">Detailed metadata regarding your current build and node status.</p>
         <div className="info-list">
            <div className="info-item"><span>Platform Version</span> <span>v2.8.4 Enterprise</span></div>
@@ -17,28 +24,53 @@ const AboutSettings = () => {
       </section>
 
       <section className="settings-card premium-card">
-        <h3><Activity size={18} /> Health Check</h3>
+        <div className="card-icon-header">
+          <Activity size={24} />
+          <h3>Health Check</h3>
+        </div>
         <p className="setting-desc">Control background system health checks.</p>
         <div className="toggle-row">
           <span>Real-time Health Status</span>
-          <input type="checkbox" defaultChecked />
+          <OnOffButton checked={healthCheck} onChange={setHealthCheck} />
         </div>
       </section>
 
       <section className="settings-card premium-card">
-        <h3><Sparkles size={18} /> Early Access</h3>
+        <div className="card-icon-header">
+          <Sparkles size={24} />
+          <h3>Early Access</h3>
+        </div>
         <p className="setting-desc">Opt-in to test experimental features before release.</p>
         <div className="segment-row">
-          <button className="seg-btn active">Stable Only</button>
-          <button className="seg-btn">Beta / Insider</button>
+          <button
+            className={`seg-btn ${releaseChannel === 'stable' ? 'active' : ''}`}
+            onClick={() => setReleaseChannel('stable')}
+          >
+            Stable Only
+          </button>
+          <button
+            className={`seg-btn ${releaseChannel === 'beta' ? 'active' : ''}`}
+            onClick={() => setReleaseChannel('beta')}
+          >
+            Beta / Insider
+          </button>
         </div>
       </section>
 
       <section className="settings-card premium-card">
-        <h3><BookOpen size={18} /> Knowledge Update</h3>
+        <div className="card-icon-header">
+          <BookOpen size={24} />
+          <h3>Knowledge Update</h3>
+        </div>
         <div className="toggle-row">
            <span>Download Offline Docs</span>
-           <button className="icon-btn-sm" style={{background: 'rgba(255,255,255,0.05)', border: 'none', padding: '0.2rem 0.5rem', borderRadius: '4px', cursor: 'pointer'}}>Download</button>
+           <button
+             className="seg-btn"
+             style={{ maxWidth: '120px', padding: '0.5rem 1rem', fontSize: '0.8rem' }}
+             onClick={() => alert('Downloading offline docs...')}
+           >
+             Download
+           </button>
         </div>
       </section>
     </div>
@@ -46,4 +78,3 @@ const AboutSettings = () => {
 }
 
 export default AboutSettings
-
