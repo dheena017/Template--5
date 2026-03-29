@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const MKVtoAVI = () => <OrganizePDF forcedTool="MKV to AVI" />
-export default MKVtoAVI
+import React from 'react';
+import VideoConversionTool from './VideoConversionTool';
+
+const MKVtoAVI = () => <VideoConversionTool fromFormat='MKV' toFormat='AVI' />;
+
+export default MKVtoAVI;
