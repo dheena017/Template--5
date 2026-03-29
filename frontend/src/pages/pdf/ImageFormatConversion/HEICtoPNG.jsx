@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const HEICtoPNG = () => <OrganizePDF forcedTool="HEIC to PNG" />
-export default HEICtoPNG
+import React from 'react';
+import ImageFormatConversionTool from './ImageFormatConversionTool';
+
+const HEICtoPNG = () => <ImageFormatConversionTool fromFormat="HEIC" toFormat="PNG" />;
+
+export default HEICtoPNG;
