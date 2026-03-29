@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const SVGtoJPEG = () => <OrganizePDF forcedTool="SVG to JPEG" />
-export default SVGtoJPEG
+import React from 'react';
+import ImageFormatConversionTool from './ImageFormatConversionTool';
+
+const SVGtoJPEG = () => <ImageFormatConversionTool fromFormat="SVG" toFormat="JPEG" />;
+
+export default SVGtoJPEG;
