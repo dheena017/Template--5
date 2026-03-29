@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Globe, Search, Command, ArrowUpRight, Zap, BookOpen, Layers, Bot, Sparkles, Send } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import '../../styles/pages/intelligence/SearchAgent.css'
+import ToolLayout from '../../components/layouts/ToolLayout'
 
 const SearchAgent = () => {
   const [query, setQuery] = useState('')
@@ -28,16 +29,17 @@ const SearchAgent = () => {
   }
 
   return (
-    <div className="search-agent-container">
-      <div className="agent-hero">
-        <div className="agent-badge">
-          <Zap size={14} fill="currentColor" /> Web Search Agent v2.4
+    <ToolLayout 
+        title="Web Search Agent" 
+        subtitle="AI-driven autonomous research that scans, synthesizes, and clusters the world's real-time data." 
+        icon={Search} 
+        color="#a855f7"
+        category="Artificial Intelligence"
+    >
+      <div className={`search-interface-wrapper ${results ? 'results-active' : ''} mt-12`}>
+        <div className="agent-badge mb-6 inline-flex" style={{ backgroundColor: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', padding: '4px 12px', borderRadius: '100px', fontSize: '10px', fontWeight: '850', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          <Zap size={14} fill="currentColor" className="mr-2" /> Web Search Agent v2.4
         </div>
-        <h1>Intelligence Research Hub</h1>
-        <p>AI-driven autonomous research that scans, synthesizes, and clusters the world's real-time data.</p>
-      </div>
-
-      <div className={`search-interface-wrapper ${results ? 'results-active' : ''}`}>
         <form className="agent-search-box glass-card" onSubmit={handleSearch}>
           <Search className="search-icon" size={24} />
           <input 
@@ -134,7 +136,7 @@ const SearchAgent = () => {
           </div>
         </div>
       )}
-    </div>
+    </ToolLayout>
   )
 }
 
