@@ -139,3 +139,53 @@ def convert_images_to_pdf(image_buffers: List[io.BytesIO]) -> io.BytesIO:
     
     output.seek(0)
     return output
+
+def remove_pages(file_buffer: io.BytesIO, pages_to_remove: List[int]) -> io.BytesIO:
+    """Remove specific 0-indexed pages from the PDF."""
+    reader = PdfReader(file_buffer)
+    writer = PdfWriter()
+    for idx, page in enumerate(reader.pages):
+        if idx not in pages_to_remove:
+            writer.add_page(page)
+    output = io.BytesIO()
+    writer.write(output)
+    output.seek(0)
+    return output
+
+def extract_pages(file_buffer: io.BytesIO, pages_to_extract: List[int]) -> io.BytesIO:
+    """Extract specific 0-indexed pages to form a new PDF."""
+    reader = PdfReader(file_buffer)
+    writer = PdfWriter()
+    for idx in pages_to_extract:
+        if idx < len(reader.pages):
+            writer.add_page(reader.pages[idx])
+    output = io.BytesIO()
+    writer.write(output)
+    output.seek(0)
+    return output
+
+def rotate_pdf(file_buffer: io.BytesIO, degrees: int = 90) -> io.BytesIO:
+    """Rotate all pages in a PDF by the given degrees."""
+    reader = PdfReader(file_buffer)
+    writer = PdfWriter()
+    for page in reader.pages:
+        page.rotate(degrees)
+        writer.add_page(page)
+    output = io.BytesIO()
+    writer.write(output)
+    output.seek(0)
+    return output
+
+def unlock_pdf(file_buffer: io.BytesIO, password: str) -> io.BytesIO:
+    """Remove encryption from a protected PDF."""
+    reader = PdfReader(file_buffer)
+    if reader.is_encrypted:
+        reader.decrypt(password)
+    writer = PdfWriter()
+    for page in reader.pages:
+        writer.add_page(page)
+    output = io.BytesIO()
+    writer.write(output)
+    output.seek(0)
+    return output
+
