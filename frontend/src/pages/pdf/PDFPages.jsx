@@ -18,10 +18,14 @@ import {
   Box,
   Pin,
   Music,
-  ShieldCheck
+  ShieldCheck,
+  ChevronRight,
+  ArrowUpRight,
+  MonitorPlay
 } from 'lucide-react'
 import OrganizePDF from './OrganizePDF'
 import '../../styles/pages/pdf/PDFPages.css'
+import { PrimaryButton } from '../../components/buttons'
 
 const CANONICAL_TOOL_KEYS = [
   'aac_to_ac3',
@@ -190,6 +194,20 @@ const toToolName = (key) => {
     .join(' ')
 }
 
+const toToolDescription = (key) => {
+    const name = toToolName(key);
+    if (key.includes('_to_')) {
+        const parts = key.split('_to_');
+        return `Convert ${parts[0].toUpperCase()} files to high-quality ${parts[1].toUpperCase()} format instantly.`;
+    }
+    if (key.includes('merge')) return `Combine multiple files into one single document with ease.`;
+    if (key.includes('split')) return `Divide your single file into multiple parts or extract specific pages.`;
+    if (key.includes('compression')) return `Optimize and reduce your file size without losing quality.`;
+    if (key.includes('encryption')) return `Secure your documents with professional-grade password protection.`;
+    if (key.includes('decryption')) return `Remove passwords and restrictions from your protected files.`;
+    return `Professional ${name} tool for fast, secure, and easy processing.`;
+}
+
 const isVideoKey = (key) => /(^|_)(avi|mp4|mov|mkv|wmv)(_|$)/.test(key)
 const isAudioKey = (key) => /(^|_)(mp3|wav|flac|aac|ac3|ogg)(_|$)/.test(key)
 const isEbookKey = (key) => /(epub|mobi|azw3|cbr|cbz)/.test(key)
@@ -318,7 +336,7 @@ const PDFPages = ({ forcedTab = null }) => {
             </div>
         </div>
       </div>
-      <main className="pdf-pages-main">
+      <main className="pdf-pages-main p-8 md:p-12 w-full max-w-[1400px] mx-auto">
         <header className="pdf-pages-header">
           <div className="pdf-category-dropdown">
             <button
@@ -373,20 +391,46 @@ const PDFPages = ({ forcedTab = null }) => {
               <span>{visibleSection.tools.length} tools</span>
             </div>
 
-            <div className="pdf-pages-grid">
+            <div className="portal-tools-main-grid">
               {visibleSection.tools.map((tool) => {
                 const Icon = tool.icon
                 return (
                   <button
                     key={tool.tool}
                     type="button"
-                    className="pdf-page-card"
+                    className="portal-tool-card aura-card-premium"
                     onClick={() => navigate(`/tools/pdf?tool=${tool.tool}`)}
                   >
-                    <span className="pdf-page-icon" style={{ color: tool.color, backgroundColor: `${tool.color}22` }}>
-                      <Icon size={18} />
-                    </span>
-                    <span className="pdf-page-name">{tool.name}</span>
+                    <div className="tool-card-top">
+                        <div className="tool-suite-info">
+                            <div className="suite-icon-mini" style={{ color: tool.color }}>
+                                <Icon size={14} />
+                            </div>
+                            <span className="suite-name-tag">{visibleSection.title}</span>
+                        </div>
+                        <div className="tool-action-indicator">
+                             <ArrowUpRight size={14} />
+                        </div>
+                    </div>
+                    
+                    <div className="tool-card-body">
+                        <h3>{tool.name}</h3>
+                        <div className="tool-card-footer">
+                            <div className="tool-status-dot" style={{ backgroundColor: tool.color }}></div>
+                            <span className="tool-ready-text">Ready to use</span>
+                        </div>
+
+                        <div className="card-launch-aura">
+                            <PrimaryButton 
+                                className="launch-btn-premium"
+                                size="md"
+                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
+                            >
+                                Open Tool
+                            </PrimaryButton>
+                        </div>
+                    </div>
+                    <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
                   </button>
                 )
               }
