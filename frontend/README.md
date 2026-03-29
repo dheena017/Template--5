@@ -1,16 +1,24 @@
-# React + Vite
+# Aura Frontend Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend of the Aura platform is built for ultra-performance, utilizing React, Vite, Framer Motion, and Tailwind CSS. It features a modular, dashboard-centric architecture designed to orchestrate complex documents, AI models, and creative assets.
 
-Currently, two official plugins are available:
+## 🚀 Technical Stack
+- **Framework**: React 18 + Vite
+- **Routing**: React Router DOM (v6)
+- **Styling**: Vanilla CSS, "button-card" dynamic glassmorphic design system
+- **Animation**: Framer Motion for liquid transitions
+- **Icons**: Lucide React
+- **Document Processing**: `pdf-lib` and `pdf.js` for heavy client-side isolation processing
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📁 Directory Structure
+- `src/components`: Reusable UI elements (Sidebars, Topbars)
+- `src/features`: Specialized tool functionality (e.g., PDF orchestrator, Video editors)
+- `src/pages`: Distinct page layouts and routing logic
+- `src/styles`: Global CSS, custom component styling, and dark mode tokens
+- `src/constants`: Application state configs, static feature data arrays
 
-## React Compiler
+## 🛠 Active Development
+1. Install dependencies: `npm install`
+2. Start development server: `npm run dev` (running on port 5173).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+All calls to the backend are dynamically routed via frontend service layers connecting to the FastAPI local endpoint at `:8000`.
