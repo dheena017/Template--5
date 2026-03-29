@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const FLACtoWAV = () => <OrganizePDF forcedTool="FLAC to WAV" />
-export default FLACtoWAV
+import React from 'react';
+import AudioConversionTool from './AudioConversionTool';
+
+const FLACtoWAV = () => <AudioConversionTool fromFormat='FLAC' toFormat='WAV' />;
+
+export default FLACtoWAV;
