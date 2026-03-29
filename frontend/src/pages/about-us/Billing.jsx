@@ -94,21 +94,33 @@ const Billing = () => {
 
       <div className="b-main-grid">
          <div className="b-left">
-            {/* Balance Card */}
-            <div className="balance-card premium-card">
+            {/* Futuristic Balance Card */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="balance-card-refined"
+            >
                <div className="bc-info">
-                  <h2>{(billingData?.credits || 0).toLocaleString()}</h2>
+                  <label>Available Credits</label>
+                  <motion.h2>
+                    {Math.round(billingData?.credits || 0).toLocaleString()}
+                  </motion.h2>
                </div>
-               <div className="bc-visual">
-                  <div className="bc-glow"></div>
-                  <Zap size={48} className="zap-icon" />
+               <div className="zap-visual">
+                  <Zap size={40} fill="currentColor" />
                </div>
-            </div>
+            </motion.div>
 
-            {/* Subscription Table */}
+            {/* Pricing Tiers Grid */}
             <div className="plans-grid">
-               {plans.map(plan => (
-                 <div key={plan.name} className={`plan-card ${plan.active ? 'active' : ''}`}>
+               {plans.map((plan, idx) => (
+                 <motion.div 
+                   key={plan.name} 
+                   initial={{ opacity: 0, y: 20 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   transition={{ delay: idx * 0.1 }}
+                   className={`plan-card-refined ${plan.active ? 'active' : ''}`}
+                 >
                     <div className="plan-header">
                        {plan.icon}
                        <h3>{plan.name}</h3>
@@ -122,41 +134,57 @@ const Billing = () => {
                          <li key={f}><Check size={14} className="check" /> {f}</li>
                        ))}
                     </ul>
-                    <button 
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       className={plan.active ? 'active-btn' : 'secondary-btn'}
                       onClick={() => !plan.active && handleUpgrade(plan.name)}
                     >
-                       {plan.active ? 'Current Plan' : 'Upgrade'}
-                    </button>
-                 </div>
+                       {plan.active ? 'Current Plan' : 'Select Tier'}
+                    </motion.button>
+                 </motion.div>
                ))}
             </div>
          </div>
 
          <div className="b-right">
             {/* Transaction History */}
-            <div className="history-card glass-card">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="history-card-refined"
+            >
                <div className="h-head">
-                  <History size={18} />
+                  <History size={20} />
                   <h3>Transaction History</h3>
                </div>
                <div className="h-list">
-                  {billingData?.history?.map?.((tx, i) => (
-                    <div key={i} className="tx-item">
-                       <div className={`tx-icon ${tx.amount > 0 ? 'up' : 'down'}`}>
-                          {tx.amount > 0 ? <Plus size={14} /> : <Zap size={14} />}
-                       </div>
-                       <div className="tx-info">
-                          <strong>{tx.type} {tx.tool ? `(${tx.tool})` : ''}</strong>
-                          <span>{tx.date}</span>
-                       </div>
-                       <div className={`tx-amount ${tx.amount > 0 ? 'pos' : 'neg'}`}>
-                          {tx.amount > 0 ? '+' : ''}{tx.amount}
-                       </div>
-                    </div>
-                  ))}
+                  {billingData?.history?.length > 0 ? (
+                    billingData.history.map((tx, i) => (
+                      <motion.div 
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.05 }}
+                        key={i} 
+                        className="tx-item-refined"
+                      >
+                         <div className={`tx-icon ${tx.amount > 0 ? 'up' : 'down'}`}>
+                            {tx.amount > 0 ? <Plus size={14} /> : <Zap size={14} />}
+                         </div>
+                         <div className="tx-info">
+                            <strong>{tx.type} {tx.tool ? `(${tx.tool})` : ''}</strong>
+                            <span>{tx.date}</span>
+                         </div>
+                         <div className={`tx-amount ${tx.amount > 0 ? 'pos' : 'neg'}`}>
+                            {tx.amount > 0 ? '+' : ''}{tx.amount}
+                         </div>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <div className="empty-history">No recent transactions.</div>
+                  )}
                </div>
-            </div>
+            </motion.div>
 
             <div className="security-note">
                <Shield size={16} />
