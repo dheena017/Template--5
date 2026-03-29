@@ -1,4 +1,6 @@
-import React from 'react'
-import OrganizePDF from '../OrganizePDF'
-const SVGtoPNG = () => <OrganizePDF forcedTool="SVG to PNG" />
-export default SVGtoPNG
+import React from 'react';
+import ImageFormatConversionTool from './ImageFormatConversionTool';
+
+const SVGtoPNG = () => <ImageFormatConversionTool fromFormat="SVG" toFormat="PNG" />;
+
+export default SVGtoPNG;
