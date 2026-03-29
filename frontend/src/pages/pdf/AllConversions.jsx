@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Search, Download, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { Search, Download, Loader2, AlertCircle, CheckCircle2, Layers } from 'lucide-react'
 import { api } from '../../services/api'
 import '../../styles/pages/pdf/AllConversions.css'
+import ToolLayout from '../../components/layouts/ToolLayout'
 
 const AllConversions = () => {
   const [catalog, setCatalog] = useState([])
@@ -102,13 +103,13 @@ const AllConversions = () => {
   }
 
   return (
-    <section className="all-conversions-shell">
-      <div className="all-conversions-main">
-        <header className="all-conversions-header">
-          <h1>All Conversions</h1>
-          <p>One page for all available format conversions from your backend Python engines.</p>
-        </header>
-
+    <ToolLayout 
+        title="All Conversions" 
+        subtitle="One page for all available format conversions from your backend Python engines." 
+        icon={Layers} 
+        color="#a855f7"
+        category="Document Intelligence"
+    >
         <div className="all-conversions-toolbar">
           <label className="all-conversions-search">
             <Search size={16} />
@@ -184,8 +185,7 @@ const AllConversions = () => {
             </div>
           </div>
         )}
-      </div>
-    </section>
+    </ToolLayout>
   )
 }
 
