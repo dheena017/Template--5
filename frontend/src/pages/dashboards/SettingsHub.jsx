@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import '../../styles/pages/dashboards/DashboardIndex.css'
+import { PrimaryButton } from '../../components/buttons'
 
 const SETTINGS_CARDS = [
   {
@@ -127,29 +128,51 @@ const SettingsHub = () => {
         <p>Pick a category to manage your platform behavior and individual tool preferences.</p>
       </motion.header>
 
-      <motion.div className="all-dashboards-grid" variants={containerVariants}>
+      <motion.div className="portal-tools-main-grid" variants={containerVariants}>
         {SETTINGS_CARDS.map((card) => {
           const Icon = card.icon
           return (
-            <motion.button
+            <button
               key={card.title}
               type="button"
-              className="all-dashboard-card"
+              className="portal-tool-card"
+              style={{ 
+                  backgroundColor: '#0f1016',
+                  border: '1px solid rgba(255, 255, 255, 0.04)'
+              }}
               onClick={() => navigate(card.path)}
-              variants={itemVariants}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              whileTap={{ scale: 0.98 }}
             >
-              <div className="all-dashboard-card-head">
-                <span className="all-dashboard-icon" style={{ color: card.color, backgroundColor: `${card.color}20` }}>
-                  <Icon size={20} />
-                </span>
-                <ArrowUpRight size={16} className="all-dashboard-arrow" />
+              <div className="tool-card-top">
+                  <div className="tool-suite-info">
+                      <div className="suite-icon-mini" style={{ color: card.color }}>
+                          <Icon size={14} />
+                      </div>
+                      <span className="suite-name-tag">SYSTEM SETTINGS</span>
+                  </div>
+                  <div className="tool-action-indicator">
+                      <ArrowUpRight size={14} />
+                  </div>
               </div>
 
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
-            </motion.button>
+              <div className="tool-card-body">
+                  <h3>{card.title}</h3>
+                  <div className="tool-card-footer">
+                      <div className="tool-status-dot" style={{ backgroundColor: card.color }}></div>
+                      <span className="tool-ready-text">Ready to configure</span>
+                  </div>
+
+                  <div className="card-launch-aura">
+                      <PrimaryButton 
+                          className="launch-btn-premium"
+                          size="md"
+                          style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
+                      >
+                          Configure
+                      </PrimaryButton>
+                  </div>
+              </div>
+              <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${card.color}15, transparent)` }}></div>
+            </button>
           )
         })}
       </motion.div>
