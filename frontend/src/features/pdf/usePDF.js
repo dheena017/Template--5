@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument } from 'pdf-lib';
 
-// Set up pdfjs worker
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
@@ -16,24 +15,48 @@ export const usePDF = () => {
         setError(null);
         try {
             const arrayBuffer = await file.arrayBuffer();
-            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            
+            // Check if password protected using pdf-lib
+            try {
+                await PDFDocument.load(arrayBuffer);
+            } catch (pdfLibErr) {
+                if (pdfLibErr.message.includes('encrypted') || pdfLibErr.message.includes('password')) {
+                    setError("This PDF is password-protected. Please unlock it before merging.");
+                    return null;
+                }
+            }
+
+            // Load for thumbnail generation
+            const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+            const pdf = await loadingTask.promise;
             
             const pages = [];
+            console.log("Analyzing PDF with", pdf.numPages, "pages");
             for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const viewport = page.getViewport({ scale: 0.3 });
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-                await page.render({ canvasContext: context, viewport }).promise;
-                
-                pages.push({
-                    id: `page-${i}-${Date.now()}`,
-                    originalNum: i,
-                    thumbnail: canvas.toDataURL(),
-                    rotation: 0
-                });
+                try {
+                    // Only render thumbnail for the first page to speed up the selection process
+                    let thumbnail = null;
+                    if (i === 1) {
+                        const page = await pdf.getPage(i);
+                        const viewport = page.getViewport({ scale: 0.3 });
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: context, viewport }).promise;
+                        thumbnail = canvas.toDataURL();
+                    }
+                    
+                    pages.push({
+                        id: `page-${i}-${Date.now()}`,
+                        originalNum: i,
+                        thumbnail: thumbnail,
+                        rotation: 0
+                    });
+                } catch (pageErr) {
+                    console.error(`Error processing page ${i}:`, pageErr);
+                    pages.push({ id: `page-${i}-error`, originalNum: i, thumbnail: null, rotation: 0 });
+                }
             }
 
             setPdfInfo({
@@ -45,8 +68,8 @@ export const usePDF = () => {
             });
             return { pages, arrayBuffer, name: file.name };
         } catch (err) {
-            console.error("PDF Load Error:", err);
-            setError("Failed to load PDF. It might be corrupted or password-protected.");
+            console.error("PDF Component Error:", err);
+            setError("Failed to load PDF. The file may be invalid or its internal structure is unreadable.");
             return null;
         } finally {
             setLoading(false);
