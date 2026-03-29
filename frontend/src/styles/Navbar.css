@@ -109,3 +109,9 @@
 .user-avatar-mini:hover {
   border-color: var(--accent-primary);
 }
+
+@media (max-width: 768px) {
+  .aura-navbar {
+    display: none !important;
+  }
+}
