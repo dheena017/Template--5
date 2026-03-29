@@ -23,17 +23,27 @@
   -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
 }
 
-/* 2. Global Accent Color Propagation */
+/* 2. Global Accent Color Propagation & Shimmer Integration */
 button.btn-primary,
 button.pj-btn-primary,
+.primary-btn,
+.submit-btn,
+.recovery-btn,
 .badge-aura,
 .pill.active,
 .accent-element {
   background: var(--accent-gradient) !important;
   border-color: var(--accent-primary) !important;
   box-shadow: 0 8px 16px rgba(139, 92, 246, 0.2) !important;
+  color: #fff !important;
+  font-weight: 750 !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 .text-accent,
