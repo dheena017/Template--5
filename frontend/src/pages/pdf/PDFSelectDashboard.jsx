@@ -8,6 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/pages/pdf/OrganizePDF.css';
+import ToolLayout from '../../components/layouts/ToolLayout';
 
 const PDFSelectDashboard = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -52,22 +53,15 @@ const PDFSelectDashboard = () => {
     ];
 
     return (
-        <div className="pdf-tools-wrapper min-h-screen bg-[#0a0b14]">
-            <main className="pdf-tools-main max-w-7xl mx-auto px-6 py-12">
+        <ToolLayout 
+            title="Select Files" 
+            subtitle="Upload your documents here to start. You can then choose which tool to apply to your selection." 
+            icon={FileText} 
+            color="#3b82f6"
+            category="Document Intelligence"
+        >
                 <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div>
-                        <motion.h1 
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="text-5xl font-black text-white mb-4 tracking-tighter"
-                        >
-                            Select <span className="text-blue-500">Files</span>
-                        </motion.h1>
-                        <p className="text-slate-400 text-lg max-w-xl">
-                            Upload your documents here to start. You can then choose which tool to apply to your selection.
-                        </p>
-                    </div>
-                    
+                    <div />
                     <div className="flex items-center gap-3 bg-slate-800/40 p-1.5 rounded-2xl border border-slate-700/50">
                         <button 
                             onClick={() => setViewMode('grid')}
@@ -84,12 +78,12 @@ const PDFSelectDashboard = () => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
                     {/* Main Upload Area */}
-                    <div className="lg:col-span-3 space-y-8">
+                    <div className="lg:col-span-3">
                         <div 
                             {...getRootProps()} 
-                            className={`relative border-2 border-dashed rounded-[40px] p-12 transition-all duration-500 flex flex-col items-center justify-center min-h-[400px] overflow-hidden ${isDragActive ? 'border-blue-500 bg-blue-500/5 scale-[1.01]' : 'border-slate-800 bg-slate-900/20 hover:border-slate-600'}`}
+                            className={`tool-upload-center min-h-[500px] transition-all duration-500 ${isDragActive ? 'border-blue-500 bg-blue-500/5 scale-[1.01]' : ''}`}
                         >
                             <input {...getInputProps()} />
                             
@@ -102,18 +96,18 @@ const PDFSelectDashboard = () => {
                                         exit={{ opacity: 0, scale: 0.9 }}
                                         className="text-center"
                                     >
-                                        <div className="w-24 h-24 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-8">
+                                        <div className="w-24 h-24 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-blue-500/20 shadow-lg shadow-blue-500/10">
                                             <FileUp size={48} className="text-blue-500" />
                                         </div>
-                                        <h2 className="text-3xl font-black text-white mb-3">Drop your PDFs here</h2>
-                                        <p className="text-slate-500 mb-8 max-w-xs mx-auto text-sm font-medium">Click or drag and drop to start selecting files for your PDF operations.</p>
-                                        <button className="px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl shadow-xl shadow-blue-600/20 transition-all active:scale-95">
+                                        <h2 className="text-4xl font-black text-white mb-4 tracking-tighter">Drop your PDFs here</h2>
+                                        <p className="text-slate-500 mb-10 max-w-sm mx-auto text-lg font-medium opacity-60">Click or drag and drop to start selecting files for your PDF operations.</p>
+                                        <button className="btn-premium-aura" style={{ backgroundColor: '#2563eb' }}>
                                             Select Files
                                         </button>
                                     </motion.div>
                                 ) : (
                                     <div className="w-full">
-                                        <div className={`grid ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} gap-6`}>
+                                        <div className={`grid ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'} gap-8`}>
                                             {selectedFiles.map((f, idx) => (
                                                 <motion.div
                                                     key={f.id}
@@ -121,41 +115,47 @@ const PDFSelectDashboard = () => {
                                                     animate={{ opacity: 1, scale: 1 }}
                                                     transition={{ delay: idx * 0.05 }}
                                                     onClick={() => toggleFileSelection(f.id)}
-                                                    className={`group relative h-48 rounded-3xl p-6 border-2 transition-all cursor-pointer ${f.selected ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'}`}
+                                                    className={`group relative h-56 rounded-[32px] p-8 border transition-all cursor-pointer backdrop-blur-xl ${f.selected ? 'border-blue-500 bg-blue-500/10 shadow-2xl shadow-blue-900/20' : 'border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04]'}`}
                                                 >
-                                                    <div className="flex flex-col h-full justify-between">
+                                                    <div className="flex flex-col h-full justify-between relative z-10">
                                                         <div className="flex justify-between items-start">
-                                                            <div className={`p-3 rounded-2xl ${f.selected ? 'bg-blue-500 text-white' : 'bg-slate-800 text-slate-400'}`}>
-                                                                <FileText size={24} />
+                                                            <div className={`p-4 rounded-2xl transition-all duration-500 ${f.selected ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30 rotate-6' : 'bg-white/5 text-slate-400'}`}>
+                                                                <FileText size={28} />
                                                             </div>
                                                             <button 
                                                                 onClick={(e) => removeFile(f.id, e)}
-                                                                className="opacity-0 group-hover:opacity-100 p-2 hover:bg-red-500/20 text-slate-500 hover:text-red-500 rounded-lg transition-all"
+                                                                className="opacity-0 group-hover:opacity-100 p-2.5 hover:bg-red-500/20 text-slate-500 hover:text-red-500 rounded-xl transition-all"
                                                             >
-                                                                <Trash2 size={16} />
+                                                                <Trash2 size={20} />
                                                             </button>
                                                         </div>
                                                         <div>
-                                                            <h3 className="text-white font-bold leading-tight truncate mb-1">{f.name}</h3>
-                                                            <div className="flex items-center gap-2">
-                                                                <span className="text-[10px] font-black text-slate-500 bg-slate-800/50 px-2 py-0.5 rounded-full">{f.size}</span>
-                                                                <span className="text-[10px] font-medium text-slate-600">{f.timestamp}</span>
+                                                            <h3 className="text-white text-lg font-black leading-tight truncate mb-2">{f.name}</h3>
+                                                            <div className="flex items-center gap-3">
+                                                                <span className="text-[10px] font-black text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">{f.size}</span>
+                                                                <span className="text-[10px] font-bold text-slate-500">{f.timestamp}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     
                                                     {f.selected && (
-                                                        <div className="absolute top-4 right-4 text-blue-500 bg-white rounded-full">
-                                                            <CheckCircle2 size={18} fill="currentColor" className="text-white stroke-blue-500" />
-                                                        </div>
+                                                        <motion.div 
+                                                            initial={{ scale: 0 }}
+                                                            animate={{ scale: 1 }}
+                                                            className="absolute top-6 right-6 text-blue-500 bg-white rounded-full z-20"
+                                                        >
+                                                            <CheckCircle2 size={24} fill="currentColor" className="text-white stroke-blue-500" />
+                                                        </motion.div>
                                                     )}
                                                 </motion.div>
                                             ))}
                                             
                                             {/* Add More Cell */}
-                                            <div className="border-2 border-dashed border-slate-800 rounded-3xl h-48 flex flex-col items-center justify-center text-slate-600 hover:border-slate-600 hover:text-slate-400 transition-all cursor-pointer">
-                                                <Plus size={32} strokeWidth={1.5} />
-                                                <span className="text-sm font-bold mt-2">Add Files</span>
+                                            <div className="border-2 border-dashed border-white/5 rounded-[32px] h-56 flex flex-col items-center justify-center text-slate-600 hover:border-white/20 hover:text-slate-300 transition-all cursor-pointer bg-white/[0.01]">
+                                                <div className="p-4 rounded-2xl bg-white/5 mb-4 group-hover:scale-110 transition-transform">
+                                                    <Plus size={32} strokeWidth={2} />
+                                                </div>
+                                                <span className="text-sm font-black uppercase tracking-widest">Add Files</span>
                                             </div>
                                         </div>
                                     </div>
@@ -238,8 +238,7 @@ const PDFSelectDashboard = () => {
                         ))}
                     </div>
                 </div>
-            </main>
-        </div>
+        </ToolLayout>
     );
 };
 
