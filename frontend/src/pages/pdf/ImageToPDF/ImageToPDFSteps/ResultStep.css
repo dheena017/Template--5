@@ -1,0 +1,8 @@
+.download-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.download-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.15);
+}
