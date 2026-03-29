@@ -3,6 +3,7 @@
 @import './styles/theme.css';
 @import './styles/animations.css';
 @import './styles/AuraEngine.css';
+@import './styles/components/Card.css';
 
 
 :root {
