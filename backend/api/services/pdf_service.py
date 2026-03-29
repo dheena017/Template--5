@@ -122,3 +122,20 @@ def split_pdf(file_buffer: io.BytesIO, mode: str, options: dict) -> List[tuple]:
             results.append((f"page_{i+1}.pdf", out_buf))
 
     return results
+
+def convert_images_to_pdf(image_buffers: List[io.BytesIO]) -> io.BytesIO:
+    """Combine multiple image buffers into a single, high-fidelity PDF."""
+    from PIL import Image
+    images = []
+    for buf in image_buffers:
+        img = Image.open(buf)
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+        images.append(img)
+    
+    output = io.BytesIO()
+    if images:
+        images[0].save(output, format='PDF', save_all=True, append_images=images[1:])
+    
+    output.seek(0)
+    return output
