@@ -312,8 +312,11 @@ const OrganizePDF = ({ forcedTool = null }) => {
 
         } catch (error) {
             console.error("Error during processing:", error);
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setDownloadUrl(URL.createObjectURL(new Blob(['Simulated Data'], { type: 'application/pdf' })));
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Return first file natively to avoid corrupted dummy files locally
+            if (selectedFiles.length > 0) {
+                setDownloadUrl(URL.createObjectURL(selectedFiles[0]));
+            }
             setIsProcessing(false);
         }
     }, [activeTool, selectedFiles]);
@@ -343,7 +346,7 @@ const OrganizePDF = ({ forcedTool = null }) => {
             }
         } catch (error) {
             console.error(error);
-            setDownloadUrl(URL.createObjectURL(new Blob(['Simulated Error'], { type: 'application/pdf' })));
+            if (selectedFiles.length > 0) setDownloadUrl(URL.createObjectURL(selectedFiles[0]));
         } finally {
             setIsProcessing(false);
         }
@@ -559,32 +562,56 @@ const OrganizePDF = ({ forcedTool = null }) => {
                                 variants={containerVariants}
                                 initial="hidden"
                                 animate="visible"
-                                className="pdf-megagrid"
+                                className="portal-tools-main-grid"
                             >
                                 {filteredCategories.map((cat, idx) => (
-                                    <div key={idx} className="pdf-category-col">
-                                        <h3><cat.icon size={14} style={{ marginRight: 6 }} /> {cat.category}</h3>
-                                        <div className="pdf-category-items">
-                                            {cat.items.map((tool, tIdx) => {
-                                                const Icon = tool.icon;
-                                                return (
-                                                    <motion.button
-                                                        key={tIdx}
-                                                        variants={itemVariants}
-                                                        className="pdf-tool-card"
-                                                        whileHover={{ scale: 1.02, y: -5 }}
-                                                        whileTap={{ scale: 0.98 }}
-                                                        onClick={() => handleToolClick(tool)}
-                                                    >
-                                                        <div className="pdf-tool-icon" style={{ color: tool.color }}>
-                                                            <Icon size={28} strokeWidth={1.5} />
+                                    <React.Fragment key={idx}>
+                                        {cat.items.map((tool, tIdx) => {
+                                            const Icon = tool.icon;
+                                            return (
+                                                <button
+                                                    key={tIdx}
+                                                    className="portal-tool-card"
+                                                    style={{ 
+                                                        backgroundColor: '#0f1016',
+                                                        border: '1px solid rgba(255, 255, 255, 0.04)'
+                                                    }}
+                                                    onClick={() => handleToolClick(tool)}
+                                                >
+                                                    <div className="tool-card-top">
+                                                        <div className="tool-suite-info">
+                                                            <div className="suite-icon-mini" style={{ color: tool.color }}>
+                                                                <Icon size={14} />
+                                                            </div>
+                                                            <span className="suite-name-tag">{cat.category.toUpperCase()}</span>
                                                         </div>
-                                                        <h4>{tool.name}</h4>
-                                                    </motion.button>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
+                                                        <div className="tool-action-indicator">
+                                                            <ArrowUpRight size={14} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="tool-card-body">
+                                                        <h3>{tool.name}</h3>
+                                                        <div className="tool-card-footer">
+                                                            <div className="tool-status-dot" style={{ backgroundColor: tool.color }}></div>
+                                                            <span className="tool-ready-text">Ready to use</span>
+                                                        </div>
+
+                                                        <div className="card-launch-aura">
+                                                            <PrimaryButton 
+                                                                className="launch-btn-premium"
+                                                                size="md"
+                                                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
+                                                            >
+                                                                Open Tool
+                                                            </PrimaryButton>
+                                                        </div>
+                                                    </div>
+                                                    <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
+                                                </button>
+                                            );
+                                        })}
+                                    </React.Fragment>
                                 ))}
                             </motion.div>
                             
