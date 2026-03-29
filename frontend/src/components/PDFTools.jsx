@@ -7,6 +7,8 @@ import PDFMerge from './PDFMerge';
 import PDFCompress from './PDFCompress';
 import PDFExtractText from './PDFExtractText';
 import Button from './Button';
+import ToolLayout from './layouts/ToolLayout';
+import { Wrench } from 'lucide-react';
 
 function PDFTools({ initialView }) {
   const [file, setFile] = useState(null);
@@ -95,12 +97,16 @@ function PDFTools({ initialView }) {
   }
 
   return (
-    <div style={{ padding: '40px 64px', maxWidth: '1000px', margin: '0 auto' }}>
-      <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '32px' }}>{getTitle()}</h2>
-      
+    <ToolLayout 
+        title={getTitle()} 
+        subtitle="Professional grade document processing powered by the Aura engine." 
+        icon={Wrench} 
+        color="#fbbf24"
+        category="Document Intelligence"
+    >
       {initialView !== 'merge' && (
-        <div style={{ marginBottom: '40px', background: '#f9f9fb', padding: '32px', borderRadius: '16px', border: '1px solid #f1f1f1' }}>
-          <p style={{ fontWeight: 600, marginBottom: '20px' }}>Upload the PDF you want to process:</p>
+        <div style={{ marginBottom: '40px', background: 'rgba(255,255,255,0.03)', padding: '32px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <p style={{ fontWeight: 600, marginBottom: '20px', color: '#fff' }}>Upload the PDF you want to process:</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <input 
                 type="file" 
@@ -113,7 +119,7 @@ function PDFTools({ initialView }) {
               <Button variant="outline" icon="📂" onClick={() => document.getElementById('tool-upload').click()}>
                 {file ? 'Change File' : 'Choose File'}
               </Button>
-              {fileName && <span style={{ fontSize: '0.9rem', color: '#666' }}>{fileName} {pageCount && `(${pageCount} pages)`}</span>}
+              {fileName && <span style={{ fontSize: '0.9rem', color: '#888' }}>{fileName} {pageCount && `(${pageCount} pages)`}</span>}
           </div>
         </div>
       )}
@@ -150,17 +156,17 @@ function PDFTools({ initialView }) {
 
       {pdfUrl && initialView !== 'merge' && !compressResultUrl && (
         <div style={{ marginTop: '48px' }}>
-          <h4 style={{ marginBottom: '16px' }}>Document Preview</h4>
+          <h4 style={{ marginBottom: '16px', color: '#fff' }}>Document Preview</h4>
           <iframe
             src={pdfUrl}
             title="PDF Preview"
             width="100%"
             height="600px"
-            style={{ border: '1px solid #eee', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+            style={{ border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}
           />
         </div>
       )}
-    </div>
+    </ToolLayout>
   );
 }
 
