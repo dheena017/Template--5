@@ -1,0 +1,59 @@
+/* Merge PDF Main Layout Styles */
+
+.pdf-tools-wrapper {
+    min-height: 100vh;
+    background-color: var(--tool-bg);
+}
+
+.pdf-tools-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem;
+}
+
+.pdf-tool-active-view {
+    width: 100%;
+}
+
+.tool-upload-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.tool-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.tool-main-icon {
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(var(--accent-rgb), 0.3));
+}
+
+.tool-title-wrapper h2 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -0.02em;
+}
+
+.tool-title-wrapper p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #94a3b8;
+    max-width: 600px;
+}
+
+@media (max-width: 640px) {
+    .tool-title-wrapper h2 {
+        font-size: 2.5rem;
+    }
+    .tool-title-wrapper p {
+        font-size: 1rem;
+    }
+}
