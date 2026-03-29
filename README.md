@@ -9,10 +9,55 @@ Aura Platform is a robust, full-stack application template designed for ultra-lo
 *   **Premium "Button-Card" Aesthetics:** Deep glassmorphism, dynamic lighting, and a modern 'Studio' application feel.
 
 ## 🛠 Project Structure
+
 - `frontend/`: React + Vite application boasting Framer Motion liquid physics and an immersive dark mode theme.
 - `backend/`: FastAPI + SQLAlchemy backend serving as the hyper-fast capability engine.
 - `SYSTEM_ARCHITECTURE.md`: Deep dive into the cloud infrastructure and intended data flow.
 - `aura_platform.db`: The provisioned SQLite backend database driving features and live telemetry.
+
+---
+## 📂 Full File & Directory Arrangement
+
+### Root Directory
+- `analytics_stats.json`, `audio_names.json`, `audio_tools.json`, `image_tools.json`, `video_tools.json`: JSON data/configuration for analytics and tool definitions.
+- `platform_schema.sql`: SQL schema for the platform database.
+- `docker-compose.yml`, `Dockerfile`: Docker configuration for deployment.
+- `README.md`: Main project documentation (this file).
+- `SYSTEM_ARCHITECTURE.md`: High-level system architecture and infrastructure design.
+
+### backend/
+- `README.md`: Backend-specific documentation and usage.
+- `requirements.txt`: Python dependencies for backend.
+- `init_db.py`: Script to initialize and seed the database.
+- `main.py`: FastAPI application entry point.
+- `core/`: Database configuration and global backend settings.
+- `api/`:
+   - `models/`: SQLAlchemy ORM models for database tables.
+   - `routes/`: FastAPI route definitions (e.g., PDF, assets, profile).
+   - `services/`: Business logic and service layers for analytics, PDF, etc.
+
+### frontend/
+- `README.md`: Frontend-specific documentation and usage.
+- `package.json`: NPM dependencies and scripts.
+- `vite.config.js`: Vite build configuration.
+- `public/`: Static assets (images, icons, etc.).
+- `src/`: Main source code for the React app:
+   - `App.jsx`, `main.jsx`: Application entry points.
+   - `assets/`: Static assets used in the app.
+   - `components/`: Reusable UI components (Navbar, Sidebar, Toolbar, etc.).
+   - `constants/`: Static configuration and data arrays.
+   - `context/`: React context providers for state management.
+   - `features/`: Specialized tool features (e.g., PDF tools).
+   - `pages/`: Page-level components and routing.
+   - `services/`: API and provider service logic.
+   - `styles/`: CSS files for global and component-specific styles.
+   - `utils/`: Utility/helper functions.
+
+### docs/
+- `README.md`, `SYSTEM_ARCHITECTURE.md`: Documentation files, moved here for better organization.
+
+---
+Each folder contains a README or index file where possible, and the code is modularized for scalability and clarity. If you need more detailed explanations for any specific file or folder, see the respective README or ask for details.
 
 ## 🏗 System Architecture
 
