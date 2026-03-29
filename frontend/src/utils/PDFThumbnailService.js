@@ -2,7 +2,8 @@ import * as pdfjs from 'pdfjs-dist';
 
 // Configure the worker for pdfjs-dist
 // The worker is required for rendering PDFs in the browser
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 /**
  * Thumbnail Generation Service
