@@ -1,9 +1,15 @@
-import OfficeToolItem from './OfficeToolItem';
-import './OfficeToolItem.css';
+import React from 'react';
+import PDFPages from '../PDFPages';
 
-export const WordMerge    = () => <OfficeToolItem toolId="word-merge" />;
-export const ExcelMerge   = () => <OfficeToolItem toolId="excel-merge" />;
-export const ExcelSplit   = () => <OfficeToolItem toolId="excel-split" />;
-export const WordCompress = () => <OfficeToolItem toolId="word-compress" />;
-export const PptCompress  = () => <OfficeToolItem toolId="ppt-compress" />;
-export const ImgCompress  = () => <OfficeToolItem toolId="img-compress" />;
+// Global Dashboard
+export const OfficeToolsHub = () => <PDFPages forcedTab="office_tools" />;
+
+// Individual Tools
+export { default as WordMerge } from './WordMerge';
+export { default as ExcelMerge } from './ExcelMerge';
+export { default as ExcelSplit } from './ExcelSplit';
+export { default as WordCompress } from './WordCompress';
+export { default as PptCompress } from './PptCompress';
+export { default as ImgCompress } from './ImgCompress';
+
+export default OfficeToolsHub;
