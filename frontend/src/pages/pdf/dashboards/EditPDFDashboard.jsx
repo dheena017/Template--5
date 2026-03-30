@@ -5,7 +5,8 @@ import {
 } from 'lucide-react'
 import '../../../styles/pages/dashboards/DashboardIndex.css'
 import { PrimaryButton } from '../../../components/buttons'
-import PDFToolSwitcher from '../../../components/dropdowns/PDFToolSwitcher'
+import SearchBar from '../../../components/common/SearchBar/SearchBar'
+
 
 const TOOLS = [
   { id: 'edit', name: 'Edit PDF', icon: Layout, color: '#7c3aed' },
@@ -26,7 +27,6 @@ const EditPDFDashboard = () => {
     return (
         <section className="pdf-pages-shell">
             <main className="pdf-pages-main p-8 md:p-12 w-full max-w-[1400px] mx-auto">
-                <PDFToolSwitcher activeTool="Edit PDF" />
                 <header className="pdf-pages-header mb-12 flex justify-between items-center bg-white/5 p-8 rounded-3xl border border-white/10">
                     <div className="flex items-center gap-6">
                         <div className="p-4 bg-violet-500/20 rounded-2xl">
@@ -38,30 +38,26 @@ const EditPDFDashboard = () => {
                         </div>
                     </div>
 
-                    <label htmlFor="edit-search" className="pdf-pages-search relative w-96">
-                        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                        <input
-                            id="edit-search"
-                            type="text"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Find editor tool..."
-                            className="w-full bg-black/40 border border-white/10 rounded-full py-4 pl-12 pr-6 text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500 transition-all font-bold"
-                        />
-                    </label>
+                    <SearchBar 
+                        placeholder="Search edit tool..."
+                        onSearch={(val) => setSearch(val)}
+                        className="w-96"
+                    />
+
                 </header>
 
                 <div className="portal-tools-main-grid">
                     {filteredTools.map((tool, idx) => {
                         const Icon = tool.icon
                         return (
-                            <button
+                            <div
                                 key={tool.id}
                                 className="portal-tool-card"
                                 style={{ 
                                     backgroundColor: '#0f1016',
                                     border: '1px solid rgba(255, 255, 255, 0.04)',
-                                    animationDelay: `${idx * 0.05}s`
+                                    animationDelay: `${idx * 0.05}s`,
+                                    cursor: 'pointer'
                                 }}
                                 onClick={() => navigate(`/${tool.id}`)}
                             >
@@ -70,7 +66,7 @@ const EditPDFDashboard = () => {
                                         <div className="suite-icon-mini" style={{ color: tool.color }}>
                                             <Icon size={14} />
                                         </div>
-                                        <span className="suite-name-tag">EDITOR</span>
+                                        <span className="suite-name-tag">EDITING</span>
                                     </div>
                                     <div className="tool-action-indicator">
                                         <ArrowUpRight size={14} />
@@ -95,7 +91,7 @@ const EditPDFDashboard = () => {
                                     </div>
                                 </div>
                                 <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
-                            </button>
+                            </div>
                         )
                     }
                     )}

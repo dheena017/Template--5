@@ -2,7 +2,6 @@ import React, { useState, useCallback, useReducer } from 'react';
 import { 
     Split, Download, FileUp, Scissors, Settings2, RotateCcw
 } from 'lucide-react';
-import { SplitPDFSettings } from '../../components/toolSettings';
 import { useDropzone } from 'react-dropzone';
 import { AnimatePresence } from 'framer-motion';
 import { PDFDocument } from 'pdf-lib';
@@ -48,15 +47,17 @@ function splitReducer(state, action) {
     }
 }
 
+import { useSettings } from '../../context/SettingsContext';
+
 const SplitPDF = () => {
     const { loadPDF, loading: pdfLoading, error: pdfError } = usePDF();
+    const { toolSettingsOpen } = useSettings();
     const [currentStep, setCurrentStep] = useState('select');
     const [pdfInfo, setPdfInfo] = useState(null);
     const [progress, setProgress] = useState(0);
     const [zipBlobUrl, setZipBlobUrl] = useState(null);
     const [zipFileName, setZipFileName] = useState('');
     const [state, dispatch] = useReducer(splitReducer, initialState);
-    const [settingsOpen, setSettingsOpen] = useState(false);
     const [pdfSettings, setPdfSettings] = useState({});
 
     const activeTool = { name: 'Split PDF', icon: Split, color: '#ff5252' };
@@ -198,11 +199,6 @@ const SplitPDF = () => {
             color={activeTool.color}
             category="Document Intelligence"
         >
-            <button onClick={() => setSettingsOpen(true)} className="tsp-edge-tab" style={{'--tool-accent': activeTool.color}} title="Split PDF Settings">
-                <Settings2 size={14} style={{color: activeTool.color}} />
-                <span className="tab-label" style={{color: activeTool.color}}>Settings</span>
-            </button>
-            <SplitPDFSettings open={settingsOpen} onClose={() => setSettingsOpen(false)} onApply={(s) => { setPdfSettings(s); setSettingsOpen(false); }} />
             <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <StepIndicator steps={STEPS} currentStep={currentStep} />
                 <div className="w-full flex justify-center mt-12">

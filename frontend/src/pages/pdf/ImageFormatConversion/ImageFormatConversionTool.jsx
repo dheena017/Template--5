@@ -8,14 +8,24 @@ import StepIndicator from '../MergePDFSteps/StepIndicator';
 import SelectStep from './ImageFormatConversionSteps/SelectStep';
 import ConfigStep from './ImageFormatConversionSteps/ConfigStep';
 import ResultStep from './ImageFormatConversionSteps/ResultStep';
+import { ImageConversionSettings } from '../../../components/toolSettings';
+import { useSettings } from '../../../context/SettingsContext';
 
 const ImageFormatConversionTool = ({ fromFormat, toFormat }) => {
+    const { toolSettingsOpen, setToolSettingsOpen } = useSettings();
     const [currentStep, setCurrentStep] = useState('select');
     const [fileInfo, setFileInfo] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
     const [progress, setProgress] = useState(0);
     const [resultData, setResultData] = useState(null);
-    const [quality, setQuality] = useState('high');
+    
+    const [imageSettings, setImageSettings] = useState({
+        quality: 'High',
+        progressive: true,
+        stripMetadata: true,
+        colorSpace: 'sRGB',
+        sampling: '4:4:4'
+    });
 
     const activeTool = { 
         name: `${fromFormat} to ${toFormat}`, 
@@ -76,7 +86,6 @@ const ImageFormatConversionTool = ({ fromFormat, toFormat }) => {
             setProgress(100);
             await new Promise(r => setTimeout(r, 400));
             
-            // Generate an actual transformed image format using HTML5 Canvas engine!
             const img = new Image();
             const url = URL.createObjectURL(fileInfo.rawFile);
             
@@ -91,14 +100,12 @@ const ImageFormatConversionTool = ({ fromFormat, toFormat }) => {
             canvas.height = img.height;
             const ctx = canvas.getContext('2d');
             
-            // If converting to JPEG, give it a white background instead of black transparency
             if (getFormatConfig(toFormat).mime === 'image/jpeg') {
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
             ctx.drawImage(img, 0, 0);
             
-            // Get final blob
             const finalBlob = await new Promise(resolve => canvas.toBlob(resolve, getFormatConfig(toFormat).mime, 0.95));
             URL.revokeObjectURL(url);
             
@@ -126,7 +133,6 @@ const ImageFormatConversionTool = ({ fromFormat, toFormat }) => {
         setFileInfo(null);
         setResultData(null);
         setProgress(0);
-        setQuality('high');
         setCurrentStep('select');
     };
 
@@ -135,7 +141,7 @@ const ImageFormatConversionTool = ({ fromFormat, toFormat }) => {
             case 'select':
                 return <SelectStep {...{ getRootProps, getInputProps, isDragActive, activeTool, fromFormat, toFormat }} />;
             case 'config':
-                return <ConfigStep {...{ fileInfo, fromFormat, toFormat, quality, setQuality, handleConvert, isProcessing, progress, reset, activeTool }} />;
+                return <ConfigStep {...{ fileInfo, fromFormat, toFormat, quality: imageSettings.quality, setQuality: (v) => setImageSettings(s => ({ ...s, quality: v })), handleConvert, isProcessing, progress, reset, activeTool }} />;
             case 'download':
                 return <ResultStep {...{ resultData, fromFormat, toFormat, activeTool, reset }} />;
             default:
@@ -151,6 +157,13 @@ const ImageFormatConversionTool = ({ fromFormat, toFormat }) => {
             color={activeTool.color}
             category={activeTool.category}
         >
+            <ImageConversionSettings 
+                open={toolSettingsOpen} 
+                onClose={() => setToolSettingsOpen(false)} 
+                settings={imageSettings} 
+                setSettings={setImageSettings} 
+            />
+            
             <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <StepIndicator steps={STEPS} currentStep={currentStep} />
                 <div className="w-full flex justify-center mt-12">

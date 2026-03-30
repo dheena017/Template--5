@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { 
   HardDrive, Library, Layers, CheckCircle, Box, Trash2, 
   Database, RefreshCw, FolderTree, FileSearch, Cloud, 

@@ -14,7 +14,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import { Search, Home, FileUp, Minimize2, Zap, Combine } from 'lucide-react'
-import * as Pages from './pages'
+import SearchBar from './components/common/SearchBar/SearchBar'
 import * as VideoConversions from './pages/pdf/VideoConversion'
 import * as AudioConversions from './pages/pdf/AudioConversion'
 import * as ImageFormatConversions from './pages/pdf/ImageFormatConversion'
@@ -29,10 +29,131 @@ import NextActionRail from './components/common/NextActionRail'
 import VisualAssetTray from './components/common/VisualAssetTray'
 import { useSettings } from './context/SettingsContext'
 import RightSettingsPanel from './components/RightSettingsPanel'
+import ToolSettingsManager from './components/toolSettings/ToolSettingsManager'
 import './App.css'
 import './styles/Notifications.css'
 import './styles/NextActionRail.css'
 import './styles/VisualAssetTray.css'
+
+// Lazy load large sections to prevent circular imports & improve stability
+const Pages = {
+    Profile: React.lazy(() => import('./pages').then(m => ({ default: m.Profile }))),
+    Dashboard: React.lazy(() => import('./pages').then(m => ({ default: m.Dashboard }))),
+    UserDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.UserDashboard }))),
+    GeneralSettings: React.lazy(() => import('./pages').then(m => ({ default: m.GeneralSettings }))),
+    ImageSettings: React.lazy(() => import('./pages').then(m => ({ default: m.ImageSettings }))),
+    AvatarSettings: React.lazy(() => import('./pages').then(m => ({ default: m.AvatarSettings }))),
+    SpeechSettings: React.lazy(() => import('./pages').then(m => ({ default: m.SpeechSettings }))),
+    TextSettings: React.lazy(() => import('./pages').then(m => ({ default: m.TextSettings }))),
+    StudioSettings: React.lazy(() => import('./pages').then(m => ({ default: m.StudioSettings }))),
+    FileSettings: React.lazy(() => import('./pages').then(m => ({ default: m.FileSettings }))),
+    PDFSettings: React.lazy(() => import('./pages').then(m => ({ default: m.PDFSettings }))),
+    DevSettings: React.lazy(() => import('./pages').then(m => ({ default: m.DevSettings }))),
+    SocialSettings: React.lazy(() => import('./pages').then(m => ({ default: m.SocialSettings }))),
+    AboutSettings: React.lazy(() => import('./pages').then(m => ({ default: m.AboutSettings }))),
+    HubDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.HubDashboard }))),
+    GenericDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.GenericDashboard }))),
+    ImageDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.ImageDashboard }))),
+    ImageGenerator: React.lazy(() => import('./pages').then(m => ({ default: m.ImageGenerator }))),
+    BrandKits: React.lazy(() => import('./pages').then(m => ({ default: m.BrandKits }))),
+    Models: React.lazy(() => import('./pages').then(m => ({ default: m.Models }))),
+    FluxContest: React.lazy(() => import('./pages').then(m => ({ default: m.FluxContest }))),
+    GenerateImages: React.lazy(() => import('./pages').then(m => ({ default: m.GenerateImages }))),
+    AvatarDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.AvatarDashboard }))),
+    AIStudio: React.lazy(() => import('./pages').then(m => ({ default: m.AIStudio }))),
+    AvatarCreator: React.lazy(() => import('./pages').then(m => ({ default: m.AvatarCreator }))),
+    ArtistFaceSwap: React.lazy(() => import('./pages').then(m => ({ default: m.ArtistFaceSwap }))),
+    VideoAgent: React.lazy(() => import('./pages').then(m => ({ default: m.VideoAgent }))),
+    AvatarTemplates: React.lazy(() => import('./pages').then(m => ({ default: m.AvatarTemplates }))),
+    PPTToVideo: React.lazy(() => import('./pages').then(m => ({ default: m.PPTToVideo }))),
+    Translate: React.lazy(() => import('./pages').then(m => ({ default: m.Translate }))),
+    Characters: React.lazy(() => import('./pages').then(m => ({ default: m.Characters }))),
+    Avatars: React.lazy(() => import('./pages').then(m => ({ default: m.Avatars }))),
+    Apps: React.lazy(() => import('./pages').then(m => ({ default: m.Apps }))),
+    BrandSystem: React.lazy(() => import('./pages').then(m => ({ default: m.BrandSystem }))),
+    TeamDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.TeamDashboard }))),
+    Team: React.lazy(() => import('./pages').then(m => ({ default: m.Team }))),
+    ProjectAvatar: React.lazy(() => import('./pages').then(m => ({ default: m.ProjectAvatar }))),
+    AvatarVideosHome: React.lazy(() => import('./pages').then(m => ({ default: m.AvatarVideosHome }))),
+    SpeechDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.SpeechDashboard }))),
+    TextToSpeech: React.lazy(() => import('./pages').then(m => ({ default: m.TextToSpeech }))),
+    VoiceChanger: React.lazy(() => import('./pages').then(m => ({ default: m.VoiceChanger }))),
+    PodcastCreator: React.lazy(() => import('./pages').then(m => ({ default: m.PodcastCreator }))),
+    AudioDubbing: React.lazy(() => import('./pages').then(m => ({ default: m.AudioDubbing }))),
+    Pronunciation: React.lazy(() => import('./pages').then(m => ({ default: m.Pronunciation }))),
+    SoundEffects: React.lazy(() => import('./pages').then(m => ({ default: m.SoundEffects }))),
+    Voices: React.lazy(() => import('./pages').then(m => ({ default: m.Voices }))),
+    StudioDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.StudioDashboard }))),
+    AIOrchestrator: React.lazy(() => import('./pages').then(m => ({ default: m.AIOrchestrator }))),
+    FaceSwapAI: React.lazy(() => import('./pages').then(m => ({ default: m.FaceSwapAI }))),
+    MusicGenerator: React.lazy(() => import('./pages').then(m => ({ default: m.MusicGenerator }))),
+    Highlights: React.lazy(() => import('./pages').then(m => ({ default: m.Highlights }))),
+    GenerateBRoll: React.lazy(() => import('./pages').then(m => ({ default: m.GenerateBRoll }))),
+    ProductPlacement: React.lazy(() => import('./pages').then(m => ({ default: m.ProductPlacement }))),
+    UGCCreator: React.lazy(() => import('./pages').then(m => ({ default: m.UGCCreator }))),
+    BatchMode: React.lazy(() => import('./pages').then(m => ({ default: m.BatchMode }))),
+    VoiceIsolator: React.lazy(() => import('./pages').then(m => ({ default: m.VoiceIsolator }))),
+    AudioNative: React.lazy(() => import('./pages').then(m => ({ default: m.AudioNative }))),
+    Playground: React.lazy(() => import('./pages').then(m => ({ default: m.Playground }))),
+    History: React.lazy(() => import('./pages').then(m => ({ default: m.History }))),
+    InstantHighlights: React.lazy(() => import('./pages').then(m => ({ default: m.InstantHighlights }))),
+    VideoDubbing: React.lazy(() => import('./pages').then(m => ({ default: m.VideoDubbing }))),
+    VideoPodcast: React.lazy(() => import('./pages').then(m => ({ default: m.VideoPodcast }))),
+    ArtistsHome: React.lazy(() => import('./pages').then(m => ({ default: m.ArtistsHome }))),
+    FilesDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.FilesDashboard }))),
+    Files: React.lazy(() => import('./pages').then(m => ({ default: m.Files }))),
+    Audiobooks: React.lazy(() => import('./pages').then(m => ({ default: m.Audiobooks }))),
+    Productions: React.lazy(() => import('./pages').then(m => ({ default: m.Productions }))),
+    Series: React.lazy(() => import('./pages').then(m => ({ default: m.Series }))),
+    Templates: React.lazy(() => import('./pages').then(m => ({ default: m.Templates }))),
+    TextDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.TextDashboard }))),
+    SpeechToText: React.lazy(() => import('./pages').then(m => ({ default: m.SpeechToText }))),
+    Rules: React.lazy(() => import('./pages').then(m => ({ default: m.Rules }))),
+    SocialDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.SocialDashboard }))),
+    Blog: React.lazy(() => import('./pages').then(m => ({ default: m.Blog }))),
+    Discord: React.lazy(() => import('./pages').then(m => ({ default: m.Discord }))),
+    Twitter: React.lazy(() => import('./pages').then(m => ({ default: m.Twitter }))),
+    Integrations: React.lazy(() => import('./pages').then(m => ({ default: m.Integrations }))),
+    SocialMedia: React.lazy(() => import('./pages').then(m => ({ default: m.SocialMedia }))),
+    DevDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.DevDashboard }))),
+    ApiKeys: React.lazy(() => import('./pages').then(m => ({ default: m.ApiKeys }))),
+    DevAnalytics: React.lazy(() => import('./pages').then(m => ({ default: m.DevAnalytics }))),
+    DevLogs: React.lazy(() => import('./pages').then(m => ({ default: m.DevLogs }))),
+    DevOverview: React.lazy(() => import('./pages').then(m => ({ default: m.DevOverview }))),
+    EnvVars: React.lazy(() => import('./pages').then(m => ({ default: m.EnvVars }))),
+    SystemStatus: React.lazy(() => import('./pages').then(m => ({ default: m.SystemStatus }))),
+    Webhooks: React.lazy(() => import('./pages').then(m => ({ default: m.Webhooks }))),
+    API: React.lazy(() => import('./pages').then(m => ({ default: m.API }))),
+    Billing: React.lazy(() => import('./pages').then(m => ({ default: m.Billing }))),
+    Docs: React.lazy(() => import('./pages').then(m => ({ default: m.Docs }))),
+    FAQSupport: React.lazy(() => import('./pages').then(m => ({ default: m.FAQSupport }))),
+    Feedback: React.lazy(() => import('./pages').then(m => ({ default: m.Feedback }))),
+    Notifications: React.lazy(() => import('./pages').then(m => ({ default: m.Notifications }))),
+    AboutUs: React.lazy(() => import('./pages').then(m => ({ default: m.AboutUs }))),
+    ResourcesDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.ResourcesDashboard }))),
+    ComingSoon: React.lazy(() => import('./pages').then(m => ({ default: m.ComingSoon }))),
+    Ask: React.lazy(() => import('./pages').then(m => ({ default: m.Ask }))),
+    AnalyticsDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.AnalyticsDashboard }))),
+    VideoConversionDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.VideoConversionDashboard }))),
+    AudioConversionDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.AudioConversionDashboard }))),
+    ImageFormatConversionDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.ImageFormatConversionDashboard }))),
+    DocumentConversionDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.DocumentConversionDashboard }))),
+    MergePDF: React.lazy(() => import('./pages').then(m => ({ default: m.MergePDF }))),
+    SplitPDF: React.lazy(() => import('./pages').then(m => ({ default: m.SplitPDF }))),
+    RemovePages: React.lazy(() => import('./pages').then(m => ({ default: m.RemovePages }))),
+    ExtractPages: React.lazy(() => import('./pages').then(m => ({ default: m.ExtractPages }))),
+    ScanToPDF: React.lazy(() => import('./pages').then(m => ({ default: m.ScanToPDF }))),
+    OCRPDF: React.lazy(() => import('./pages').then(m => ({ default: m.OCRPDF }))),
+    PDFSelectDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.PDFSelectDashboard }))),
+    PDFPages: React.lazy(() => import('./pages').then(m => ({ default: m.PDFPages }))),
+    PDFOrganizeDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.PDFOrganizeDashboard }))),
+    PDFOptimizeDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.PDFOptimizeDashboard }))),
+    PDFConvertToDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.PDFConvertToDashboard }))),
+    PDFConvertFromDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.PDFConvertFromDashboard }))),
+    PDFIntelligenceDashboardMain: React.lazy(() => import('./pages').then(m => ({ default: m.PDFIntelligenceDashboardMain }))),
+    PDFEditDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.PDFEditDashboard }))),
+    PDFSecurityDashboardMain: React.lazy(() => import('./pages').then(m => ({ default: m.PDFSecurityDashboardMain }))),
+};
 
 
 
@@ -109,18 +230,18 @@ function App() {
       case 'profile': return <Pages.Profile />;
       case 'dashboard': return <Pages.Dashboard />;
       case 'user-dashboard': return <Pages.UserDashboard />;
-      case 'settings-hub': return <Pages.GeneralSettingsPage />;
-      case 'settings/general': return <Pages.GeneralSettingsPage />;
-      case 'settings/image': return <Pages.ImageSettingsPage />;
-      case 'settings/avatar': return <Pages.AvatarSettingsPage />;
-      case 'settings/speech': return <Pages.SpeechSettingsPage />;
-      case 'settings/text': return <Pages.TextSettingsPage />;
-      case 'settings/studio': return <Pages.StudioSettingsPage />;
-      case 'settings/files': return <Pages.FileSettingsPage />;
-      case 'settings/pdf': return <Pages.PDFSettingsPage />;
-      case 'settings/developers': return <Pages.DevSettingsPage />;
-      case 'settings/social': return <Pages.SocialSettingsPage />;
-      case 'settings/about': return <Pages.AboutSettingsPage />;
+      case 'settings-hub': return <Pages.GeneralSettings />;
+      case 'settings/general': return <Pages.GeneralSettings />;
+      case 'settings/image': return <Pages.ImageSettings />;
+      case 'settings/avatar': return <Pages.AvatarSettings />;
+      case 'settings/speech': return <Pages.SpeechSettings />;
+      case 'settings/text': return <Pages.TextSettings />;
+      case 'settings/studio': return <Pages.StudioSettings />;
+      case 'settings/files': return <Pages.FileSettings />;
+      case 'settings/pdf': return <Pages.PDFSettings />;
+      case 'settings/developers': return <Pages.DevSettings />;
+      case 'settings/social': return <Pages.SocialSettings />;
+      case 'settings/about': return <Pages.AboutSettings />;
       case 'hub-dashboard': return <Pages.HubDashboard />;
       case 'generic-dashboard': return <Pages.GenericDashboard />;
 
@@ -318,7 +439,7 @@ function App() {
         return <Pages.PDFOrganizeDashboard />;
       case 'pdf-dashboard':
       case 'pdf-select':
-        return <Pages.PDFDashboard />;
+        return <Pages.PDFSelectDashboard />;
       case 'compress':
       case 'optimize-pdf':
         return <Pages.PDFOptimizeDashboard />;
@@ -461,6 +582,11 @@ function App() {
 
       <div className={`app-container ${!isSidebarOpen ? 'sidebar-closed' : ''} ${isDeepFocus ? 'deep-focus-active' : ''}`}>
         <RightSettingsPanel open={appSettingsOpen} setOpen={setAppSettingsOpen} />
+        <ToolSettingsManager 
+          toolId={activeTab} 
+          open={toolSettingsOpen} 
+          onClose={() => setToolSettingsOpen(false)} 
+        />
         {!isDeepFocus && (
           isSidebarOpen ? (
             <Sidebar activeTab={activeTab} onTabChange={handleTabChange} isOpen={isSidebarOpen} onToggle={toggleSidebar} />
@@ -489,18 +615,25 @@ function App() {
                  <Minimize2 size={16} />
                </button>
              )}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                style={{ height: '100%' }}
-              >
-                {renderContent()}
-              </motion.div>
-            </AnimatePresence>
+                         <React.Suspense fallback={
+                    <div style={{ padding: '48px', textAlign: 'center', opacity: 0.5 }}>
+                      <div className="aura-loader"></div>
+                      <p style={{ marginTop: '16px', fontWeight: 'bold' }}>Loading Neural Interface...</p>
+                    </div>
+                  }>
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeTab}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ height: 'auto', minHeight: '100%' }}
+                      >
+                        {renderContent()}
+                      </motion.div>
+                    </AnimatePresence>
+                  </React.Suspense>
           </main>
         </div>
       </div>

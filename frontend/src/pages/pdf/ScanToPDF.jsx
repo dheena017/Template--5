@@ -2,12 +2,13 @@ import React, { useState, useCallback } from 'react';
 import { 
     Scan, Download, FileUp, Settings2, FileText
 } from 'lucide-react';
-import { ScanToPDFSettings } from '../../components/toolSettings';
 import { useDropzone } from 'react-dropzone';
 import { AnimatePresence } from 'framer-motion';
 import { api } from '../../services/api';
 import FAQSection from '../../features/pdf/FAQSection';
 import '../../styles/pages/pdf/OrganizePDF.css';
+import ToolLayout from '../../components/layouts/ToolLayout';
+import { useSettings } from '../../context/SettingsContext';
 
 // Separate step components
 import SelectStep from './ScanToPDFSteps/SelectStep';
@@ -24,13 +25,13 @@ const STEPS = [
 ];
 
 const ScanToPDF = () => {
+    const { toolSettingsOpen } = useSettings();
     const [currentStep, setCurrentStep] = useState('select'); // 'select', 'reorder', 'processing', 'download'
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [progress, setProgress] = useState(0);
     const [finalBlobUrl, setFinalBlobUrl] = useState(null);
     const [fileName, setFileName] = useState('');
     const [error, setError] = useState(null);
-    const [settingsOpen, setSettingsOpen] = useState(false);
     const [pdfSettings, setPdfSettings] = useState({});
 
     const activeTool = { name: 'Scan to PDF', icon: Scan, color: '#ec4899' };
@@ -115,31 +116,23 @@ const ScanToPDF = () => {
     };
 
     return (
-        <div className="pdf-tools-wrapper">
-            <button onClick={() => setSettingsOpen(true)} className="tsp-edge-tab" style={{'--tool-accent': activeTool.color}} title="Scan to PDF Settings">
-                <Settings2 size={14} style={{color: activeTool.color}} />
-                <span className="tab-label" style={{color: activeTool.color}}>Settings</span>
-            </button>
-            <ScanToPDFSettings open={settingsOpen} onClose={() => setSettingsOpen(false)} onApply={(s) => { setPdfSettings(s); setSettingsOpen(false); }} />
-            <main className="pdf-tools-main">
-                <div className="pdf-tool-active-view">
-                    <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
-                        <StepIndicator steps={STEPS} currentStep={currentStep} />
-                        <div className="tool-title-wrapper mb-12">
-                            <activeTool.icon size={64} style={{ color: activeTool.color }} className="tool-main-icon" />
-                            <h2 className="text-5xl font-black uppercase tracking-tighter text-white">{activeTool.name}</h2>
-                            <p className="text-xl text-slate-400 mt-2">Professional pixel-to-vector conversion engine for ultimate document quality.</p>
-                        </div>
-                        <div className="w-full flex justify-center">
-                            <AnimatePresence mode="wait">{renderCurrentStep()}</AnimatePresence>
-                        </div>
-                    </div>
+        <ToolLayout 
+            title={activeTool.name} 
+            subtitle="Professional pixel-to-vector conversion engine for ultimate document quality." 
+            icon={activeTool.icon} 
+            color={activeTool.color}
+            category="Document Intelligence"
+        >
+            <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
+                <StepIndicator steps={STEPS} currentStep={currentStep} />
+                <div className="w-full flex justify-center mt-12">
+                    <AnimatePresence mode="wait">{renderCurrentStep()}</AnimatePresence>
                 </div>
-                <div className="mt-32 border-t border-slate-800/30 pt-32">
-                    <FAQSection tool="scan" isDarkMode={true} />
-                </div>
-            </main>
-        </div>
+            </div>
+            <div className="mt-32 border-t border-slate-800/30 pt-32">
+                <FAQSection tool="scan" isDarkMode={true} />
+            </div>
+        </ToolLayout>
     );
 };
 

@@ -5,6 +5,8 @@ import {
 } from 'lucide-react'
 import '../../styles/pages/dashboards/DashboardIndex.css'
 import { PrimaryButton } from '../../components/buttons'
+import SearchBar from '../../components/common/SearchBar/SearchBar'
+
 
 const TOOLS = [
     { id: 'word-to-pdf', name: 'Word to PDF', icon: FileText, color: '#42a5f5', desc: 'Convert DOC/DOCX to PDF' },
@@ -58,20 +60,12 @@ const DocumentConversionDashboard = () => {
                         </div>
                     </div>
 
-                    <div className="relative w-72 group">
-                        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-500 transition-colors" />
-                        <input
-                            id="doc-conversion-search"
-                            type="text"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Find document tool..."
-                            autoComplete="off"
-                            spellCheck="false"
-                            style={{ paddingLeft: '3rem' }}
-                            className="w-full bg-black/40 border border-white/10 rounded-full py-3 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-sky-500 focus:bg-black/60 transition-all font-medium"
-                        />
-                    </div>
+                    <SearchBar 
+                        placeholder="Find document tool..."
+                        onSearch={(val) => setSearch(val)}
+                        className="w-72"
+                    />
+
                 </header>
 
                 {filteredTools.length > 0 ? (

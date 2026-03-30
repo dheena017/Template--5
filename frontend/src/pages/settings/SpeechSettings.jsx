@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { 
   Volume2, Mic2, SlidersHorizontal, AudioLines, Headphones, 
   Zap, Activity, Music, Radio, Waves

@@ -1,5 +1,4 @@
 import '../../styles/sidebars/OrganizePDFSidebar.css';
-import SidebarCategorySwitcher from '../dropdowns/SidebarCategorySwitcher';
 
 const Icons = {
   Minimize: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v5H3"/><path d="m3 3 5 5"/><path d="M16 21v-5h5"/><path d="m21 21-5-5"/></svg>,
@@ -16,9 +15,6 @@ const OptimizePDFSidebar = ({ activeTab, onTabChange }) => {
 
   return (
     <div className="secondary-sidebar-aura">
-      <div className="secondary-sidebar-header">
-        <h3>Optimize PDF</h3>
-      </div>
       <nav className="secondary-nav">
         <ul>
           {tools.map(tool => (

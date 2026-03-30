@@ -1,4 +1,5 @@
-import { 
+import './SettingsUniversal.css'
+import {
   FileText, Shield, Lock, Unlock, Zap, BookOpen, Pin, 
   Stamp, Trash2, Cpu, Eye, Cloud
 } from 'lucide-react'

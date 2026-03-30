@@ -8,6 +8,8 @@ import {
   Activity, Globe, Cpu, MoreHorizontal
 } from 'lucide-react'
 import '../../styles/pages/developers/DevLogs.css'
+import SearchBar from '../../components/common/SearchBar/SearchBar'
+
 
 const DevLogs = () => {
   const [filterType, setFilterType] = useState('All')
@@ -27,10 +29,12 @@ const DevLogs = () => {
           <p>Global event logging for distributed services and neural orchestrators.</p>
         </div>
         <div className="header-actions">
-           <div className="search-logs glass-card">
-              <Search size={16} />
-              <input type="text" placeholder="Search by event, id, or trace..." />
-           </div>
+           <SearchBar 
+              placeholder="Search by event, id, or trace..."
+              onSearch={(val) => console.log('Search logs:', val)}
+              className="logs-search-premium"
+           />
+
            <button className="secondary-btn"><Download size={18} /> Export</button>
         </div>
       </header>

@@ -2,7 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Image, ImageIcon, Zap, ShieldCheck, FileImage, Layers, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { PrimaryButton } from '../../components/buttons';
+import SearchBar from '../../components/common/SearchBar/SearchBar';
 import '../../styles/pages/pdf/PDFPages.css';
+
 
 const IMAGE_TOOLS = [
   { id: 'heic-to-jpg', name: 'HEIC to JPG', desc: 'Convert Apple HEIC photos to standard JPEG' },
@@ -71,20 +73,12 @@ const ImageFormatConversionDashboard = () => {
             </div>
           </div>
 
-          <div className="relative w-72 group">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-amber-500 transition-colors" />
-            <input
-              id="image-pages-search"
-              type="text"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search format (e.g. png)"
-              autoComplete="off"
-              spellCheck="false"
-              style={{ paddingLeft: '3rem' }}
-              className="w-full bg-black/40 border border-white/10 rounded-full py-3 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500 focus:bg-black/60 transition-all font-medium"
-            />
-          </div>
+          <SearchBar 
+            placeholder="Search format (e.g. png)"
+            onSearch={(val) => setSearch(val)}
+            className="w-72"
+          />
+
         </header>
 
         {filteredTools.length > 0 ? (

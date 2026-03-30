@@ -15,7 +15,7 @@ export { default as OCRPDF } from './OCRPDF.jsx'
 export { default as PDFSelectDashboard } from './PDFSelectDashboard.jsx'
 
 // Folder-based sub-pages
-export { default as PopularConversions } from './PopularConversions/index'
+export { default as AllConversions } from './AllConversions.jsx'
 export { default as PDFConversion } from './PDFConversion/index'
 export { default as ConvertToPDF } from './ConvertToPDF/index'
 export { default as ImageToPDF } from './ImageToPDF/index'

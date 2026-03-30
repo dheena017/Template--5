@@ -9,7 +9,7 @@ import { usePDF } from '../../features/pdf/usePDF';
 import FAQSection from '../../features/pdf/FAQSection';
 import '../../styles/pages/pdf/OrganizePDF.css';
 import ToolLayout from '../../components/layouts/ToolLayout';
-import { OrganizePDFSettings } from '../../components/toolSettings';
+import { useSettings } from '../../context/SettingsContext';
 
 // Separate step components
 import SelectStep from './OrganizePDFSteps/SelectStep';
@@ -37,7 +37,7 @@ const OrganizePDFTool = () => {
     const [history, setHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const [zoomLevel, setZoomLevel] = useState(1);
-    const [settingsOpen, setSettingsOpen] = useState(false);
+    const { toolSettingsOpen } = useSettings();
     const [toolSettings, setToolSettings] = useState({});
 
     const activeTool = { name: 'Organize PDF', icon: Layers, color: '#42a5f5' };
@@ -242,11 +242,6 @@ const OrganizePDFTool = () => {
 
     return (
         <ToolLayout title={activeTool.name} subtitle="Visually reorder pages and restructure your document in seconds." icon={activeTool.icon} color={activeTool.color} category="Document Intelligence">
-            <button onClick={() => setSettingsOpen(true)} className="tsp-edge-tab" style={{'--tool-accent': activeTool.color}} title="Organize PDF Settings">
-                <Layers size={14} style={{color: activeTool.color}} />
-                <span className="tab-label" style={{color: activeTool.color}}>Settings</span>
-            </button>
-            <OrganizePDFSettings open={settingsOpen} onClose={() => setSettingsOpen(false)} onApply={(s) => { setToolSettings(s); setSettingsOpen(false); }} />
             <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <StepIndicator steps={STEPS} currentStep={currentStep} />
                 <div className="w-full flex justify-center mt-12">

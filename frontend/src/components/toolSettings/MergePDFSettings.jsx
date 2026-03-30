@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Combine, FileStack, AlignLeft, Download, Settings2 } from 'lucide-react';
-import ToolSettingsPanel, { Toggle, Slider, Sel, Row, BtnGroup, Chips, Note, Sect } from './ToolSettingsPanel';
+import { Combine, FileStack, AlignLeft, Download, Settings2, Shield } from 'lucide-react';
+import ToolSettingsPanel, { Toggle, Slider, Sel, Row, BtnGroup, Chips, Note, Sect, NumberedStep, PremiumCard } from './ToolSettingsPanel';
 
 const DEFAULT = {
     compression: 'Medium',
@@ -35,57 +35,57 @@ const MergePDFSettings = ({ open, onClose, onApply }) => {
             toolName="Merge PDF"
             toolIcon={Combine}
         >
-            <Sect title="Output Settings" icon={Download} defaultOpen>
-                <Row label="Compression">
-                    <BtnGroup options={['None','Low','Medium','High']} value={s.compression} onChange={v => set('compression', v)} />
-                </Row>
-                <Row label="Output Format">
-                    <BtnGroup options={['PDF','PDF/A','PDF/X']} value={s.outputFormat} onChange={v => set('outputFormat', v)} />
-                </Row>
-                <Row label="Custom Filename">
-                    <input className="tsp-input" value={s.filename} onChange={e => set('filename', e.target.value)} placeholder="merged_document" />
-                </Row>
-                <Row label="PDF Version">
-                    <Sel value={s.pdfVersion} onChange={v => set('pdfVersion', v)} options={['PDF 1.4','PDF 1.5','PDF 1.6','PDF 1.7','PDF 2.0']} />
-                </Row>
+            <Sect title="System Configuration" icon={Settings2} badge="Selection Guide">
+                <div className="tsp-numbered-list">
+                    <NumberedStep 
+                        number="01" 
+                        title="Neural Compression" 
+                        description="Choose the balance between file size and visual fidelity. Medium is recommended for most docs." 
+                    />
+                    <Row label="Intensity">
+                        <BtnGroup options={['None','Low','Medium','High']} value={s.compression} onChange={v => set('compression', v)} />
+                    </Row>
+
+                    <NumberedStep 
+                        number="02" 
+                        title="Page Sequencing" 
+                        description="Define how page numbers should behave across the merged stack." 
+                    />
+                    <Row label="Scheme">
+                        <BtnGroup options={['Continuous','Reset']} value={s.pageNumbering} onChange={v => set('pageNumbering', v)} />
+                    </Row>
+
+                    <NumberedStep 
+                        number="03" 
+                        title="Synthesis Output" 
+                        description="Configure the final format and metadata of the generated document." 
+                    />
+                    <Row label="Profile">
+                        <BtnGroup options={['PDF','PDF/A','PDF/X']} value={s.outputFormat} onChange={v => set('outputFormat', v)} />
+                    </Row>
+                </div>
+
+                <div className="tsp-premium-cards-grid">
+                    <PremiumCard 
+                        icon={AlignLeft} 
+                        title="Integration" 
+                        color="#ef4444" 
+                        description="Preserves all layers and annotations during merge." 
+                    />
+                    <PremiumCard 
+                        icon={Shield} 
+                        title="Security" 
+                        color="#3b82f6" 
+                        description="Documents remain encrypted throughout the process." 
+                    />
+                </div>
             </Sect>
 
-            <Sect title="Page Numbering" icon={FileStack} defaultOpen>
-                <Row label="Numbering Scheme">
-                    <BtnGroup options={['Continuous','Reset']} value={s.pageNumbering} onChange={v => set('pageNumbering', v)} />
-                </Row>
-                <Note>
-                    <b>Continuous:</b> Pages 1,2,3... across all files.<br/>
-                    <b>Reset:</b> Each file starts at page 1.
-                </Note>
-            </Sect>
-
-            <Sect title="Extra Pages" icon={AlignLeft} defaultOpen={false}>
-                <Row label="Insert Blank Between Files">
-                    <Toggle value={s.insertBlank} onChange={v => set('insertBlank', v)} />
-                </Row>
-                <Row label="Generate Table of Contents">
-                    <Toggle value={s.generateTOC} onChange={v => set('generateTOC', v)} />
-                </Row>
-            </Sect>
-
-            <Sect title="Document Metadata" icon={Settings2} defaultOpen={false}>
-                <Row label="Title">
-                    <input className="tsp-input" value={s.title} onChange={e => set('title', e.target.value)} placeholder="Document title..." />
-                </Row>
-                <Row label="Author">
-                    <input className="tsp-input" value={s.author} onChange={e => set('author', e.target.value)} placeholder="Author name..." />
-                </Row>
-                <Row label="Subject">
-                    <input className="tsp-input" value={s.subject} onChange={e => set('subject', e.target.value)} placeholder="Description..." />
-                </Row>
-            </Sect>
-
-            <Sect title="Advanced" defaultOpen={false}>
-                <Row label="Embed Fonts"><Toggle value={s.embedFonts} onChange={v => set('embedFonts', v)} /></Row>
-                <Row label="Flatten Annotations"><Toggle value={s.flattenAnnotations} onChange={v => set('flattenAnnotations', v)} /></Row>
-                <Row label="Remove Metadata"><Toggle value={s.removeMetadata} onChange={v => set('removeMetadata', v)} /></Row>
-                <Row label="Optimize for Web"><Toggle value={s.optimizeForWeb} onChange={v => set('optimizeForWeb', v)} /></Row>
+            <Sect title="Advanced Engine Switches" defaultOpen={false}>
+                <Row label="Insert Blank Interstitial"><Toggle value={s.insertBlank} onChange={v => set('insertBlank', v)} /></Row>
+                <Row label="Neural TOC Generation"><Toggle value={s.generateTOC} onChange={v => set('generateTOC', v)} /></Row>
+                <Row label="Embed Custom Fonts"><Toggle value={s.embedFonts} onChange={v => set('embedFonts', v)} /></Row>
+                <Row label="Strip Private Metadata"><Toggle value={s.removeMetadata} onChange={v => set('removeMetadata', v)} /></Row>
             </Sect>
         </ToolSettingsPanel>
     );

@@ -8,9 +8,10 @@ import {
   MoreVertical, Download, X,
   ChevronRight
 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { api, logger } from '../../services/api'
+import SearchBar from '../../components/common/SearchBar/SearchBar'
 import '../../styles/pages/developers/ApiKeys.css'
+
 
 const ApiKeys = () => {
   useEffect(() => {
@@ -126,10 +127,12 @@ const ApiKeys = () => {
       <div className="apikeys-layout">
         <main className="apikeys-main premium-card">
            <div className="keys-toolbar">
-              <div className="search-keys glass-card">
-                 <Search size={16} />
-                 <input type="text" placeholder="Search by key name..." />
-              </div>
+              <SearchBar 
+                 placeholder="Search by key name..."
+                 onSearch={(val) => console.log('Search keys:', val)}
+                 className="keys-search-premium"
+              />
+
               <div className="filter-group">
                  <button className="filter-btn active">All Keys</button>
                  <button className="filter-btn">Active</button>

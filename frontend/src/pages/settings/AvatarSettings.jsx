@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { 
   Bot, Users2, ShieldCheck, Box, 
   Layers, Smile, Video, Monitor, 

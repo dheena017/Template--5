@@ -6,41 +6,41 @@ import {
     Cpu, Globe, Download, Shield, Layout, PanelRight
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-import './RightSettingsPanel.css';
+import '../styles/SettingsPanel.css';
 
 // ── Mini primitives ────────────────────────────────────────────────
 const Toggle = ({ value, onChange }) => (
-    <button className={`rsp-toggle ${value ? 'on' : ''}`} onClick={(e) => { e.stopPropagation(); onChange(!value); }}>
-        <span className="rsp-thumb" />
+    <button className={`aura-toggle ${value ? 'on' : ''}`} onClick={(e) => { e.stopPropagation(); onChange(!value); }}>
+        <span className="aura-toggle-thumb" />
     </button>
 );
 
 const Slider = ({ min = 0, max = 100, value, onChange, unit = '' }) => (
-    <div className="rsp-slider-row" onClick={(e) => e.stopPropagation()}>
+    <div className="aura-slider-row" onClick={(e) => e.stopPropagation()}>
         <input type="range" min={min} max={max} value={value}
             onChange={e => onChange(Number(e.target.value))}
-            className="rsp-range" />
-        <span className="rsp-range-val">{value}{unit}</span>
+            className="aura-range" />
+        <span className="aura-range-val">{value}{unit}</span>
     </div>
 );
 
 const Select = ({ value, onChange, options }) => (
-    <select className="rsp-select" value={value} onChange={e => onChange(e.target.value)}>
+    <select className="aura-select" value={value} onChange={e => onChange(e.target.value)}>
         {options.map(o => <option key={o.value || o} value={o.value || o}>{o.label || o}</option>)}
     </select>
 );
 
 const SectionTitle = ({ icon: Icon, label }) => (
-    <div className="rsp-section-title">
-        <Icon size={13} />
+    <div className="aura-sect-label">
+        <Icon size={12} />
         <span>{label}</span>
     </div>
 );
 
 const Row = ({ label, children }) => (
-    <div className="rsp-row">
-        <span className="rsp-row-label">{label}</span>
-        <div className="rsp-row-ctrl">{children}</div>
+    <div className="aura-row">
+        <span className="aura-row-label">{label}</span>
+        <div className="aura-row-ctrl">{children}</div>
     </div>
 );
 
@@ -130,35 +130,28 @@ const RightSettingsPanel = ({ open, setOpen }) => {
     const renderSection = () => {
         switch (section) {
             case 'appearance': return (
-                <div className="rsp-section-body">
+                <div className="aura-panel-content" style={{ padding: 0 }}>
                     <SectionTitle icon={Palette} label="Theme" />
                     <Row label="Color Mode">
-                        <div className="rsp-btn-group">
-                            <button className={`rsp-mode-btn ${darkMode ? 'active' : ''}`} onClick={() => setDarkMode(true)}>
+                        <div className="aura-btn-group">
+                            <button className={`aura-group-btn ${darkMode ? 'active' : ''}`} onClick={() => setDarkMode(true)}>
                                 <Moon size={14}/> Dark
                             </button>
-                            <button className={`rsp-mode-btn ${!darkMode ? 'active' : ''}`} onClick={() => setDarkMode(false)}>
+                            <button className={`aura-group-btn ${!darkMode ? 'active' : ''}`} onClick={() => setDarkMode(false)}>
                                 <Sun size={14}/> Light
                             </button>
                         </div>
                     </Row>
                     <Row label="Accent Color">
-                        <div className="rsp-swatch-grid">
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                             {ACCENT_COLORS.map(c => (
                                 <button
                                     key={c.value}
-                                    className={`rsp-swatch ${accentColor === c.value ? 'selected' : ''}`}
-                                    style={{ background: c.value }}
+                                    style={{ width: '22px', height: '22px', borderRadius: '6px', border: accentColor === c.value ? '2px solid white' : '2px solid transparent', background: c.value, cursor: 'pointer' }}
                                     onClick={(e) => { e.stopPropagation(); setAccentColor(c.value); }}
                                     title={c.label}
                                 />
                             ))}
-                        </div>
-                    </Row>
-                    <Row label="Custom Accent">
-                        <div className="rsp-color-row">
-                            <input type="color" value={accentColor} onChange={e => setAccentColor(e.target.value)} className="rsp-color-swatch" />
-                            <input type="text"  value={accentColor.toUpperCase()} onChange={e => setAccentColor(e.target.value)} className="rsp-color-hex" maxLength={7} />
                         </div>
                     </Row>
 
@@ -172,7 +165,7 @@ const RightSettingsPanel = ({ open, setOpen }) => {
             );
 
             case 'display': return (
-                <div className="rsp-section-body">
+                <div className="aura-panel-content" style={{ padding: 0 }}>
                     <SectionTitle icon={Layout} label="Layout" />
                     <Row label="Compact Mode"><Toggle value={compactMode} onChange={setCompactMode} /></Row>
                     <Row label="Show Page Numbers"><Toggle value={showPageNums} onChange={setShowPageNums} /></Row>
@@ -186,116 +179,79 @@ const RightSettingsPanel = ({ open, setOpen }) => {
                     <Row label="Grid Columns">
                         <Select value={gridColumns} onChange={setGridColumns} options={['auto','2','3','4','6']} />
                     </Row>
-                    <Row label="Lazy Load Images"><Toggle value={lazyLoad} onChange={setLazyLoad} /></Row>
 
                     <SectionTitle icon={Globe} label="Localization" />
                     <Row label="Language">
                         <Select value={language} onChange={setLanguage} options={[
                             {value:'en', label:'English'},{value:'es', label:'Español'},
-                            {value:'fr', label:'Français'},{value:'de', label:'Deutsch'},
-                            {value:'zh', label:'中文'},{value:'ja', label:'日本語'},
-                            {value:'ar', label:'العربية'},{value:'hi', label:'हिंदी'},
+                            {value:'fr', label:'Français'},{value:'de', label:'Deutsch'}
                         ]} />
                     </Row>
                 </div>
             );
 
             case 'typography': return (
-                <div className="rsp-section-body">
+                <div className="aura-panel-content" style={{ padding: 0 }}>
                     <SectionTitle icon={Type} label="Font Settings" />
                     <Row label="Font Family">
                         <Select value={fontFamily} onChange={setFontFamily} options={[
-                            'Inter','Roboto','Open Sans','Poppins','Lato','Nunito',
-                            'Source Sans Pro','Outfit','Plus Jakarta Sans'
+                            'Inter','Roboto','Outfit','Plus Jakarta Sans'
                         ]} />
                     </Row>
                     <Row label={`Base Font Size (${fontSize}px)`}><Slider min={12} max={20} value={fontSize} onChange={setFontSize} unit="px" /></Row>
                     <Row label={`Line Height (${lineHeight}%)`}><Slider min={120} max={220} value={lineHeight} onChange={setLineHeight} unit="%" /></Row>
-                    <div className="rsp-type-preview" style={{ fontFamily, fontSize, lineHeight: `${lineHeight}%` }}>
+                    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px', padding: '16px', color: 'white', marginTop: '12px', fontFamily, fontSize, lineHeight: `${lineHeight}%` }}>
                         <p>The quick brown fox jumps over the lazy dog.</p>
-                        <p className="text-sm text-slate-400">Aura Platform — Premium Toolset</p>
+                        <p style={{ fontSize: '0.75rem', opacity: 0.5 }}>Aura Platform — Premium Toolset</p>
                     </div>
-                </div>
-            );
-
-            case 'performance': return (
-                <div className="rsp-section-body">
-                    <SectionTitle icon={Zap} label="Rendering" />
-                    <Row label="Animations"><Toggle value={animationsEnabled} onChange={setAnimationsEnabled} /></Row>
-                    <Row label="Hardware Acceleration"><Toggle value={hardwareAccel} onChange={setHardwareAccel} /></Row>
-                    <Row label="Lazy Loading"><Toggle value={lazyLoad} onChange={setLazyLoad} /></Row>
-
-                    <SectionTitle icon={Download} label="Storage & Cache" />
-                    <Row label="Auto-Clear Downloads"><Toggle value={autoClearDownloads} onChange={setAutoClearDownloads} /></Row>
-                    <Row label="PDF Cache">
-                        <button className="rsp-action-btn">Clear Cache</button>
-                    </Row>
-                    <Row label="Thumbnails Cache">
-                        <button className="rsp-action-btn">Clear Cache</button>
-                    </Row>
                 </div>
             );
 
             case 'privacy': return (
-                <div className="rsp-section-body">
+                <div className="aura-panel-content" style={{ padding: 0 }}>
                     <SectionTitle icon={Shield} label="Data & Privacy" />
                     <Row label="Usage Analytics"><Toggle value={analyticsOpt} onChange={setAnalyticsOpt} /></Row>
                     <Row label="Crash Reports"><Toggle value={crashReports} onChange={setCrashReports} /></Row>
                     <Row label="Local Storage Only"><Toggle value={localStorageOnly} onChange={setLocalStorageOnly} /></Row>
-                    <Row label="Clear All Data">
-                        <button className="rsp-action-btn danger">Clear Now</button>
-                    </Row>
-                    <div className="rsp-privacy-note">
-                        <Shield size={12}/> Your files are processed locally and never stored on our servers.
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.7rem', color: '#64748b', background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', marginTop: '12px' }}>
+                        <Shield size={12}/> Your files stay on your device and are never exported to external servers.
                     </div>
                 </div>
             );
 
-            case 'notifications': return (
-                <div className="rsp-section-body">
-                    <SectionTitle icon={Bell} label="Notification Preferences" />
-                    <Row label="System Alerts"><Toggle value={notifSystem} onChange={setNotifSystem} /></Row>
-                    <Row label="Task Complete"><Toggle value={notifComplete} onChange={setNotifComplete} /></Row>
-                    <Row label="Product Updates"><Toggle value={notifUpdates} onChange={setNotifUpdates} /></Row>
-                    <Row label="Sound Effects"><Toggle value={notifSound} onChange={setNotifSound} /></Row>
-                    {notifSound && <Row label="Volume"><Slider min={0} max={100} value={notifVolume} onChange={setNotifVolume} unit="%" /></Row>}
-                </div>
-            );
-
             case 'shortcuts': return (
-                <div className="rsp-section-body">
+                <div className="aura-panel-content" style={{ padding: 0 }}>
                     <SectionTitle icon={Keyboard} label="Keyboard Shortcuts" />
                     {[
                         ['Open Settings',      'Ctrl + ,'],
                         ['Quick Search',       'Ctrl + K'],
-                        ['Deep Focus Mode',    'Ctrl + Shift + F'],
-                        ['Undo',               'Ctrl + Z'],
-                        ['Redo',               'Ctrl + Y'],
-                        ['Select All Pages',   'Ctrl + A'],
-                        ['Delete Selected',    'Delete'],
-                        ['Clear Selection',    'Escape'],
-                        ['Next Tool',          'Tab'],
                         ['Toggle Sidebar',     'Ctrl + B'],
                     ].map(([name, key]) => (
-                        <div key={name} className="rsp-shortcut-row">
-                            <span>{name}</span>
-                            <kbd>{key}</kbd>
+                        <div key={name} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', fontSize: '0.85rem' }}>
+                            <span style={{ color: '#94a3b8' }}>{name}</span>
+                            <kbd style={{ background: 'rgba(255,255,255,0.08)', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem' }}>{key}</kbd>
                         </div>
                     ))}
                 </div>
             );
 
-            default: return null;
+            default: return (
+                <div className="aura-panel-content" style={{ padding: 0 }}>
+                    <div style={{ textAlign: 'center', padding: '40px 0', opacity: 0.3 }}>
+                        <Cpu size={48} style={{ margin: '0 auto 16px' }} />
+                        <p>Advanced feature config under development.</p>
+                    </div>
+                </div>
+            );
         }
     };
 
     return (
         <>
-            {/* Overlay */}
             <AnimatePresence>
                 {open && (
                     <motion.div
-                        className="rsp-overlay"
+                        className="aura-panel-overlay"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -304,50 +260,53 @@ const RightSettingsPanel = ({ open, setOpen }) => {
                 )}
             </AnimatePresence>
 
-            {/* Slide-In Panel */}
             <AnimatePresence>
                 {open && (
                     <motion.div
-                        className="rsp-panel"
+                        className="aura-settings-panel"
+                        style={{ '--aura-accent-rgb': hexToRgb(accentColor) }}
                         initial={{ x: '100%', opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: '100%', opacity: 0 }}
                         transition={{ type: 'spring', stiffness: 340, damping: 34 }}
-                        onClick={(e) => e.stopPropagation()} // Critical for avoiding overlay closers
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Header */}
-                        <div className="rsp-header">
-                            <div className="rsp-header-title">
-                                <PanelRight size={18} />
-                                <span>App Settings</span>
+                        <div className="aura-panel-header">
+                            <div className="aura-header-group">
+                                <div className="aura-header-icon">
+                                    <PanelRight size={22} style={{ color: accentColor }} />
+                                </div>
+                                <div className="aura-header-text">
+                                    <h3>App Settings</h3>
+                                    <p>Global Configuration</p>
+                                </div>
                             </div>
-                            <div className="rsp-header-actions">
-                                <button className="rsp-icon-btn" onClick={resetAll} title="Reset All">
+                            <div style={{ display: 'flex', gap: '8px' }}>
+                                <button className="aura-close-btn" onClick={resetAll} title="Reset All">
                                     <RotateCcw size={15} />
                                 </button>
-                                <button className="rsp-icon-btn close" onClick={() => setOpen(false)} title="Close">
+                                <button className="aura-close-btn" onClick={() => setOpen(false)} title="Close">
                                     <X size={16} />
                                 </button>
                             </div>
                         </div>
 
-                        {/* Body: sidebar nav + content */}
-                        <div className="rsp-body">
-                            <nav className="rsp-nav">
+                        <div className="aura-panel-split-body">
+                            <nav className="aura-panel-nav">
                                 {SECTIONS.map(sec => (
                                     <button
                                         key={sec.id}
-                                        className={`rsp-nav-btn ${section === sec.id ? 'active' : ''}`}
+                                        className={`aura-nav-link ${section === sec.id ? 'active' : ''}`}
                                         onClick={() => setSection(sec.id)}
                                     >
                                         <sec.icon size={15} />
                                         <span>{sec.label}</span>
-                                        {section === sec.id && <ChevronRight size={12} className="rsp-nav-arrow" />}
+                                        {section === sec.id && <ChevronRight size={12} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
                                     </button>
                                 ))}
                             </nav>
 
-                            <div className="rsp-content">
+                            <div className="aura-panel-tab-content">
                                 <AnimatePresence mode="wait">
                                     <motion.div
                                         key={section}
@@ -362,12 +321,13 @@ const RightSettingsPanel = ({ open, setOpen }) => {
                             </div>
                         </div>
 
-                        {/* Footer */}
-                        <div className="rsp-footer">
-                            <span>Aura Platform v2.1.0</span>
-                            <button className="rsp-save-btn" onClick={() => setOpen(false)}>
+                        <div className="aura-panel-footer">
+                            <button className="aura-apply-btn" onClick={() => setOpen(false)}>
                                 Save & Close
                             </button>
+                            <div className="aura-footer-info">
+                                <span>Aura Platform v2.1.0</span>
+                            </div>
                         </div>
                     </motion.div>
                 )}
@@ -375,5 +335,11 @@ const RightSettingsPanel = ({ open, setOpen }) => {
         </>
     );
 };
+
+// Helper
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '139, 92, 246';
+}
 
 export default RightSettingsPanel;

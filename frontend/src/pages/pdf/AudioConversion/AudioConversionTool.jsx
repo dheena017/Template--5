@@ -8,14 +8,24 @@ import StepIndicator from '../MergePDFSteps/StepIndicator';
 import SelectStep from './AudioConversionSteps/SelectStep';
 import ConfigStep from './AudioConversionSteps/ConfigStep';
 import ResultStep from './AudioConversionSteps/ResultStep';
+import { AudioConversionSettings } from '../../../components/toolSettings';
+import { useSettings } from '../../../context/SettingsContext';
 
 const AudioConversionTool = ({ fromFormat, toFormat }) => {
+    const { toolSettingsOpen, setToolSettingsOpen } = useSettings();
     const [currentStep, setCurrentStep] = useState('select'); // 'select', 'config', 'download'
     const [fileInfo, setFileInfo] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
     const [progress, setProgress] = useState(0);
     const [resultData, setResultData] = useState(null);
-    const [quality, setQuality] = useState('high');
+    
+    const [audioSettings, setAudioSettings] = useState({
+        quality: 'High',
+        bitrate: '320kbps',
+        sampleRate: '44100Hz',
+        channels: 'Stereo',
+        normalize: true
+    });
 
     const activeTool = { 
         name: `${fromFormat} to ${toFormat}`, 
@@ -69,7 +79,6 @@ const AudioConversionTool = ({ fromFormat, toFormat }) => {
         setIsProcessing(true);
         setProgress(0);
         try {
-            // Simulated conversion process
             for(let i = 1; i <= 100; i += Math.floor(Math.random() * 15) + 5) {
                 setProgress(Math.min(i, 100));
                 await new Promise(r => setTimeout(r, 150));
@@ -85,7 +94,6 @@ const AudioConversionTool = ({ fromFormat, toFormat }) => {
             });
             setCurrentStep('download');
 
-            // Send analytics record
             try {
                 fetch(`http://localhost:8000/api/analytics/record?action=${fromFormat} to ${toFormat}&target=Audio File&pages=1&engine=local`, { method: 'POST' }).catch(() => {});
             } catch (err) {}
@@ -103,7 +111,6 @@ const AudioConversionTool = ({ fromFormat, toFormat }) => {
         setFileInfo(null);
         setResultData(null);
         setProgress(0);
-        setQuality('high');
         setCurrentStep('select');
     };
 
@@ -112,7 +119,7 @@ const AudioConversionTool = ({ fromFormat, toFormat }) => {
             case 'select':
                 return <SelectStep {...{ getRootProps, getInputProps, isDragActive, activeTool, fromFormat, toFormat }} />;
             case 'config':
-                return <ConfigStep {...{ fileInfo, fromFormat, toFormat, quality, setQuality, handleConvert, isProcessing, progress, reset, activeTool }} />;
+                return <ConfigStep {...{ fileInfo, fromFormat, toFormat, quality: audioSettings.quality, setQuality: (v) => setAudioSettings(s => ({ ...s, quality: v })), handleConvert, isProcessing, progress, reset, activeTool }} />;
             case 'download':
                 return <ResultStep {...{ resultData, fromFormat, toFormat, activeTool, reset }} />;
             default:
@@ -128,6 +135,13 @@ const AudioConversionTool = ({ fromFormat, toFormat }) => {
             color={activeTool.color}
             category={activeTool.category}
         >
+            <AudioConversionSettings 
+                open={toolSettingsOpen} 
+                onClose={() => setToolSettingsOpen(false)} 
+                settings={audioSettings} 
+                setSettings={setAudioSettings} 
+            />
+            
             <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <StepIndicator steps={STEPS} currentStep={currentStep} />
                 <div className="w-full flex justify-center mt-12">

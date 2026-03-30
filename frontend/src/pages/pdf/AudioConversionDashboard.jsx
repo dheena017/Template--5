@@ -4,6 +4,8 @@ import { Search, Music, Headphones, Zap, ShieldCheck, Volume2, Disc, ChevronRigh
 import '../../styles/pages/pdf/PDFPages.css';
 import '../../styles/pages/dashboards/DashboardIndex.css';
 import { PrimaryButton } from '../../components/buttons';
+import SearchBar from '../../components/common/SearchBar/SearchBar';
+
 
 const AUDIO_TOOLS = [
   { id: 'mp3-to-wav', name: 'MP3 to WAV', desc: 'Convert MP3 to high-quality uncompressed WAV format' },
@@ -78,17 +80,12 @@ const AudioConversionDashboard = () => {
             </div>
           </div>
 
-          <label htmlFor="audio-pages-search" className="pdf-pages-search relative w-72">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              id="audio-pages-search"
-              type="text"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search format (e.g. mp3)"
-              className="w-full bg-black/40 border border-white/10 rounded-full py-3 pl-12 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500 transition-colors"
-            />
-          </label>
+          <SearchBar 
+            placeholder="Search format (e.g. mp3)"
+            onSearch={(val) => setSearch(val)}
+            className="w-72"
+          />
+
         </header>
 
         {filteredTools.length > 0 ? (

@@ -245,10 +245,36 @@ export const api = {
         },
         // --- High-Performance Logic Extensions ---
         lock: async (file, password) => {
-            return await PDFSecurityService.lockPDF(file, password);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('password', password);
+            const res = await fetch(`${API_URL}/api/pdf/protect`, { method: 'POST', body: formData });
+            if (!res.ok) throw new Error('Lock failed');
+            return await res.blob();
+        },
+        unlock: async (file, password) => {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('password', password);
+            const res = await fetch(`${API_URL}/api/pdf/unlock`, { method: 'POST', body: formData });
+            if (!res.ok) throw new Error('Unlock failed');
+            return await res.blob();
         },
         sign: async (file, name) => {
-            return await PDFSecurityService.anchorSignRecord(file, name);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('name', name);
+            const res = await fetch(`${API_URL}/api/pdf/sign`, { method: 'POST', body: formData });
+            if (!res.ok) throw new Error('Signing failed');
+            return await res.blob();
+        },
+        redact: async (file, keywords) => {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('keywords', keywords);
+            const res = await fetch(`${API_URL}/api/pdf/redact`, { method: 'POST', body: formData });
+            if (!res.ok) throw new Error('Redaction failed');
+            return await res.blob();
         },
         ocr: async (file, lang) => {
             return await PDFIntelligenceService.runOCR(file, lang);
@@ -261,6 +287,25 @@ export const api = {
         },
         optimizeLocal: async (file) => {
             return await PDFOptimizerService.optimizePDF(file);
+        }
+    },
+
+    // eBook Transformations
+    ebook: {
+        convert: async (file, fromFormat, toFormat, settings = {}) => {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('from_format', fromFormat);
+            formData.append('to_format', toFormat);
+            formData.append('font_size', settings.fontSize || 'Normal');
+            formData.append('optimize_images', settings.optimizeImages !== false);
+
+            const res = await fetch(`${API_URL}/api/ebook/convert`, {
+                method: 'POST',
+                body: formData,
+            });
+            if (!res.ok) throw new Error('eBook Engine: Conversion failed');
+            return await res.blob();
         }
     }
 };

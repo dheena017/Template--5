@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { 
   Clapperboard, Workflow, Target, Cpu, Clock, Zap, 
   Monitor, Layout, Key, Rocket, Server, 

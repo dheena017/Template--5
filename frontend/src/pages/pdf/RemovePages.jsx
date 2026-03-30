@@ -2,11 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { 
     FileMinus, Download, FileUp, Scissors, Trash2, CheckCircle2, Settings2
 } from 'lucide-react';
-import { RemovePagesSettings } from '../../components/toolSettings';
 import { useDropzone } from 'react-dropzone';
 import { AnimatePresence } from 'framer-motion';
 import { PDFDocument } from 'pdf-lib';
 import { usePDF } from '../../features/pdf/usePDF';
+import { useSettings } from '../../context/SettingsContext';
 import FAQSection from '../../features/pdf/FAQSection';
 import '../../styles/pages/pdf/OrganizePDF.css';
 import ToolLayout from '../../components/layouts/ToolLayout';
@@ -26,6 +26,7 @@ const STEPS = [
 ];
 
 const RemovePages = () => {
+    const { toolSettingsOpen } = useSettings();
     const { loadPDF, loading: pdfLoading, error: pdfError } = usePDF();
     const [currentStep, setCurrentStep] = useState('select'); // 'select', 'reorder', 'processing', 'download'
     const [pdfInfo, setPdfInfo] = useState(null);
@@ -33,7 +34,6 @@ const RemovePages = () => {
     const [progress, setProgress] = useState(0);
     const [finalBlobUrl, setFinalBlobUrl] = useState(null);
     const [fileName, setFileName] = useState('');
-    const [settingsOpen, setSettingsOpen] = useState(false);
     const [pdfSettings, setPdfSettings] = useState({});
 
     const activeTool = { name: 'Remove Pages', icon: FileMinus, color: '#f43f5e' };
@@ -137,11 +137,6 @@ const RemovePages = () => {
 
     return (
         <ToolLayout title={activeTool.name} subtitle="Prune your documents with surgical precision." icon={activeTool.icon} color={activeTool.color} category="Document Intelligence">
-            <button onClick={() => setSettingsOpen(true)} className="tsp-edge-tab" style={{'--tool-accent': activeTool.color}} title="Remove Pages Settings">
-                <Settings2 size={14} style={{color: activeTool.color}} />
-                <span className="tab-label" style={{color: activeTool.color}}>Settings</span>
-            </button>
-            <RemovePagesSettings open={settingsOpen} onClose={() => setSettingsOpen(false)} onApply={(s) => { setPdfSettings(s); setSettingsOpen(false); }} />
             <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <StepIndicator steps={STEPS} currentStep={currentStep} />
                 <div className="w-full flex justify-center mt-12">

@@ -132,13 +132,13 @@ const SettingsHub = () => {
         {SETTINGS_CARDS.map((card) => {
           const Icon = card.icon
           return (
-            <button
+            <div
               key={card.title}
-              type="button"
               className="portal-tool-card"
               style={{ 
                   backgroundColor: '#0f1016',
-                  border: '1px solid rgba(255, 255, 255, 0.04)'
+                  border: '1px solid rgba(255, 255, 255, 0.04)',
+                  cursor: 'pointer'
               }}
               onClick={() => navigate(card.path)}
             >
@@ -172,7 +172,7 @@ const SettingsHub = () => {
                   </div>
               </div>
               <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${card.color}15, transparent)` }}></div>
-            </button>
+            </div>
           )
         })}
       </motion.div>

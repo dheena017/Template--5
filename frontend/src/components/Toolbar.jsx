@@ -1,7 +1,9 @@
 import React from 'react';
 import '../styles/Toolbar.css';
-import { Bell, HelpCircle, LogOut, MessageSquare, Settings, User, Search, X, ChevronRight, Share, Zap, Maximize2 } from 'lucide-react';
+import { Bell, HelpCircle, LogOut, MessageSquare, Settings, User, Search, X, ChevronRight, Share, Zap, Maximize2, Home } from 'lucide-react';
 import { Dropdown, DropdownItem, DropdownDivider } from './dropdowns';
+import SearchBar from './common/SearchBar/SearchBar';
+
 
 const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDeepFocus, setIsDeepFocus }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -31,8 +33,8 @@ const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDee
   const results = React.useMemo(() => {
     if (!searchQuery) return [];
     const query = searchQuery.toLowerCase();
-    return ALL_FEATURES.filter(f => 
-      f.name.toLowerCase().includes(query) || 
+    return ALL_FEATURES.filter(f =>
+      f.name.toLowerCase().includes(query) ||
       f.cat.toLowerCase().includes(query) ||
       (f.keywords && f.keywords.some(k => k.toLowerCase().includes(query)))
     );
@@ -50,38 +52,31 @@ const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDee
       <div className="toolbar-left">
         {!isSidebarOpen && (
           <button className="toggle-sidebar-btn-aura" onClick={onToggleSidebar} title="Open Sidebar">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12h18M3 6h18M3 18h18" /></svg>
           </button>
         )}
         <div className="breadcrumb-aura">
-          <span className="breadcrumb-folder">Aura</span>
-          <ChevronRight size={14} className="breadcrumb-separator" />
-          <span className="breadcrumb-folder">Dashboard</span>
-          <ChevronRight size={14} className="breadcrumb-separator" />
-          <span className="breadcrumb-active">{getBreadcrumb(activeTab)}</span>
+          <div className="bc-root-icon" onClick={() => onTabChange('dashboard')}>
+            <Home size={16} />
+          </div>
+          <ChevronRight size={12} className="bc-sep" />
+          <span className="bc-cat">{activeTab.includes('/') ? activeTab.split('/')[0].toUpperCase() : 'AURA'}</span>
+          <ChevronRight size={12} className="bc-sep" />
+          <span className="bc-active">{getBreadcrumb(activeTab)}</span>
         </div>
       </div>
-      
+
       <div className="toolbar-right">
         <div className="search-container-aura">
-          <div className="search-bar-aura">
-             <Search size={16} strokeWidth={2.5} />
-             <input 
-              type="text" 
-              placeholder="Quick search... (Alt+S)" 
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowResults(true);
-              }}
-              onFocus={() => setShowResults(true)}
-             />
-             {searchQuery && (
-               <button className="clear-search-btn" onClick={() => setSearchQuery('')}>
-                 <X size={12} />
-               </button>
-             )}
-          </div>
+          <SearchBar 
+            placeholder="Quick search... (Alt+S)"
+            onSearch={(val) => {
+              setSearchQuery(val);
+              setShowResults(true);
+            }}
+            className="toolbar-search-premium"
+          />
+
 
           {showResults && searchQuery && (
             <div className="search-results-dropdown-aura">
@@ -89,8 +84,8 @@ const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDee
                 <>
                   <div className="search-group-title">Suggestions</div>
                   {results.map((item, idx) => (
-                    <div 
-                      key={idx} 
+                    <div
+                      key={idx}
                       className="search-result-item-aura"
                       onClick={() => {
                         onTabChange(item.path);
@@ -112,25 +107,25 @@ const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDee
             </div>
           )}
         </div>
-        
+
         <div className="toolbar-actions-aura">
           <button className="icon-btn-aura" title="Share Project">
             <Share size={18} />
           </button>
-          
-          <button 
-            className={`icon-btn-aura ${isDeepFocus ? 'active' : ''}`} 
+
+          <button
+            className={`icon-btn-aura ${isDeepFocus ? 'active' : ''}`}
             title="Deep Focus Mode"
             onClick={() => setIsDeepFocus(!isDeepFocus)}
           >
             <Maximize2 size={18} />
           </button>
-          
+
           <button className="icon-btn-aura" title="Shortcuts">
             <Zap size={18} />
           </button>
-          
-          <Dropdown 
+
+          <Dropdown
             align="right"
             trigger={
               <button className="icon-btn-aura" title="Notifications">
@@ -144,29 +139,29 @@ const Toolbar = ({ activeTab, onToggleSidebar, isSidebarOpen, onTabChange, isDee
               <span>Updates and events</span>
             </div>
             <div className="noti-list" style={{ padding: '8px' }}>
-                <DropdownItem>System: Deployment successful</DropdownItem>
-                <DropdownItem>Team: New comment on Video #2</DropdownItem>
-                <DropdownItem>Credits: +500 refilled</DropdownItem>
+              <DropdownItem>System: Deployment successful</DropdownItem>
+              <DropdownItem>Team: New comment on Video #2</DropdownItem>
+              <DropdownItem>Credits: +500 refilled</DropdownItem>
             </div>
           </Dropdown>
 
           <div className="user-profile-aura">
-             <Dropdown 
-               align="right"
-               trigger={
-                 <div className="user-name-aura">KJ</div>
-               }
-             >
-               <div className="menu-header">
-                 <strong>Kajal J.</strong>
-                 <span>Personal Workspace</span>
-               </div>
-               <DropdownItem icon={<User size={14} />} onClick={() => onTabChange('profile')}>Public Profile</DropdownItem>
-               <DropdownItem icon={<Settings size={14} />} onClick={() => onTabChange('settings-hub')}>Workspace Settings</DropdownItem>
-               <DropdownItem icon={<HelpCircle size={14} />} onClick={() => onTabChange('faq')}>Documentation</DropdownItem>
-               <DropdownDivider />
-               <DropdownItem icon={<LogOut size={14} />} className="logout">Sign Out</DropdownItem>
-             </Dropdown>
+            <Dropdown
+              align="right"
+              trigger={
+                <div className="user-name-aura" title="Kj. Dheena - Pro Plan">KJ</div>
+              }
+            >
+              <div className="menu-header">
+                <strong>Kajal J.</strong>
+                <span>Personal Workspace</span>
+              </div>
+              <DropdownItem icon={<User size={14} />} onClick={() => onTabChange('profile')}>Public Profile</DropdownItem>
+              <DropdownItem icon={<Settings size={14} />} onClick={() => onTabChange('settings-hub')}>Workspace Settings</DropdownItem>
+              <DropdownItem icon={<HelpCircle size={14} />} onClick={() => onTabChange('faq')}>Documentation</DropdownItem>
+              <DropdownDivider />
+              <DropdownItem icon={<LogOut size={14} />} className="logout">Sign Out</DropdownItem>
+            </Dropdown>
           </div>
         </div>
       </div>

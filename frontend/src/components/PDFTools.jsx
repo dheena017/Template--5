@@ -8,6 +8,7 @@ import PDFCompress from './PDFCompress';
 import PDFExtractText from './PDFExtractText';
 import Button from './Button';
 import ToolLayout from './layouts/ToolLayout';
+import KeyboardShortcuts from './common/KeyboardShortcuts';
 import { Wrench } from 'lucide-react';
 
 function PDFTools({ initialView }) {
@@ -166,6 +167,9 @@ function PDFTools({ initialView }) {
           />
         </div>
       )}
+      <div style={{ marginTop: '2rem' }}>
+        <KeyboardShortcuts />
+      </div>
     </ToolLayout>
   );
 }

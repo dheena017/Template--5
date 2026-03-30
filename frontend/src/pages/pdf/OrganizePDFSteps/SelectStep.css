@@ -14,7 +14,7 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: 
+    box-shadow:
         0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06),
         inset 0 0 20px 0 rgba(255, 255, 255, 0.02);
@@ -24,7 +24,7 @@
     border-color: rgba(var(--accent-rgb), 0.4);
     background: rgba(var(--accent-rgb), 0.03);
     transform: translateY(-8px) scale(1.005);
-    box-shadow: 
+    box-shadow:
         0 20px 40px -15px rgba(0, 0, 0, 0.5),
         0 0 30px 0 rgba(var(--accent-rgb), 0.05);
 }
@@ -52,8 +52,15 @@
 }
 
 @keyframes floating-aura {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(2deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
 }
 
 .upload-dropzone:hover .upload-icon-wrapper {

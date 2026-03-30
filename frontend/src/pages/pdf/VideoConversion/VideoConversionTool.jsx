@@ -134,16 +134,8 @@ const VideoConversionTool = ({ fromFormat, toFormat }) => {
             subtitle={activeTool.subtitle} 
             icon={activeTool.icon} 
             color={activeTool.color}
-            category={activeTool.category}
+            category="VIDEO TOOLS"
         >
-            <VideoSettingsHub 
-                open={toolSettingsOpen}
-                onClose={() => setToolSettingsOpen(false)}
-                activeTool={activeTool}
-                settings={videoSettings}
-                setSettings={setVideoSettings}
-            />
-
             <div className="pdf-tool-content-aura">
                 <StepIndicator currentStep={currentStep} steps={STEPS} color={activeTool.color} />
                 

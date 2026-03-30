@@ -4,6 +4,8 @@ import { useDropzone } from 'react-dropzone';
 import { AnimatePresence } from 'framer-motion';
 import * as pdfjsLib from 'pdfjs-dist';
 import '../../styles/pages/pdf/OrganizePDF.css';
+import ToolLayout from '../../components/layouts/ToolLayout';
+import { useSettings } from '../../context/SettingsContext';
 
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
@@ -15,11 +17,13 @@ import ResultStep from './OCRPDFSteps/ResultStep';
 import OCRHowTo from './OCRPDFSteps/OCRHowTo';
 
 const OCRPDF = () => {
+    const { toolSettingsOpen } = useSettings();
     const [isProcessing, setIsProcessing] = useState(false);
     const [pdfInfo, setPdfInfo] = useState(null);
     const [recognitionMode, setRecognitionMode] = useState('text'); // text, searchable, json
     const [progress, setProgress] = useState(0);
     const [resultData, setResultData] = useState(null);
+    const [ocrSettings, setOcrSettings] = useState({});
 
     const activeTool = { name: 'OCR PDF', icon: Scan, color: '#ec4899' };
 
@@ -51,16 +55,11 @@ const OCRPDF = () => {
         setIsProcessing(true);
         setProgress(0);
         try {
-            // Mock OCR Implementation for Frontend Demo
-            // In a real scenario, this would send to FastAPI /api/pdf/ocr
-            
             for(let i = 1; i <= 100; i += 5) {
                 setProgress(i);
                 await new Promise(r => setTimeout(r, 150));
             }
-            
             const mockExtractedText = `Extracted Text Data from ${pdfInfo.name}\n\n[PAGE 1]\nDOCUMENT INTELLIGENCE SUMMARY:\nOptical Character Recognition successfully completed. High-definition text synthesis applied.`;
-            
             setResultData(mockExtractedText);
         } catch (error) {
             console.error(error);
@@ -81,13 +80,19 @@ const OCRPDF = () => {
         const file = new Blob([resultData], {type: 'text/plain'});
         element.href = URL.createObjectURL(file);
         element.download = "Extracted_Text.txt";
-        document.body.appendChild(element); // Required for this to work in FireFox
+        document.body.appendChild(element);
         element.click();
     };
 
     return (
-        <div className="pdf-tools-wrapper min-h-screen bg-[#0f172a]">
-            <main className="pdf-tools-main max-w-6xl mx-auto p-4 md:p-8">
+        <ToolLayout 
+            title={activeTool.name} 
+            subtitle="Professional OCR engine for high-precision text synthesis and document intelligence." 
+            icon={activeTool.icon} 
+            color={activeTool.color} 
+            category="Document Intelligence"
+        >
+            <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <AnimatePresence mode="wait">
                     {!pdfInfo ? (
                         <UploadStep 
@@ -113,10 +118,12 @@ const OCRPDF = () => {
                         />
                     )}
                 </AnimatePresence>
-            </main>
+            </div>
             
-            <OCRHowTo />
-        </div>
+            <div className="mt-32 border-t border-slate-800/30 pt-32">
+                <OCRHowTo />
+            </div>
+        </ToolLayout>
     );
 };
 

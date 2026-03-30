@@ -34,14 +34,41 @@ export const PDFSecurityService = {
     const lastPage = pages[pages.length - 1];
     
     const { width, height } = lastPage.getSize();
-    lastPage.drawText(`Digitally Signed by ${signeeName}`, {
+    const timestamp = new Date().toLocaleString();
+    
+    // Draw signature box
+    lastPage.drawRectangle({
+        x: 45,
+        y: 45,
+        width: 180,
+        height: 40,
+        borderColor: { type: 'RGB', red: 0.06, green: 0.72, blue: 0.5 }, // #10b981
+        borderWidth: 1,
+        color: { type: 'RGB', red: 1, green: 1, blue: 1 },
+        opacity: 0.05
+    });
+
+    lastPage.drawText(`Digitally Signed by Aura Engine`, {
+      x: 50,
+      y: 70,
+      size: 10,
+      color: { type: 'RGB', red: 0.1, green: 0.1, blue: 0.1 }
+    });
+    lastPage.drawText(`Signee: ${signeeName}`, {
+      x: 50,
+      y: 60,
+      size: 8,
+      color: { type: 'RGB', red: 0.4, green: 0.4, blue: 0.4 }
+    });
+    lastPage.drawText(`Date: ${timestamp}`, {
       x: 50,
       y: 50,
-      size: 10,
-      opacity: 0.5
+      size: 7,
+      color: { type: 'RGB', red: 0.5, green: 0.5, blue: 0.5 }
     });
     
     const bytes = await pdfDoc.save();
     return new Blob([bytes], { type: 'application/pdf' });
   }
 };
+

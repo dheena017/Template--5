@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { 
     Combine, Download, FileUp, Layers, Settings2
 } from 'lucide-react';
-import { MergePDFSettings } from '../../components/toolSettings';
 import { useSettings } from '../../context/SettingsContext';
 import { useDropzone } from 'react-dropzone';
 import { AnimatePresence } from 'framer-motion';
@@ -36,7 +35,7 @@ const MergePDF = () => {
     const [progress, setProgress] = useState(0);
     const [mergedBlobUrl, setMergedBlobUrl] = useState(null);
     const [mergedFileName, setMergedFileName] = useState('');
-    const { toolSettingsOpen, setToolSettingsOpen } = useSettings();
+    const { toolSettingsOpen } = useSettings();
     const [resultData, setResultData] = useState(null);
 
     const activeTool = { 
@@ -173,16 +172,6 @@ const MergePDF = () => {
             color={activeTool.color}
             category={activeTool.category}
         >
-            <MergePDFSettings 
-                open={toolSettingsOpen} 
-                onClose={() => setToolSettingsOpen(false)}
-                onApply={handleExecuteMerge}
-                onReset={() => {}}
-                accentColor={activeTool.color}
-                toolName={activeTool.name}
-                toolIcon={activeTool.icon}
-            />
-
             <div className="tool-upload-center" style={{ width: '100%', maxWidth: 'none', minHeight: '600px' }}>
                 <StepIndicator steps={STEPS} currentStep={currentStep} />
                 <div className="w-full flex justify-center mt-12">

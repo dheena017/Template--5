@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTasks } from '../context/TaskContext';
 import { Search, Zap, Sliders } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
+import SearchBar from './common/SearchBar/SearchBar';
 import '../styles/Sidebar.css';
+
 import '../styles/MissionControl.css';
 import OrganizePDFSidebar from './sidebars/OrganizePDFSidebar';
 import OptimizePDFSidebar from './sidebars/OptimizePDFSidebar';
@@ -230,16 +232,11 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const renderMainNavigation = () => (
     <>
       <div className="sidebar-search-container-aura">
-        <div className="sidebar-search-inner-aura">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input 
-            type="text" 
-            placeholder="Quick search..." 
-            value={sidebarSearch}
-            onChange={(e) => setSidebarSearch(e.target.value)}
-          />
-          {sidebarSearch && <button className="clear-sidebar-search" onClick={() => setSidebarSearch('')}>×</button>}
-        </div>
+        <SearchBar 
+          placeholder="Quick search..."
+          onSearch={(val) => setSidebarSearch(val)}
+          className="sidebar-search-premium"
+        />
       </div>
 
       <div className="workspace-card">
@@ -272,15 +269,15 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           
           {(sidebarSearch || (!sidebarSearch && true)) && (
             <>
-              <div className="nav-section-divider-aura"></div>
-              <div className="nav-section-title-aura">Essentials</div>
+              <div className="nav-section-divider-aura" style={{ marginTop: 24, marginBottom: 0 }}></div>
+              <div className="nav-section-title-aura" style={{ margin: '16px 0 12px 0' }}>ESSENTIALS</div>
             </>
           )}
           
           {/* PDF SECTION */}
           {(sidebarSearch ? filteredPdf.length > 0 : true) && (
             <>
-              <div className="nav-section-divider-aura"></div>
+              <div style={{ height: 0 }} />
               <li className={`dropdown-trigger-aura ${(isPdfOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
                 if (!sidebarSearch) setIsPdfOpen(!isPdfOpen);
                 onTabChange('pdf-select'); 
@@ -682,16 +679,16 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             <span style={{ fontSize: '14px', fontWeight: '500' }}>App Settings</span>
           </div>
           <div className="usage-card-aura">
-            <div className="usage-header">
-              <span>Aura Credits</span>
-              <span>85%</span>
+            <div className="usage-header" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+              <span style={{ fontWeight: 700, fontSize: '13px', color: '#fff' }}>Aura Credits:</span>
+              <span style={{ fontSize: '12.5px', color: 'var(--text-muted, #b3b3b3)' }}>85/100 <span style={{ fontSize: '12px', color: '#8b5cf6', fontWeight: 700 }}>(85% remaining)</span></span>
             </div>
-            <div className="usage-bar-bg">
+            <div className="usage-bar-bg" style={{ marginTop: 6 }}>
                <div className="usage-bar-fill" style={{ width: '85%' }}></div>
             </div>
           </div>
           <div className="user-profile-footer-aura" onClick={() => { onTabChange('profile'); setSidebarView('main'); }}>
-            <div className="user-avatar-aura">KJ</div>
+            <div className="user-avatar-aura" title="Kj. Dheena - Pro Plan">KJ</div>
             <div className="user-details-aura">
                <span className="user-name">Kj. Dheena</span>
                <span className="user-plan">Pro Plan</span>

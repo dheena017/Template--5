@@ -6,13 +6,13 @@ import './SelectStep.css';
 
 const SelectStep = ({ getRootProps, getInputProps, isDragActive, activeTool, pdfLoading, pdfError }) => {
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className="select-step-container w-full"
         >
-            <div 
+            <div
                 className={`upload-dropzone ${isDragActive ? 'drag-active' : ''} p-12`}
                 {...getRootProps()}
             >
@@ -23,17 +23,17 @@ const SelectStep = ({ getRootProps, getInputProps, isDragActive, activeTool, pdf
                     </div>
                     <h3 className="text-2xl font-black text-white mb-2">Organize Your PDF?</h3>
                     <p className="text-lg text-slate-400 mb-8 max-w-md">Drop your document here to reorder, rotate, delete or duplicate pages with a single click.</p>
-                    <Button 
-                        type="button" 
-                        variant="primary" 
-                        className="btn-premium-aura" 
+                    <Button
+                        type="button"
+                        variant="primary"
+                        className="btn-premium-aura"
                         style={{ backgroundColor: activeTool.color }}
                     >
                         Choose File
                     </Button>
-                    
+
                     {pdfError && (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-sm font-bold flex items-center gap-3 backdrop-blur-sm"
@@ -42,7 +42,7 @@ const SelectStep = ({ getRootProps, getInputProps, isDragActive, activeTool, pdf
                             {pdfError}
                         </motion.div>
                     )}
-                    
+
                     <div className="feature-pill-wrapper">
                         <div className="feature-pill"><Clock size={16} /> <span>Live Editor</span></div>
                         <div className="feature-pill"><ShieldCheck size={16} /> <span>Unlimited Edits</span></div>

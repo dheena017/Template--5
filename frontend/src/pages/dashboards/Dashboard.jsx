@@ -24,6 +24,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import '../../styles/pages/dashboards/DashboardIndex.css'
 import { PrimaryButton } from '../../components/buttons'
+import SearchBar from '../../components/common/SearchBar/SearchBar'
+
 
 const FEATURED_TOOLS = [
   {
@@ -181,23 +183,14 @@ const Dashboard = () => {
           </div>
 
           <div className="universal-search-hub">
-            <div className="search-box-large">
-              <div className="search-icon-anim">
-                <Search size={24} />
-              </div>
-              <input 
-                type="text" 
-                placeholder="Search for any tool, action, or document process..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoFocus
-              />
-              <div className="keyboard-hint">
-                <span>⌘</span><span>K</span>
-              </div>
-            </div>
+            <SearchBar 
+              placeholder="Search organization tool..."
+              onSearch={(val) => setSearchQuery(val)}
+              className="dashboard-search-premium"
+            />
             
             <div className="portal-filter-rail">
+
               <button 
                 className={`filter-pill ${activeCategory === 'all' ? 'active' : ''}`}
                 onClick={() => setActiveCategory('all')}
@@ -251,12 +244,17 @@ const Dashboard = () => {
           </div>
         </motion.div>
 
-        <motion.div className="turbo-recipes-workspace" variants={itemVariants}>
-           <div className="flex items-center gap-3 mb-6">
-              <Zap size={16} className="text-secondary" />
-              <span className="text-xs uppercase font-black tracking-widest text-slate-500">Turbo Recipes</span>
-           </div>
-           <div className="recipe-grid">
+          <motion.div className="turbo-recipes-workspace" variants={itemVariants}>
+            <div className="turbo-recipes-header" style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
+              <div className="flex items-center gap-3 mb-2">
+               <Zap size={20} className="text-secondary" />
+               <span className="text-xs uppercase font-black tracking-widest text-slate-500" style={{ fontSize: '1.1rem', letterSpacing: '2px' }}>TURBO RECIPES</span>
+              </div>
+              <div className="turbo-recipes-subtitle" style={{ marginLeft: '2.2rem', marginTop: '0.2rem', color: 'var(--text-muted)', fontWeight: 600, fontSize: '1rem' }}>
+               Scan + OCR + Translate
+              </div>
+            </div>
+            <div className="recipe-grid">
               {TURBO_RECIPES.map(recipe => (
                 <motion.button 
                   key={recipe.id}
@@ -278,69 +276,86 @@ const Dashboard = () => {
            </div>
         </motion.div>
 
-        <motion.div className="portal-tools-main-grid" variants={containerVariants}>
-          <AnimatePresence mode="popLayout">
-            {filteredTools.map((tool) => {
-              const SuiteIcon = tool.suiteIcon
-              return (
-                <motion.button
-                  layout
-                  key={tool.id}
-                  className="portal-tool-card aura-card-premium"
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  onClick={() => navigate(tool.path)}
-                  onMouseEnter={() => setHoveredTool(tool.id)}
-                  onMouseLeave={() => setHoveredTool(null)}
-                  whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)' }}
-                >
-                  {hoveredTool === tool.id && (
-                    <motion.div 
-                      className="live-signal-overlay"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
+        {/* Render section headers as <h3> for each suite */}
+        {TOOL_SUITES.filter(suite => filteredTools.some(tool => tool.suiteId === suite.id)).map(suite => (
+          <React.Fragment key={suite.id}>
+            <h3 style={{
+              margin: '2.5rem 0 1.2rem 0',
+              fontSize: '1.1rem',
+              fontWeight: 900,
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+              color: '#a78bfa',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.6rem',
+            }}>
+              <suite.icon size={20} style={{ color: suite.color }} />
+              {suite.title}
+            </h3>
+            <motion.div className="portal-tools-main-grid" variants={containerVariants}>
+              <AnimatePresence mode="popLayout">
+                {filteredTools.filter(tool => tool.suiteId === suite.id).map((tool) => {
+                  const SuiteIcon = tool.suiteIcon
+                  return (
+                    <motion.div
+                      layout
+                      key={tool.id}
+                      className="portal-tool-card aura-card-premium"
+                      variants={itemVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      onClick={() => navigate(tool.path)}
+                      onMouseEnter={() => setHoveredTool(tool.id)}
+                      onMouseLeave={() => setHoveredTool(null)}
+                      whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)' }}
+                      style={{ cursor: 'pointer' }}
                     >
-                      <SuiteIcon size={80} strokeWidth={0.5} style={{ color: tool.color }} />
-                    </motion.div>
-                  )}
-                  <div className="tool-card-top">
-                    <div className="tool-suite-info">
-                      <div className="suite-icon-mini" style={{ color: tool.color }}>
-                        <SuiteIcon size={14} />
-                      </div>
-                      <span className="suite-name-tag">{tool.suiteName}</span>
-                    </div>
-                    <div className="tool-action-indicator">
-                      <ArrowUpRight size={14} />
-                    </div>
-                  </div>
-                  
-                  <div className="tool-card-body">
-                    <h3>{tool.label}</h3>
-                    <div className="tool-card-footer">
-                      <div className="tool-status-dot" style={{ backgroundColor: tool.color }}></div>
-                      <span className="tool-ready-text">Ready to use</span>
-                    </div>
-
-                    <div className="card-launch-aura">
-                        <PrimaryButton 
-                            className="w-full launch-btn-premium"
-                            size="md"
-                            style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)' }}
+                      {hoveredTool === tool.id && (
+                        <motion.div 
+                          className="live-signal-overlay"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
                         >
-                            Open Tool
-                        </PrimaryButton>
-                    </div>
-                  </div>
-                  
-                  <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
-                </motion.button>
-              )
-            })}
-          </AnimatePresence>
-        </motion.div>
+                          <SuiteIcon size={80} strokeWidth={0.5} style={{ color: tool.color }} />
+                        </motion.div>
+                      )}
+                      <div className="tool-card-top">
+                        <div className="tool-suite-info">
+                          <div className="suite-icon-mini" style={{ color: tool.color }}>
+                            <SuiteIcon size={14} />
+                          </div>
+                          <span className="suite-name-tag">{tool.suiteName}</span>
+                        </div>
+                        <div className="tool-action-indicator">
+                          <ArrowUpRight size={14} />
+                        </div>
+                      </div>
+                      <div className="tool-card-body">
+                        <h4 style={{marginBottom: '0.25rem'}}>{tool.label}</h4>
+                        <div className="tool-card-footer">
+                          <div className="tool-status-dot" style={{ backgroundColor: tool.color, width: 10, height: 10, border: '2px solid #fff', boxShadow: '0 0 0 2px #18181b' }}></div>
+                          <span className="tool-ready-text">Ready to use</span>
+                        </div>
+                        <div className="card-launch-aura">
+                            <PrimaryButton 
+                                className="w-full launch-btn-premium"
+                                size="md"
+                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)' }}
+                            >
+                                Open Tool
+                            </PrimaryButton>
+                        </div>
+                      </div>
+                      <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
+                    </motion.div>
+                  )
+                })}
+              </AnimatePresence>
+            </motion.div>
+          </React.Fragment>
+        ))}
 
         {filteredTools.length === 0 && (
           <motion.div className="portal-empty-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

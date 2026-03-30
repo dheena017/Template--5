@@ -8,12 +8,11 @@ import {
   Clock, Zap, Activity, Info
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  MUSIC_TRENDING, MUSIC_GENRES, 
-  MUSIC_MOODS, MUSIC_THEMES 
-} from '../../constants/data'
+import { MUSIC_TRENDING, MUSIC_GENRES, MUSIC_MOODS, MUSIC_THEMES } from '../../constants/data'
 import { logger } from '../../services/api'
+import SearchBar from '../../components/common/SearchBar/SearchBar'
 import '../../styles/pages/studio/MusicGenerator.css'
+
 
 const MusicGenerator = () => {
   const [activeTab, setActiveTab] = useState('Explore') 
@@ -86,11 +85,13 @@ const ExploreContent = () => {
   return (
     <div className="explore-container">
       <section className="explore-search">
-        <div className="search-box-large">
-          <Search size={20} />
-          <input type="text" placeholder="Search for music, genres, or moods..." />
-        </div>
+        <SearchBar 
+          placeholder="Search for music, genres, or moods..."
+          onSearch={(val) => console.log('Search music:', val)}
+          className="music-search-premium"
+        />
       </section>
+
 
       <section className="explore-section">
         <div className="section-header">

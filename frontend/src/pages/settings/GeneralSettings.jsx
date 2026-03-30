@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { 
+import './SettingsUniversal.css'
+import {
   Sun, Moon, Palette, Type, RotateCcw, Monitor, Laptop, 
   Wind, Zap, Info, Sparkles, Layers, Box, Eye
 } from 'lucide-react'

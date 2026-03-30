@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { Info, BookOpen, CircleHelp, Activity, Sparkles, HeartPulse } from 'lucide-react'
 import OnOffButton from '../../components/common/OnOffButton'
 

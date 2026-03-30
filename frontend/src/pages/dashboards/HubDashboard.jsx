@@ -101,12 +101,13 @@ const HubDashboard = ({ type = 'main' }) => {
                 </div>
                 <div className="portal-tools-main-grid">
                   {category.links.slice(0, 4).map((tool, idx) => (
-                    <button
+                    <div
                       key={`${catName}-${idx}`}
                       className="portal-tool-card"
                       style={{ 
                           backgroundColor: '#0f1016',
-                          border: '1px solid rgba(255, 255, 255, 0.04)'
+                          border: '1px solid rgba(255, 255, 255, 0.04)',
+                          cursor: 'pointer'
                       }}
                       onClick={() => navigate(tool.path)}
                     >
@@ -140,7 +141,7 @@ const HubDashboard = ({ type = 'main' }) => {
                           </div>
                       </div>
                       <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${catColor}15, transparent)` }}></div>
-                    </button>
+                    </div>
                   ))}
                 </div>
               </section>

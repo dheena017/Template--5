@@ -3,6 +3,7 @@ import { Search, Download, Loader2, AlertCircle, CheckCircle2, Layers } from 'lu
 import { api } from '../../services/api'
 import '../../styles/pages/pdf/AllConversions.css'
 import ToolLayout from '../../components/layouts/ToolLayout'
+import KeyboardShortcuts from '../../components/common/KeyboardShortcuts'
 
 const AllConversions = () => {
   const [catalog, setCatalog] = useState([])
@@ -185,6 +186,9 @@ const AllConversions = () => {
             </div>
           </div>
         )}
+        <div style={{ marginTop: '2rem' }}>
+          <KeyboardShortcuts />
+        </div>
     </ToolLayout>
   )
 }

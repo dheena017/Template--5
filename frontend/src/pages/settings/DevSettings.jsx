@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { 
   Terminal, Key, Webhook, Activity, Code2, Cpu, 
   Globe, ShieldCheck, Lock, RefreshCw, Layers, 

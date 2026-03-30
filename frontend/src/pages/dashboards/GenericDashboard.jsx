@@ -91,12 +91,13 @@ const GenericDashboard = ({ type }) => {
         </div>
         <motion.div className="portal-tools-main-grid" variants={containerVariants}>
           {config.tools.map((tool) => (
-            <button 
+            <div 
               key={tool.name} 
               className="portal-tool-card" 
               style={{ 
                   backgroundColor: '#0f1016',
-                  border: '1px solid rgba(255, 255, 255, 0.04)'
+                  border: '1px solid rgba(255, 255, 255, 0.04)',
+                  cursor: 'pointer'
               }}
               onClick={() => navigate(tool.path)}
             >
@@ -130,7 +131,7 @@ const GenericDashboard = ({ type }) => {
                   </div>
               </div>
               <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${config.color}15, transparent)` }}></div>
-            </button>
+            </div>
           ))}
         </motion.div>
       </motion.div>

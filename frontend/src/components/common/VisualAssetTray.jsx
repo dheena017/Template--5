@@ -7,8 +7,10 @@ import {
 } from 'lucide-react';
 import { api, resolveAssetUrl } from '../../services/api';
 
+import { useSettings } from '../../context/SettingsContext';
+
 const VisualAssetTray = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { trayOpen, toggleTray } = useSettings();
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -30,23 +32,23 @@ const VisualAssetTray = () => {
   }, []);
 
   return (
-    <div className={`visual-asset-tray-wrapper ${isOpen ? 'is-open' : ''}`}>
+    <div className={`visual-asset-tray-wrapper ${trayOpen ? 'is-open' : ''}`}>
       {/* Toggle Button */}
       <button 
         className="tray-toggle-btn"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleTray}
         title="Production Asset Tray"
       >
         <div className="toggle-glow"></div>
-        {isOpen ? <ChevronRight size={20} /> : <History size={20} />}
-        {!isOpen && assets.length > 0 && (
+        {trayOpen ? <ChevronRight size={20} /> : <History size={20} />}
+        {!trayOpen && assets.length > 0 && (
           <span className="asset-count-badge">{assets.length}</span>
         )}
       </button>
 
       {/* Tray Content */}
       <AnimatePresence>
-        {isOpen && (
+        {trayOpen && (
           <motion.aside 
             className="asset-tray-panel"
             initial={{ x: 300, opacity: 0 }}

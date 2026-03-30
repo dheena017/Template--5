@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './SettingsUniversal.css'
 import { 
   FileText, Languages, MessageSquare, ListChecks, Zap, 
   BookOpen, Brain, PenTool, Hash, Globe, 

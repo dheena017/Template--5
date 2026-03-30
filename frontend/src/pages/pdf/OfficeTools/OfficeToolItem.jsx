@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ToolLayout from '../../../components/layouts/ToolLayout';
 import StepIndicator from '../MergePDFSteps/StepIndicator';
 import Button from '../../../components/Button';
+import { OfficeToolsSettings } from '../../../components/toolSettings';
+import { useSettings } from '../../../context/SettingsContext';
 
 const STEPS = [
   { id: 'select', label: 'Upload', icon: FileUp },
@@ -25,12 +27,21 @@ const OfficeToolItem = ({ toolId }) => {
   const cfg = OFFICE_CONFIGS[toolId] || OFFICE_CONFIGS['word-merge'];
   const Icon = cfg.icon;
 
+  const { toolSettingsOpen, setToolSettingsOpen } = useSettings();
   const [step, setStep]         = useState('select');
   const [files, setFiles]       = useState([]);
   const [progress, setProgress] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult]     = useState(null);
-  const [quality, setQuality]   = useState(80);
+  
+  const [officeSettings, setOfficeSettings] = useState({
+      compressionLevel: 'Standard',
+      quality: 85,
+      keepImages: true,
+      fastProcessing: true,
+      compatibility: 'Office 2021+'
+  });
+  
   const [splitBy, setSplitBy]   = useState('sheets');
 
   const onDrop = useCallback((accepted) => {
@@ -58,7 +69,6 @@ const OfficeToolItem = ({ toolId }) => {
       }
       setProgress(100);
 
-      // Pass-through: return first file with appropriate name
       const primaryFile = files[0];
       const blob = new Blob([primaryFile], { type: primaryFile.type });
       const outputName = toolId.includes('merge')
@@ -100,13 +110,7 @@ const OfficeToolItem = ({ toolId }) => {
           ))}
         </div>
 
-        {/* Tool-specific settings */}
-        {toolId === 'img-compress' && (
-          <div className="office-setting mt-4">
-            <label className="text-slate-400 text-sm font-bold block mb-2">Quality: {quality}%</label>
-            <input type="range" min={20} max={100} value={quality} onChange={e => setQuality(Number(e.target.value))} className="w-full" style={{ accentColor: cfg.color }} />
-          </div>
-        )}
+        {/* Removed redundant in-page quality slider - now in settings panel */}
         {toolId === 'excel-split' && (
           <div className="office-setting mt-4">
             <label className="text-slate-400 text-sm font-bold block mb-2">Split By</label>

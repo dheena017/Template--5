@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../../styles/pages/profile/Settings.css'
-import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type, Sparkles, ExternalLink, Zap, RotateCcw, Github, Globe, Mail } from 'lucide-react'
+import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type, Sparkles, ExternalLink, Zap, RotateCcw, Code2, Globe, Mail } from 'lucide-react'
 
 const SettingsTab = ({
   theme,
@@ -201,7 +201,7 @@ const SettingsTab = ({
           </div>
           <div className="settings-stack">
             <div className="setting-block">
-              <label><Github size={14} /> GitHub Identifier</label>
+              <label><Code2 size={14} /> GitHub Identifier</label>
               <div className="flex gap-3">
                 <input 
                   className="premium-input flex-1" 

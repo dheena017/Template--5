@@ -6,7 +6,9 @@ import {
   ExternalLink, ArrowRight
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import SearchBar from '../../components/common/SearchBar/SearchBar'
 import '../../styles/pages/about-us/FAQSupport.css'
+
 
 const FAQSupport = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -84,15 +86,12 @@ const FAQSupport = () => {
           <h1>How can we help?</h1>
           <p>Find answers to common questions or reach out to our dedicated support team.</p>
           
-          <div className="search-bar-wrapper">
-            <Search size={20} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="Search for questions, features, or troubleshooting..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+          <SearchBar 
+            placeholder="Search for questions, features, or troubleshooting..."
+            onSearch={(val) => setSearchQuery(val)}
+            className="faq-search-premium"
+          />
+
         </motion.div>
       </div>
 
