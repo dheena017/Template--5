@@ -13,8 +13,11 @@ const rootPath = path.resolve(__dirname, '..');
 
 console.log('--- Aura Platform: Booting Full Stack ---');
 
+
 // 1. Start Python Backend (FastAPI)
-const backend = spawn('uvicorn', ['backend.main:app', '--reload', '--port', '8000'], {
+// Cross-platform Python executable resolution
+let pythonCmd = process.platform === 'win32' ? 'python' : './venv/bin/python';
+const backend = spawn(pythonCmd, ['-m', 'uvicorn', 'backend.main:app', '--reload', '--port', '8000'], {
     cwd: rootPath,
     stdio: 'inherit',
     shell: true
