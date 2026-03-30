@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search,
   FileText,
@@ -384,19 +385,49 @@ const PDFPages = ({ forcedTab = null }) => {
           </label>
         </header>
 
+        <AnimatePresence mode="wait">
         {visibleSection ? (
-          <>
+          <motion.div 
+            key={visibleSection.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+          >
             <div className="pdf-pages-title-row">
               <h1>{visibleSection.title}</h1>
               <span>{visibleSection.tools.length} tools</span>
             </div>
 
-            <div className="portal-tools-main-grid">
+            <motion.div 
+              className="portal-tools-main-grid"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.05
+                  }
+                }
+              }}
+              initial="hidden"
+              animate="show"
+            >
               {visibleSection.tools.map((tool) => {
                 const Icon = tool.icon
                 return (
-                  <button
+                  <motion.button
                     key={tool.tool}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.9, y: 20 },
+                      show: { opacity: 1, scale: 1, y: 0 }
+                    }}
+                    whileHover={{ 
+                        scale: 1.02, 
+                        y: -5,
+                        transition: { type: 'spring', stiffness: 400, damping: 10 }
+                    }}
+                    whileTap={{ scale: 0.98 }}
                     type="button"
                     className="portal-tool-card aura-card-premium"
                     onClick={() => navigate(`/tools/pdf?tool=${tool.tool}`)}
@@ -424,22 +455,29 @@ const PDFPages = ({ forcedTab = null }) => {
                             <PrimaryButton 
                                 className="launch-btn-premium"
                                 size="md"
-                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
+                                style={{ backgroundColor: tool.color || '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: `0 10px 25px ${tool.color}30`, paddingInline: '2rem' }}
                             >
                                 Open Tool
                             </PrimaryButton>
                         </div>
                     </div>
                     <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
-                  </button>
+                  </motion.button>
                 )
               }
               )}
-            </div>
-          </>
+            </motion.div>
+          </motion.div>
         ) : (
-          <div className="pdf-pages-empty">No matching PDF tools were found.</div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="pdf-pages-empty"
+          >
+            No matching PDF tools were found.
+          </motion.div>
         )}
+        </AnimatePresence>
       </main>
     </section>
   )
