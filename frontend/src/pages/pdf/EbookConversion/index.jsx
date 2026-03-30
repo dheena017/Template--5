@@ -1,22 +1,21 @@
-import EbookConversionTool from './EbookConversionTool';
-import './EbookConversionTool.css';
+import React from 'react';
+import PDFPages from '../PDFPages';
 
-// EPUB → others
-export const EpubToPdf  = () => <EbookConversionTool fromFormat="epub" toFormat="pdf"  />;
-export const EpubToMobi = () => <EbookConversionTool fromFormat="epub" toFormat="mobi" />;
-export const EpubToAzw3 = () => <EbookConversionTool fromFormat="epub" toFormat="azw3" />;
+// Global Dashboard
+export const EbookConversionHub = () => <PDFPages forcedTab="ebook_conversion" />;
 
-// MOBI → others
-export const MobiToPdf  = () => <EbookConversionTool fromFormat="mobi" toFormat="pdf"  />;
-export const MobiToEpub = () => <EbookConversionTool fromFormat="mobi" toFormat="epub" />;
-export const MobiToAzw3 = () => <EbookConversionTool fromFormat="mobi" toFormat="azw3" />;
+// Individual Tools
+export { default as EpubToPdf } from './EpubToPdf';
+export { default as EpubToMobi } from './EpubToMobi';
+export { default as EpubToAzw3 } from './EpubToAzw3';
+export { default as MobiToPdf } from './MobiToPdf';
+export { default as MobiToEpub } from './MobiToEpub';
+export { default as MobiToAzw3 } from './MobiToAzw3';
+export { default as PdfToEpub } from './PdfToEpub';
+export { default as PdfToMobi } from './PdfToMobi';
+export { default as PdfToAzw3 } from './PdfToAzw3';
+export { default as Azw3ToPdf } from './Azw3ToPdf';
+export { default as Azw3ToEpub } from './Azw3ToEpub';
+export { default as Azw3ToMobi } from './Azw3ToMobi';
 
-// PDF → eBooks
-export const PdfToEpub  = () => <EbookConversionTool fromFormat="pdf"  toFormat="epub" />;
-export const PdfToMobi  = () => <EbookConversionTool fromFormat="pdf"  toFormat="mobi" />;
-export const PdfToAzw3  = () => <EbookConversionTool fromFormat="pdf"  toFormat="azw3" />;
-
-// AZW3 → others
-export const Azw3ToPdf  = () => <EbookConversionTool fromFormat="azw3" toFormat="pdf"  />;
-export const Azw3ToEpub = () => <EbookConversionTool fromFormat="azw3" toFormat="epub" />;
-export const Azw3ToMobi = () => <EbookConversionTool fromFormat="azw3" toFormat="mobi" />;
+export default EbookConversionHub;

@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { BookOpen, FileUp, Settings2, Download, PlayCircle } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { PDFDocument } from 'pdf-lib';
 import ToolLayout from '../../../components/layouts/ToolLayout';
 import StepIndicator from '../MergePDFSteps/StepIndicator';
-import { motion } from 'framer-motion';
+import { EbookConversionSettings } from '../../../components/toolSettings';
+import { useSettings } from '../../../context/SettingsContext';
 import Button from '../../../components/Button';
+import api from '../../../services/api';
 
 const STEPS = [
   { id: 'select', label: 'Upload File', icon: FileUp },
@@ -22,11 +24,20 @@ const FORMAT_INFO = {
 };
 
 const EbookConversionTool = ({ fromFormat, toFormat }) => {
+  const { toolSettingsOpen, setToolSettingsOpen } = useSettings();
   const [step, setStep]       = useState('select');
   const [fileInfo, setFileInfo] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult]   = useState(null);
+  
+  const [ebookSettings, setEbookSettings] = useState({
+      fontSize: 'Normal',
+      fontFamily: 'Default',
+      embedFonts: true,
+      margins: 'Medium',
+      optimizeImages: true
+  });
 
   const from = FORMAT_INFO[fromFormat] || FORMAT_INFO['epub'];
   const to   = FORMAT_INFO[toFormat]   || FORMAT_INFO['pdf'];
@@ -64,23 +75,21 @@ const EbookConversionTool = ({ fromFormat, toFormat }) => {
     setIsProcessing(true);
     setProgress(0);
     try {
-      for (let i = 10; i <= 100; i += Math.floor(Math.random() * 15) + 5) {
-        setProgress(Math.min(i, 100));
-        await new Promise(r => setTimeout(r, 120));
-      }
-      setProgress(100);
+      // 1. Initial progress simulation for UI feel
+      const interval = setInterval(() => {
+        setProgress(prev => Math.min(prev + 5, 80));
+      }, 200);
 
-      // For PDF output — wrap as valid PDF; for other outputs pass through raw blob
-      let blob;
-      if (toFormat === 'pdf') {
-        const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([595, 842]);
-        page.drawText(`Converted from ${fromFormat.toUpperCase()}: ${fileInfo.name}`, { x: 50, y: 750, size: 14 });
-        const bytes = await pdfDoc.save();
-        blob = new Blob([bytes], { type: 'application/pdf' });
-      } else {
-        blob = new Blob([fileInfo.rawFile], { type: to.mime });
-      }
+      // 2. Real Backend Call
+      const blob = await api.ebook.convert(
+        fileInfo.rawFile, 
+        fromFormat, 
+        toFormat, 
+        ebookSettings
+      );
+
+      clearInterval(interval);
+      setProgress(100);
 
       setResult({
         url: URL.createObjectURL(blob),
@@ -90,7 +99,7 @@ const EbookConversionTool = ({ fromFormat, toFormat }) => {
       setStep('download');
     } catch (err) {
       console.error(err);
-      alert('Conversion failed. Please try another file.');
+      alert('Aura Engine: Conversion failed. Please verify the file integrity.');
       setStep('config');
     } finally {
       setIsProcessing(false);
@@ -160,6 +169,13 @@ const EbookConversionTool = ({ fromFormat, toFormat }) => {
 
   return (
     <ToolLayout title={activeTool.name} subtitle={activeTool.subtitle} icon={activeTool.icon} color={activeTool.color} category={activeTool.category}>
+      <EbookConversionSettings 
+        open={toolSettingsOpen} 
+        onClose={() => setToolSettingsOpen(false)} 
+        settings={ebookSettings} 
+        setSettings={setEbookSettings} 
+      />
+      
       <div className="tool-upload-center w-full" style={{minHeight:'600px'}}>
         <StepIndicator steps={STEPS} currentStep={step} />
         <div className="ebook-tool-wrapper mt-12">
