@@ -210,3 +210,34 @@ async def unlock(
         media_type="application/pdf",
         headers={"Content-Disposition": 'attachment; filename="unlocked.pdf"'}
     )
+
+@router.post("/sign")
+async def sign(
+    file: UploadFile = File(...),
+    name: str = Form("Aura User")
+):
+    if file.content_type != "application/pdf":
+        raise HTTPException(400, detail="Invalid file type")
+    contents = await file.read()
+    output = pdf_service.sign_pdf(io.BytesIO(contents), name)
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="signed.pdf"'}
+    )
+
+@router.post("/redact")
+async def redact(
+    file: UploadFile = File(...),
+    keywords: str = Form("")
+):
+    if file.content_type != "application/pdf":
+        raise HTTPException(400, detail="Invalid file type")
+    contents = await file.read()
+    kw_list = [k.strip() for k in keywords.split(',') if k.strip()]
+    output = pdf_service.redact_pdf(io.BytesIO(contents), kw_list)
+    return Response(
+        content=output.read(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="redacted.pdf"'}
+    )

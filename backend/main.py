@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from backend.api.routes import pdf, assets, profile
+from backend.api.routes import pdf, assets, profile, ebook
 from backend.api.services import analytics_service
 from backend.init_db import init_db
 from backend.core.db import get_db
@@ -36,6 +36,7 @@ async def startup_event():
 app.include_router(pdf.router)
 app.include_router(assets.router)
 app.include_router(profile.router)
+app.include_router(ebook.router)
 
 # 4. ANALYTICS & HUB ENDPOINTS
 @app.get("/api/health", tags=["System"])

@@ -1,0 +1,28 @@
+.keyboard-shortcuts {
+  padding: 1.5rem;
+  background: #f9f9fb;
+  border-radius: 8px;
+  max-width: 420px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.keyboard-shortcuts h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #333;
+}
+.keyboard-shortcuts table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.shortcut-action {
+  text-align: left;
+  padding: 0.5rem 0.7rem 0.5rem 0;
+  color: #444;
+}
+.shortcut-keys {
+  text-align: right;
+  font-family: monospace;
+  color: #2d6cdf;
+  padding: 0.5rem 0 0.5rem 0.7rem;
+}
