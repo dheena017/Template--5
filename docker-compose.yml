@@ -1,33 +1,23 @@
 version: '3.8'
 
 services:
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: template_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     restart: always
     environment:
-      - DJANGO_DEBUG=True
+      - DATABASE_URL=sqlite:///./aura_platform.db
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/app
-    depends_on:
-      - db
+      - ./aura_platform.db:/app/aura_platform.db
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "5173:5173"
     volumes:
@@ -37,4 +27,5 @@ services:
       - backend
 
 volumes:
-  db_data:
+  # Not using a separate DB volume as we're using SQLite for development.
+  asset_storage:
