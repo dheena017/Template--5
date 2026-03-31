@@ -35,11 +35,12 @@ const Icons = {
   ChevronRight: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
   Back: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
   Image: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>,
+  Video: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>,
   Text: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18.1H3"/></svg>,
   Social: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>,
   Dev: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
   Intel: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 22 4-10 4 10"/><path d="M12 18H2"/></svg>,
-  Settings: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>,
+  Settings: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l-.43.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>,
   More: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>,
 };
 
@@ -50,6 +51,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const [sidebarView, setSidebarView] = useState('main'); 
   const [isPdfOpen, setIsPdfOpen] = useState(false);
   const [isConversionOpen, setIsConversionOpen] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isSpeechOpen, setIsSpeechOpen] = useState(false);
@@ -62,7 +64,6 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
 
   const menuItems = [
     { id: 'dashboard', label: 'Home', icon: <Icons.Home /> },
-    { id: 'voices', label: 'Voices', icon: <Icons.Voices /> },
     { id: 'studio', label: 'Studio', icon: <Icons.Studio /> },
     { id: 'flows', label: 'Flows', icon: <Icons.Flows />, badge: 'New' },
     { id: 'files', label: 'Files', icon: <Icons.Files /> },
@@ -87,14 +88,18 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
     { id: 'document-conversion', label: 'Document Conversion' },
   ];
 
+  const videoCategories = [
+    { id: 'avatar-videos-home', label: 'Video Dashboard' },
+    { id: 'ai-studio', label: 'AI Studio' },
+    { id: 'video-agent', label: 'Video Agent' },
+    { id: 'ppt-to-video', label: 'PPT to Video' },
+  ];
+
   const avatarCategories = [
     { id: 'avatar-dashboard', label: 'Avatar Dashboard' },
-    { id: 'ai-studio', label: 'AI Studio' },
     { id: 'avatar-creator', label: 'Avatar Creator' },
     { id: 'face-swap', label: 'Face Swap' },
-    { id: 'video-agent', label: 'Video Agent' },
     { id: 'avatar-templates', label: 'Templates' },
-    { id: 'ppt-to-video', label: 'PPT to Video' },
     { id: 'translate', label: 'Translate' },
     { id: 'characters', label: 'Characters' },
     { id: 'avatars', label: 'Avatars' },
@@ -195,6 +200,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
 
   const filteredPdf = filterLinks(pdfCategories);
   const filteredConversion = filterLinks(conversionCategories);
+  const filteredVideo = filterLinks(videoCategories);
   const filteredAvatar = filterLinks(avatarCategories);
   const filteredSpeech = filterLinks(speechCategories);
   const filteredStudio = filterLinks(studioCategories);
@@ -205,7 +211,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const filteredDev = filterLinks(devCategories);
 
   const isAnyResult = sidebarSearch ? (
-    filteredMenuItems.length > 0 || filteredPdf.length > 0 || filteredConversion.length > 0 || filteredAvatar.length > 0 ||
+    filteredMenuItems.length > 0 || filteredPdf.length > 0 || filteredConversion.length > 0 || filteredVideo.length > 0 || filteredAvatar.length > 0 ||
     filteredSpeech.length > 0 || filteredStudio.length > 0 || filteredAbout.length > 0 ||
     filteredImage.length > 0 || filteredText.length > 0 || filteredSocial.length > 0 ||
     filteredDev.length > 0
@@ -254,6 +260,13 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             <div className="sidebar-no-results">No results</div>
           )}
 
+          {(sidebarSearch || (!sidebarSearch && true)) && (
+            <>
+              <div className="nav-section-divider-aura" style={{ marginTop: 24, marginBottom: 0 }}></div>
+              <div className="nav-section-title-aura" style={{ margin: '16px 0 12px 0' }}>ESSENTIALS</div>
+            </>
+          )}
+
           {filteredMenuItems.map((item, i) => (
             <li 
               key={item.id}
@@ -266,37 +279,31 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               {item.badge && <span className={`item-badge-aura ${item.badge.toLowerCase()}`}>{item.badge}</span>}
             </li>
           ))}
-          
-          {(sidebarSearch || (!sidebarSearch && true)) && (
-            <>
-              <div className="nav-section-divider-aura" style={{ marginTop: 24, marginBottom: 0 }}></div>
-              <div className="nav-section-title-aura" style={{ margin: '16px 0 12px 0' }}>ESSENTIALS</div>
-            </>
+
+          {/* CREATIVE SECTION */}
+          {(sidebarSearch || !sidebarSearch) && (
+            <div className="nav-section-title-aura" style={{ marginTop: 28 }}>CREATIVE SUITE</div>
           )}
-          
-          {/* PDF SECTION */}
-          {(sidebarSearch ? filteredPdf.length > 0 : true) && (
+
+          {/* VIDEO SECTION */}
+          {(sidebarSearch ? filteredVideo.length > 0 : true) && (
             <>
-              <div style={{ height: 0 }} />
-              <li className={`dropdown-trigger-aura ${(isPdfOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
-                if (!sidebarSearch) setIsPdfOpen(!isPdfOpen);
-                onTabChange('pdf-select'); 
-              }}>
-                 <span className="item-icon-aura"><Icons.PDF /></span>
-                 <span className="label-aura">PDF Tools</span>
+              <li className={`dropdown-trigger-aura ${(isVideoOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsVideoOpen(!isVideoOpen); onTabChange('avatar-videos-home'); }}>
+                 <span className="item-icon-aura"><Icons.Video /></span>
+                 <span className="label-aura">Video AI</span>
                  {!sidebarSearch && (
                    <span className="dropdown-arrow-aura">
-                     {isPdfOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                     {isVideoOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
                    </span>
                  )}
               </li>
-              {(isPdfOpen || sidebarSearch) && (
+              {(isVideoOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
-                  {filteredPdf.map((item, idx) => (
+                  {filteredVideo.map((item, idx) => (
                     <li key={item.id} 
-                        className={`sub-item-aura ${sidebarView === item.id ? 'active' : ''} animate-slide-right`} 
+                        className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} 
                         style={{ animationDelay: `${idx * 0.03}s` }}
-                        onClick={() => { setSidebarView(item.id); onTabChange(item.id); }}>
+                        onClick={() => onTabChange(item.id)}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -305,11 +312,139 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             </>
           )}
 
-          
+          {/* IMAGE SECTION */}
+          {(sidebarSearch ? filteredImage.length > 0 : true) && (
+            <>
+              <li className={`dropdown-trigger-aura ${(isImageOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsImageOpen(!isImageOpen); onTabChange('image-dashboard'); }}>
+                 <span className="item-icon-aura"><Icons.Image /></span>
+                 <span className="label-aura">Visual Design</span>
+                 {!sidebarSearch && (
+                   <span className="dropdown-arrow-aura">
+                     {isImageOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                   </span>
+                 )}
+              </li>
+              {(isImageOpen || sidebarSearch) && (
+                <ul className="nav-sub-list-aura">
+                  {filteredImage.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => onTabChange(item.id)}>
+                      <span className="label-aura">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          {/* AVATAR SECTION */}
+          {(sidebarSearch ? filteredAvatar.length > 0 : true) && (
+            <>
+              <li className={`dropdown-trigger-aura ${(isAvatarOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsAvatarOpen(!isAvatarOpen); onTabChange('avatar-dashboard'); }}>
+                 <span className="item-icon-aura"><Icons.Avatar /></span>
+                 <span className="label-aura">Avatar AI</span>
+                 {!sidebarSearch && (
+                   <span className="dropdown-arrow-aura">
+                     {isAvatarOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                   </span>
+                 )}
+              </li>
+              {(isAvatarOpen || sidebarSearch) && (
+                <ul className="nav-sub-list-aura">
+                  {filteredAvatar.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => onTabChange(item.id)}>
+                      <span className="label-aura">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          {/* STUDIO SECTION */}
+          {(sidebarSearch ? filteredStudio.length > 0 : true) && (
+            <>
+              <li className={`dropdown-trigger-aura ${(isStudioOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsStudioOpen(!isStudioOpen); onTabChange('artists-home'); }}>
+                 <span className="item-icon-aura"><Icons.Studio /></span>
+                 <span className="label-aura">Creation Studio</span>
+                 {!sidebarSearch && (
+                   <span className="dropdown-arrow-aura">
+                     {isStudioOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                   </span>
+                 )}
+              </li>
+              {(isStudioOpen || sidebarSearch) && (
+                <ul className="nav-sub-list-aura">
+                  {filteredStudio.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => onTabChange(item.id)}>
+                      <span className="label-aura">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          {/* AUDIO & TEXT SECTION */}
+          {(sidebarSearch || !sidebarSearch) && (
+            <div className="nav-section-title-aura" style={{ marginTop: 28 }}>AUDIO & TEXT</div>
+          )}
+
+          {/* SPEECH SECTION */}
+          {(sidebarSearch ? filteredSpeech.length > 0 : true) && (
+            <>
+              <li className={`dropdown-trigger-aura ${(isSpeechOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsSpeechOpen(!isSpeechOpen); onTabChange('speech-dashboard'); }}>
+                 <span className="item-icon-aura"><Icons.Voices /></span>
+                 <span className="label-aura">Voice & Speech</span>
+                 {!sidebarSearch && (
+                    <span className="dropdown-arrow-aura">
+                      {isSpeechOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                    </span>
+                 )}
+              </li>
+              {(isSpeechOpen || sidebarSearch) && (
+                <ul className="nav-sub-list-aura">
+                  {filteredSpeech.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => onTabChange(item.id)}>
+                      <span className="label-aura">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          {/* TEXT SECTION */}
+          {(sidebarSearch ? filteredText.length > 0 : true) && (
+            <>
+              <li className={`dropdown-trigger-aura ${(isTextOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsTextOpen(!isTextOpen); onTabChange('text-dashboard'); }}>
+                 <span className="item-icon-aura"><Icons.Text /></span>
+                 <span className="label-aura">Smart Text</span>
+                 {!sidebarSearch && (
+                   <span className="dropdown-arrow-aura">
+                     {isTextOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                   </span>
+                 )}
+              </li>
+              {(isTextOpen || sidebarSearch) && (
+                <ul className="nav-sub-list-aura">
+                  {filteredText.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => onTabChange(item.id)}>
+                      <span className="label-aura">{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          {/* TOOLS & UTILITIES */}
+          {(sidebarSearch || !sidebarSearch) && (
+            <div className="nav-section-title-aura" style={{ marginTop: 28 }}>TOOLS & UTILITIES</div>
+          )}
+
           {/* CONVERSION SECTION */}
           {(sidebarSearch ? filteredConversion.length > 0 : true) && (
             <>
-              <div className="nav-section-divider-aura"></div>
               <li className={`dropdown-trigger-aura ${(isConversionOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
                 if (!sidebarSearch) setIsConversionOpen(!isConversionOpen);
                 onTabChange('universal-conversion'); 
@@ -337,23 +472,28 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             </>
           )}
 
-          {/* AVATAR SECTION */}
-          {(sidebarSearch ? filteredAvatar.length > 0 : true) && (
+          {/* PDF SECTION */}
+          {(sidebarSearch ? filteredPdf.length > 0 : true) && (
             <>
-              <div className="nav-section-divider-aura"></div>
-              <li className={`dropdown-trigger-aura ${(isAvatarOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsAvatarOpen(!isAvatarOpen); onTabChange('avatar-dashboard'); }}>
-                 <span className="item-icon-aura"><Icons.Avatar /></span>
-                 <span className="label-aura">Avatar AI</span>
+              <li className={`dropdown-trigger-aura ${(isPdfOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
+                if (!sidebarSearch) setIsPdfOpen(!isPdfOpen);
+                onTabChange('pdf-select'); 
+              }}>
+                 <span className="item-icon-aura"><Icons.PDF /></span>
+                 <span className="label-aura">PDF Tools</span>
                  {!sidebarSearch && (
                    <span className="dropdown-arrow-aura">
-                     {isAvatarOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
+                     {isPdfOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
                    </span>
                  )}
               </li>
-              {(isAvatarOpen || sidebarSearch) && (
+              {(isPdfOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
-                  {filteredAvatar.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
+                  {filteredPdf.map((item, idx) => (
+                    <li key={item.id} 
+                        className={`sub-item-aura ${sidebarView === item.id ? 'active' : ''} animate-slide-right`} 
+                        style={{ animationDelay: `${idx * 0.03}s` }}
+                        onClick={() => { setSidebarView(item.id); onTabChange(item.id); }}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -362,78 +502,9 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
             </>
           )}
 
-          {/* SPEECH SECTION */}
-          {(sidebarSearch ? filteredSpeech.length > 0 : true) && (
-            <>
-              <div className="nav-section-divider-aura"></div>
-              <li className={`dropdown-trigger-aura ${(isSpeechOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsSpeechOpen(!isSpeechOpen); onTabChange('speech-dashboard'); }}>
-                 <span className="item-icon-aura"><Icons.Voices /></span>
-                 <span className="label-aura">Voice & Speech</span>
-                 {!sidebarSearch && (
-                    <span className="dropdown-arrow-aura">
-                      {isSpeechOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
-                    </span>
-                 )}
-              </li>
-              {(isSpeechOpen || sidebarSearch) && (
-                <ul className="nav-sub-list-aura">
-                  {filteredSpeech.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
-                      <span className="label-aura">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </>
-          )}
-
-          {/* STUDIO SECTION */}
-          {(sidebarSearch ? filteredStudio.length > 0 : true) && (
-            <>
-              <div className="nav-section-divider-aura"></div>
-              <li className={`dropdown-trigger-aura ${(isStudioOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsStudioOpen(!isStudioOpen); onTabChange('artists-home'); }}>
-                 <span className="item-icon-aura"><Icons.Studio /></span>
-                 <span className="label-aura">Creation Studio</span>
-                 {!sidebarSearch && (
-                   <span className="dropdown-arrow-aura">
-                     {isStudioOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
-                   </span>
-                 )}
-              </li>
-              {(isStudioOpen || sidebarSearch) && (
-                <ul className="nav-sub-list-aura">
-                  {filteredStudio.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
-                      <span className="label-aura">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </>
-          )}
-
-          {/* IMAGE SECTION */}
-          {(sidebarSearch ? filteredImage.length > 0 : true) && (
-            <>
-              <li className={`dropdown-trigger-aura ${(isImageOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsImageOpen(!isImageOpen); onTabChange('image-dashboard'); }}>
-                 <span className="item-icon-aura"><Icons.Image /></span>
-                 <span className="label-aura">Visual Design</span>
-                 {!sidebarSearch && (
-                   <span className="dropdown-arrow-aura">
-                     {isImageOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
-                   </span>
-                 )}
-              </li>
-              {(isImageOpen || sidebarSearch) && (
-                <ul className="nav-sub-list-aura">
-                  {filteredImage.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
-                      <span className="label-aura">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </>
+          {/* PLATFORM SECTION */}
+          {(sidebarSearch || !sidebarSearch) && (
+            <div className="nav-section-title-aura" style={{ marginTop: 28 }}>PLATFORM OVERVIEW</div>
           )}
 
           {/* SOCIAL SECTION */}
@@ -450,8 +521,8 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               </li>
               {(isSocialOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
-                  {filteredSocial.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
+                  {filteredSocial.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => onTabChange(item.id)}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -474,38 +545,14 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               </li>
               {(isDevOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
-                  {filteredDev.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => {
+                  {filteredDev.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => {
                       if (item.url) {
                         window.open(item.url, '_blank');
                       } else {
                         onTabChange(item.id);
                       }
                     }}>
-                      <span className="label-aura">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </>
-          )}
-
-          {/* TEXT SECTION */}
-          {(sidebarSearch ? filteredText.length > 0 : true) && (
-            <>
-              <li className={`dropdown-trigger-aura ${(isTextOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsTextOpen(!isTextOpen); onTabChange('text-dashboard'); }}>
-                 <span className="item-icon-aura"><Icons.Text /></span>
-                 <span className="label-aura">Smart Text</span>
-                 {!sidebarSearch && (
-                   <span className="dropdown-arrow-aura">
-                     {isTextOpen ? <Icons.ChevronDown /> : <Icons.ChevronRight />}
-                   </span>
-                 )}
-              </li>
-              {(isTextOpen || sidebarSearch) && (
-                <ul className="nav-sub-list-aura">
-                  {filteredText.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => onTabChange(item.id)}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -528,8 +575,8 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               </li>
               {(isAboutOpen || sidebarSearch) && (
                 <ul className="nav-sub-list-aura">
-                  {filteredAbout.map((item) => (
-                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''}`} onClick={() => {
+                  {filteredAbout.map((item, idx) => (
+                    <li key={item.id} className={`sub-item-aura ${activeTab === item.id ? 'active' : ''} animate-slide-right`} style={{ animationDelay: `${idx * 0.03}s` }} onClick={() => {
                       if (item.url) {
                         window.open(item.url, '_blank');
                       } else {
@@ -543,7 +590,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
               )}
             </>
           )}
-          
+
           {(sidebarSearch ? (activeTab === 'audiobooks' && 'Audiobooks'.toLowerCase().includes(sidebarSearch.toLowerCase())) : true) && (
             <li className={activeTab === 'audiobooks' ? 'active' : ''} onClick={() => onTabChange('audiobooks')}>
               <span className="item-icon-aura"><Icons.Books /></span>
@@ -555,7 +602,6 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
       </nav>
     </>
   );
-
 
   const EssentialsGrid = () => (
     <div className={`essentials-mobile-hub ${isToolsOpenMobile ? 'open' : ''}`}>
