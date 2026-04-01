@@ -30,8 +30,11 @@ export const DASHBOARD_CONFIG = {
       { label: 'Avg FPS', value: '60', sub: 'Optimized', subColor: '#0ea5e9', subIcon: React.createElement(Shield, { size: 12 }) }
     ],
     tools: [
+      { name: 'Video Hub', desc: 'Central command for all AI video production.', path: '/video-dashboard', icon: React.createElement(Film, { size: 20 }) },
+      { name: 'Video AI', desc: 'Text-to-Video and Image-to-Video generation.', path: '/video-ai', icon: React.createElement(Video, { size: 20 }) },
       { name: 'AI Studio', desc: 'Powerful studio for automated content creation.', path: '/ai-studio', icon: React.createElement(Clapperboard, { size: 20 }) },
-      { name: 'Video Agent', desc: 'Build autonomous agents to execute complex tasks.', path: '/video-agent', icon: React.createElement(Bot, { size: 20 }) }
+      { name: 'Video Agent', desc: 'Build autonomous agents to execute complex tasks.', path: '/video-agent', icon: React.createElement(Bot, { size: 20 }) },
+      { name: 'PPT to Video', desc: 'Convert presentations into narrated avatar videos.', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 20 }) }
     ],
     recentItems: [
       { id: 1, name: 'Brand Product Reel', specs: '1080p • 24fps', status: 'Completed' },
@@ -82,7 +85,6 @@ export const DASHBOARD_CONFIG = {
       { label: 'Voices Trained', value: '5', sub: 'High Accuracy', subColor: '#f59e0b', subIcon: React.createElement(Zap, { size: 12 }) }
     ],
     tools: [
-      { id: 'ai-studio', name: 'AI Studio', desc: 'Build realistic virtual agents from text.', path: '/ai-studio', icon: React.createElement(Bot, { size: 20 }) },
       { id: 'avatar-creator', name: 'Avatar Creator', desc: 'Custom lip-sync and body character generation.', path: '/avatar-creator', icon: React.createElement(User, { size: 20 }) }
     ],
     recentItems: [
