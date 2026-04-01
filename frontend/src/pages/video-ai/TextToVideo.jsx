@@ -141,7 +141,7 @@ const TextToVideo = () => {
     <div className="video-ai-container">
       <header className="video-ai-header">
         <div>
-          <h1>Neural Video Engine <motion.span animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 2 }} className="badge bg-primary ms-2 tiny">BETA 2.0</motion.span></h1>
+          <h1>Video AI Text-to-Video <motion.span animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 2 }} className="badge bg-primary ms-2 tiny">BETA 2.0</motion.span></h1>
           <p className="text-secondary">Next-generation text-to-video synthesis powered by Atmospheric-v4 models.</p>
         </div>
         <div className="header-actions d-flex gap-3">
