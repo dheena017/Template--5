@@ -31,7 +31,7 @@ export const DASHBOARD_CONFIG = {
     ],
     tools: [
       { name: 'Video Hub', desc: 'Central command for all AI video production.', path: '/video-dashboard', icon: React.createElement(Film, { size: 20 }) },
-      { name: 'Video AI', desc: 'Text-to-Video and Image-to-Video generation.', path: '/video-ai', icon: React.createElement(Video, { size: 20 }) },
+      { name: 'Text-to-Video', desc: 'Text-to-Video and Image-to-Video generation.', path: '/video-ai', icon: React.createElement(Video, { size: 20 }) },
       { name: 'AI Studio', desc: 'Powerful studio for automated content creation.', path: '/ai-studio', icon: React.createElement(Clapperboard, { size: 20 }) },
       { name: 'Video Agent', desc: 'Build autonomous agents to execute complex tasks.', path: '/video-agent', icon: React.createElement(Bot, { size: 20 }) },
       { name: 'PPT to Video', desc: 'Convert presentations into narrated avatar videos.', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 20 }) }
