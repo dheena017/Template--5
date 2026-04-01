@@ -17,7 +17,7 @@ export const SIDEBAR_CATEGORIES = [
     links: [
       { name: 'Video Hub', path: '/video-dashboard', icon: React.createElement(Film, { size: 16 }) },
       { name: 'AI Studio', path: '/ai-studio', icon: React.createElement(Clapperboard, { size: 16 }) },
-      { name: 'Video AI', path: '/video-ai', icon: React.createElement(Video, { size: 16 }) },
+      { name: 'Text-to-Video', path: '/video-ai', icon: React.createElement(Video, { size: 16 }) },
       { name: 'Video Agent', path: '/video-agent', icon: React.createElement(Bot, { size: 16 }) },
       { name: 'PPT to Video', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 16 }) }
     ]
