@@ -12,7 +12,7 @@ import {
 
 export const SIDEBAR_CATEGORIES = [
   {
-    name: 'Video',
+    name: 'Video AI',
     icon: React.createElement(Film, { size: 18 }),
     links: [
       { name: 'Video Hub', path: '/video-dashboard', icon: React.createElement(Film, { size: 16 }) },
