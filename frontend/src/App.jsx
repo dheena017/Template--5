@@ -100,6 +100,8 @@ const Pages = {
     InstantHighlights: React.lazy(() => import('./pages').then(m => ({ default: m.InstantHighlights }))),
     VideoDubbing: React.lazy(() => import('./pages').then(m => ({ default: m.VideoDubbing }))),
     VideoPodcast: React.lazy(() => import('./pages').then(m => ({ default: m.VideoPodcast }))),
+    VideoAI: React.lazy(() => import('./pages').then(m => ({ default: m.VideoAI }))),
+    VideoDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.VideoDashboard }))),
     ArtistsHome: React.lazy(() => import('./pages').then(m => ({ default: m.ArtistsHome }))),
     FilesDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.FilesDashboard }))),
     Files: React.lazy(() => import('./pages').then(m => ({ default: m.Files }))),
@@ -310,6 +312,8 @@ function App() {
       case 'instant-highlights': return <Pages.InstantHighlights />;
       case 'video-dubbing': return <Pages.VideoDubbing />;
       case 'video-podcast': return <Pages.VideoPodcast />;
+      case 'video-ai': return <Pages.VideoAI />;
+      case 'video-dashboard': return <Pages.VideoDashboard onTabChange={handleTabChange} />;
       case 'artists-home': return <Pages.ArtistsHome />;
 
       // Files & Assets
