@@ -1,0 +1,137 @@
+.video-dashboard-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.vd-hero {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+  border-radius: 24px;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vd-hero-content h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #fff, #a5a5a5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vd-hero-content p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+.vd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.vd-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.vd-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-primary);
+  background: rgba(100, 108, 255, 0.05);
+}
+
+.vd-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vd-card h3 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.vd-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.vd-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.launch-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.vd-card:hover .launch-btn {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.vd-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 2rem;
+}
+
+.vd-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.vd-stat-item span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.vd-stat-item strong {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .vd-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .vd-hero-content h1 {
+    font-size: 2.2rem;
+  }
+}
