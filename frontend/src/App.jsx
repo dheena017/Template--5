@@ -167,7 +167,7 @@ function App() {
   const { appSettingsOpen, setAppSettingsOpen, toolSettingsOpen, setToolSettingsOpen } = useSettings();
   const [backendStatus, setBackendStatus] = useState('Checking...')
   const [features, setFeatures] = useState([])
-  const [isBooting, setIsBooting] = useState(true)
+  const [isBooting, setIsBooting] = useState(false)
 
   
   const location = useLocation()
@@ -205,8 +205,7 @@ function App() {
       } catch (err) {
         console.error("Bootup error:", err);
       } finally {
-        // Guaranteed minimum loading time for premium feel
-        setTimeout(() => setIsBooting(false), 800);
+        setIsBooting(false);
       }
     };
 
@@ -525,9 +524,9 @@ function App() {
     (f.keywords && f.keywords.some(k => k.toLowerCase().includes(searchQueryHub.toLowerCase())))
   ) : [];
 
-  if (isBooting) {
-    return <LoadingScreen message="Initializing Aura Engine..." />;
-  }
+  // if (isBooting) {
+  //   return <LoadingScreen message="Initializing Aura Engine..." />;
+  // }
 
   return (
     <NotificationProvider>
@@ -633,11 +632,7 @@ function App() {
                  <Minimize2 size={16} />
                </button>
              )}
-                          <React.Suspense fallback={
-                            <div style={{ position: 'relative', height: '400px', width: '100%' }}>
-                              <LoadingScreen message="Loading Neural Interface..." />
-                            </div>
-                          }>
+                          <React.Suspense fallback={null}>
 
                     <AnimatePresence mode="wait">
                       <motion.div

@@ -97,7 +97,7 @@ const Team = () => {
                          <Users size={14} /> <span>WORKSPACE CONSOLE</span>
                     </motion.div>
                     <motion.h1 variants={itemVariants}>Human <span className="text-gradient">Intelligence</span></motion.h1>
-                    <motion.p variants={itemVariants}>Manage your high-performance team and resource distribution.</p>
+                    <motion.p variants={itemVariants}>Manage your high-performance team and resource distribution.</motion.p>
                 </div>
                 <motion.div className="header-actions-premium" variants={itemVariants}>
                     <button className="aura-btn secondary"><Shield size={18} /> Roles</button>
