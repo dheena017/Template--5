@@ -129,6 +129,23 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = React.useState('')
   const [activeCategory, setActiveCategory] = React.useState('all')
   const [hoveredTool, setHoveredTool] = React.useState(null)
+  const [currentTime, setCurrentTime] = React.useState(new Date())
+
+  // Update clock every second
+  React.useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const getGreeting = () => {
+    const hour = currentTime.getHours()
+    if (hour < 12) return 'Good Morning'
+    if (hour < 18) return 'Good Afternoon'
+    return 'Good Evening'
+  }
+
+  const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+
 
   const allTools = React.useMemo(() => {
     const list = []
@@ -173,14 +190,18 @@ const Dashboard = () => {
         <motion.header className="portal-hero-section" variants={itemVariants}>
           <div className="hero-top">
             <motion.div 
-              className="aura-chip"
+              className="aura-chip-premium"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Sparkles size={14} /> System v2.4 Active
+              <div className="status-dot-pulse"></div>
+              <Sparkles size={14} className="text-secondary" />
+              <span>{formattedTime} • SYSTEM v2.4 ONLINE</span>
             </motion.div>
-            <h1>What can we <span className="text-gradient">automate</span> for you?</h1>
+            <h2 className="greeting-text-aura">{getGreeting()}, <span className="text-muted">Aura Explorer</span></h2>
+            <h1 className="hero-main-title">What can we <span className="text-gradient">automate</span> today?</h1>
           </div>
+
 
           <div className="universal-search-hub">
             <SearchBar 
@@ -333,21 +354,27 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="tool-card-body">
-                        <h4 style={{marginBottom: '0.25rem'}}>{tool.label}</h4>
+                        <div className="tool-meta-row">
+                             <h4>{tool.label}</h4>
+                             <div className="tool-tier-badge">PRO</div>
+                        </div>
+                        <p className="tool-description-mini">Optimized for high-performance AI processing.</p>
                         <div className="tool-card-footer">
-                          <div className="tool-status-dot" style={{ backgroundColor: tool.color, width: 10, height: 10, border: '2px solid #fff', boxShadow: '0 0 0 2px #18181b' }}></div>
+                          <div className="tool-status-dot" style={{ backgroundColor: tool.color }}></div>
                           <span className="tool-ready-text">Ready to use</span>
                         </div>
                         <div className="card-launch-aura">
                             <PrimaryButton 
                                 className="w-full launch-btn-premium"
                                 size="md"
-                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)' }}
+                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none' }}
                             >
-                                Open Tool
+                                <Zap size={16} />
+                                Launch Hub
                             </PrimaryButton>
                         </div>
                       </div>
+
                       <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
                     </motion.div>
                   )

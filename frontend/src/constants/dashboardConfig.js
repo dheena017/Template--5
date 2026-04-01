@@ -255,7 +255,7 @@ export const DASHBOARD_CONFIG = {
     color: '#a855f7',
     rgb: '168, 85, 247',
     actionText: 'New Project',
-    actionPath: '/ai-orchestrator',
+    actionPath: '/highlights',
     icon: React.createElement(Clapperboard, { size: 24 }),
     groupLabel: 'Studio Engines',
     badge: 'Production',
@@ -267,7 +267,6 @@ export const DASHBOARD_CONFIG = {
       { label: 'Projects', value: '25', sub: 'Active', subColor: '#7c3aed', subIcon: React.createElement(Activity, { size: 12 }) }
     ],
     tools: [
-      { name: 'AI Orchestrator', desc: 'Automated multi-track video generation.', path: '/ai-orchestrator', icon: React.createElement(Layers, { size: 20 }) },
       { name: 'Video Highlights', desc: 'Extract viral moments with AI analytics.', path: '/highlights', icon: React.createElement(Star, { size: 20 }) },
       { name: 'Face Swap AI', desc: 'Realistic identity migration in video.', path: '/face-swap-ai', icon: React.createElement(User, { size: 20 }) }
     ],

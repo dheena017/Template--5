@@ -124,7 +124,6 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
 
   const studioCategories = [
     { id: 'artists-home', label: 'Studio Dashboard' },
-    { id: 'ai-orchestrator', label: 'AI Orchestrator' },
     { id: 'face-swap-ai', label: 'Face Swap AI' },
     { id: 'music-generator', label: 'Music Generator' },
     { id: 'highlights', label: 'Video Highlights' },

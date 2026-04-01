@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Film, Palette, Bot, Mic, FileText, 
   Clapperboard, HardDrive, Terminal, 
-  Share2, Info, Layout, Languages,
+  Share2, Info, Languages,
   Zap, Settings, Activity, Shield,
   Globe, Code2, Key, Webhook,
   History, Music, Video, Star,
@@ -59,7 +59,6 @@ export const SIDEBAR_CATEGORIES = [
     name: 'Studio',
     icon: React.createElement(Clapperboard, { size: 18 }),
     links: [
-      { name: 'AI Orchestrator', path: '/ai-orchestrator', icon: React.createElement(Layout, { size: 16 }) },
       { name: 'Video Highlights', path: '/highlights', icon: React.createElement(Star, { size: 16 }) }
     ]
   },

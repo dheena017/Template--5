@@ -22,7 +22,6 @@ export * from './pdf'
 export * from './developers'
 export * from './social-media'
 export * from './about-us'
-export { default as AIOrchestrator } from './studio/AIOrchestrator'
 
 // Subsection Tabs & Layouts
 export * as ProfileTabs from './profile_sub/tabs' 

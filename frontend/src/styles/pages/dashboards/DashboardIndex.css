@@ -70,16 +70,66 @@
   box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.3);
 }
 
-.hero-top h1 {
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 1000;
+.hero-top h1, .hero-main-title {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900;
   letter-spacing: -0.06em;
-  line-height: 0.9;
+  line-height: 0.85;
   color: #fff;
   background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-top: 1rem;
+}
+
+.greeting-text-aura {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-secondary);
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.aura-chip-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(15, 17, 26, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 0.6rem 1.25rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.7rem;
+  font-weight: 1000;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.status-dot-pulse {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  position: relative;
+}
+
+.status-dot-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: #10b981;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: aura-status-pulse 2s infinite;
+}
+
+@keyframes aura-status-pulse {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
 
 .text-gradient {
@@ -272,12 +322,42 @@
   box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 50px -10px rgba(139, 92, 246, 0.15);
 }
 
-.tool-card-body h3 {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 0.25rem;
-  letter-spacing: -0.01em;
+.tool-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tool-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tool-card-body h4 {
+  font-size: 1.3rem;
+  font-weight: 850;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.tool-tier-badge {
+    font-size: 0.6rem;
+    font-weight: 900;
+    padding: 2px 8px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 6px;
+    color: var(--accent-primary);
+}
+
+.tool-description-mini {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    line-height: 1.4;
+    margin: 0;
 }
 
 .suite-name-tag {
@@ -288,20 +368,26 @@
   color: var(--text-muted);
 }
 
-.card-launch-aura {
-    margin-top: 0.75rem;
-}
-
 .launch-btn-premium {
     height: 52px;
-    font-size: 1.1rem !important;
-    transition: all 0.3s ease !important;
+    font-size: 1rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: var(--accent-gradient) !important;
+    border: none !important;
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3) !important;
 }
 
 .launch-btn-premium:hover {
-    transform: scale(1.02);
-    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.5) !important;
-    filter: brightness(1.1);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.5) !important;
+    filter: brightness(1.2);
 }
 
 .tool-card-top {

@@ -34,6 +34,8 @@ import './App.css'
 import './styles/Notifications.css'
 import './styles/NextActionRail.css'
 import './styles/VisualAssetTray.css'
+import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
+
 
 // Lazy load large sections to prevent circular imports & improve stability
 const Pages = {
@@ -84,7 +86,6 @@ const Pages = {
     SoundEffects: React.lazy(() => import('./pages').then(m => ({ default: m.SoundEffects }))),
     Voices: React.lazy(() => import('./pages').then(m => ({ default: m.Voices }))),
     StudioDashboard: React.lazy(() => import('./pages').then(m => ({ default: m.StudioDashboard }))),
-    AIOrchestrator: React.lazy(() => import('./pages').then(m => ({ default: m.AIOrchestrator }))),
     FaceSwapAI: React.lazy(() => import('./pages').then(m => ({ default: m.FaceSwapAI }))),
     MusicGenerator: React.lazy(() => import('./pages').then(m => ({ default: m.MusicGenerator }))),
     Highlights: React.lazy(() => import('./pages').then(m => ({ default: m.Highlights }))),
@@ -166,6 +167,8 @@ function App() {
   const { appSettingsOpen, setAppSettingsOpen, toolSettingsOpen, setToolSettingsOpen } = useSettings();
   const [backendStatus, setBackendStatus] = useState('Checking...')
   const [features, setFeatures] = useState([])
+  const [isBooting, setIsBooting] = useState(true)
+
   
   const location = useLocation()
   const navigate = useNavigate()
@@ -189,18 +192,29 @@ function App() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // Health check
-    api.fetchHealth()
-      .then(data => setBackendStatus(data.status))
-      .catch(() => setBackendStatus('Offline'))
+    // Health check & Initial Data fetch
+    const initApp = async () => {
+      try {
+        const [healthData, featuresData] = await Promise.all([
+          api.fetchHealth().catch(() => ({ status: 'Offline' })),
+          api.fetchFeatures().catch(() => [])
+        ]);
+        
+        setBackendStatus(healthData.status);
+        setFeatures(featuresData);
+      } catch (err) {
+        console.error("Bootup error:", err);
+      } finally {
+        // Guaranteed minimum loading time for premium feel
+        setTimeout(() => setIsBooting(false), 800);
+      }
+    };
 
-    // Fetch dynamic features from Django
-    api.fetchFeatures()
-      .then(data => setFeatures(data))
-      .catch(err => console.error("Could not fetch features:", err))
+    initApp();
 
     return () => window.removeEventListener('resize', checkMobile);
   }, [])
+
 
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
@@ -283,7 +297,6 @@ function App() {
 
       // Studio & Creation
       case 'studio-dashboard': return <Pages.StudioDashboard />;
-      case 'ai-orchestrator': return <Pages.AIOrchestrator />;
       case 'face-swap-ai': return <Pages.FaceSwapAI />;
       case 'music-generator': return <Pages.MusicGenerator />;
       case 'highlights': return <Pages.Highlights />;
@@ -512,8 +525,13 @@ function App() {
     (f.keywords && f.keywords.some(k => k.toLowerCase().includes(searchQueryHub.toLowerCase())))
   ) : [];
 
+  if (isBooting) {
+    return <LoadingScreen message="Initializing Aura Engine..." />;
+  }
+
   return (
     <NotificationProvider>
+
       <TaskProvider>
         <NextActionRail />
         <VisualAssetTray />
@@ -615,12 +633,12 @@ function App() {
                  <Minimize2 size={16} />
                </button>
              )}
-                         <React.Suspense fallback={
-                    <div style={{ padding: '48px', textAlign: 'center', opacity: 0.5 }}>
-                      <div className="aura-loader"></div>
-                      <p style={{ marginTop: '16px', fontWeight: 'bold' }}>Loading Neural Interface...</p>
-                    </div>
-                  }>
+                          <React.Suspense fallback={
+                            <div style={{ position: 'relative', height: '400px', width: '100%' }}>
+                              <LoadingScreen message="Loading Neural Interface..." />
+                            </div>
+                          }>
+
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={activeTab}
