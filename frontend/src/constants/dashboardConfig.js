@@ -278,25 +278,32 @@ export const DASHBOARD_CONFIG = {
     ]
   },
   files: {
-    title: 'Asset Library',
-    subtitle: 'Universal file storage and document organization.',
+    title: 'Media Vault',
+    subtitle: 'High-performance AI asset management and synthesis history.',
     color: '#64748b',
     rgb: '100, 116, 139',
-    actionText: 'Upload Assets',
+    actionText: 'Upload Master',
     actionPath: '/files',
     icon: React.createElement(HardDrive, { size: 24 }),
-    groupLabel: 'Storage Nodes',
-    badge: 'Unlimited',
-    version: 'v3.0',
-    recentHeader: 'Library History',
-    recentCols: ['Asset', 'Size', 'Status', 'Actions'],
+    groupLabel: 'Storage Clusters',
+    badge: '1TB Pro',
+    version: 'v5.0',
+    isAssetLibrary: true,
+    recentHeader: 'Recent Synthesis Files',
+    recentCols: ['Asset', 'Type', 'Size', 'Status'],
     stats: [
-      { label: 'Total Files', value: '542', sub: 'Healthy', subColor: '#10b981', subIcon: React.createElement(CheckCircle2, { size: 12 }) },
-      { label: 'Storage', value: '1.2TB', sub: 'Cloud', subColor: '#0ea5e9', subIcon: React.createElement(Globe, { size: 12 }) }
+      { label: 'Cloud Storage', value: '1.2TB', sub: '85% Free', subColor: '#10b981', subIcon: React.createElement(CheckCircle2, { size: 12 }) },
+      { label: 'Master Assets', value: '842', sub: 'Ready', subColor: '#0ea5e9', subIcon: React.createElement(Globe, { size: 12 }) }
+    ],
+    assets: [
+      { id: 1, name: 'Cyberpunk_City_Sunset', type: 'Video', size: '145MB', preview: 'https://images.unsplash.com/photo-1605142859862-978be7eba909?auto=format&fit=crop&q=80&w=300', prompt: 'Cinematic futuristic city, sunset, 8k, highly detailed' },
+      { id: 2, name: 'Neon_Samurai_Seed', type: 'Image', size: '2.4MB', preview: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300', prompt: 'Neon samurai portrait, digital art, sharp focus' },
+      { id: 3, name: 'Nebula_Flow_01', type: 'Video', size: '89MB', preview: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=300', prompt: 'Deep space nebula, fluid motion, cosmic colors' },
+      { id: 4, name: 'Desert_Storm_FX', type: 'Video', size: '210MB', preview: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=300', prompt: 'Vast desert storm, cinematic lighting, slow motion' }
     ],
     tools: [
-      { name: 'Library', desc: 'Manage and search your global asset list.', path: '/files', icon: React.createElement(HardDrive, { size: 20 }) },
-      { name: 'Productions', desc: 'Active workspace for ongoing projects.', path: '/productions', icon: React.createElement(Box, { size: 20 }) }
+      { name: 'Grid Vault', desc: 'Visual media management with AI metadata.', path: '/files', icon: React.createElement(Box, { size: 20 }) },
+      { name: 'Deep Search', desc: 'Find assets by prompt or aesthetic seed.', path: '/files/search', icon: React.createElement(Activity, { size: 20 }) }
     ],
     recentItems: [
       { id: 1, name: 'Raw_Video_Archive.zip', specs: '4.5 GB', status: 'Synced' },
@@ -479,8 +486,15 @@ export const DASHBOARD_CONFIG = {
     badge: 'Nucleus v4',
     version: 'v4.2',
     hasPromptBar: true,
+    isProduction: true,
     showTelemetry: true,
     promptPlaceholder: 'Manifest your cinematic vision through semantic synthesis...',
+    productionSettings: {
+      formats: ['YouTube Landscape', 'TikTok Portrait', 'Instagram Square', 'Cinematic 21:9'],
+      styles: ['Cinematic', '3D Animation', 'Anime', 'Real-world', 'Abstract'],
+      languages: ['English', 'Spanish', 'French', 'Japanese', 'German'],
+      tones: ['Exciting', 'Calm', 'Informative', 'Dramatic', 'Inspirational']
+    },
     samples: [
       { id: 1, title: 'Cyberpunk rainy night', type: 'Text-to-Video', preview: 'https://images.unsplash.com/photo-1605142859862-978be7eba909?auto=format&fit=crop&q=80&w=300' },
       { id: 2, title: 'Abstract flow 1', type: 'Motion Pattern', preview: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=300' }
@@ -531,6 +545,36 @@ export const DASHBOARD_CONFIG = {
     recentItems: [
       { id: 1, name: 'Portrait Shift', specs: 'Stable Diffusion', status: 'Completed' },
       { id: 2, name: 'Landscape Flow', specs: 'Atmos v4', status: 'Ready' }
+    ]
+  },
+  billing: {
+    title: 'Financial Hub',
+    subtitle: 'Manage your subscription, AI credits, and global billing history.',
+    color: '#10b981',
+    rgb: '16, 185, 129',
+    actionText: 'Upgrade Plan',
+    actionPath: '/pricing',
+    icon: React.createElement(Key, { size: 24 }),
+    groupLabel: 'Subscription Management',
+    badge: 'Pro Tier',
+    version: '2026.4',
+    isBilling: true,
+    recentHeader: 'Invoice History',
+    recentCols: ['Invoice Date', 'Amount', 'Status', 'Receipt'],
+    stats: [
+      { label: 'Current Plan', value: 'Pro Nucleus', sub: '$49/mo', subColor: '#10b981', subIcon: React.createElement(Star, { size: 12 }) },
+      { label: 'AI Credits', value: '12,450', sub: '85% Left', subColor: '#0ea5e9', subIcon: React.createElement(Zap, { size: 12 }) },
+      { label: 'Next Auto-Pay', value: 'Apr 15', sub: 'Visa • 4242', subColor: '#8b5cf6', subIcon: React.createElement(CheckCircle2, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Change Plan', desc: 'Upgrade or downgrade your current subscription tier.', path: '/pricing', icon: React.createElement(Layout, { size: 20 }) },
+      { name: 'Payment Methods', desc: 'Manage your saved cards and secondary payment options.', path: '/settings/billing', icon: React.createElement(Shield, { size: 20 }) },
+      { name: 'Usage Logs', desc: 'Detailed breakdown of credit consumption per tool.', path: '/usage', icon: React.createElement(Activity, { size: 20 }) }
+    ],
+    recentItems: [
+      { id: 1, name: 'March 2026', specs: '$49.00', status: 'Paid' },
+      { id: 2, name: 'February 2026', specs: '$49.00', status: 'Paid' },
+      { id: 3, name: 'January 2026', specs: '$12.50 (Overage)', status: 'Paid' }
     ]
   }
 };
