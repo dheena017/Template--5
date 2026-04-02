@@ -13,6 +13,8 @@ class Platform(Base):
     website = Column(String(256), default="https://aura.dev")
     support_email = Column(String(128), default="dheena@aura.dev")
     plan = Column(String(64), default="Pro Plan")
+    credits = Column(Integer, default=1250)
+    subscription_tier = Column(String(64), default="Trial")
     uptime_streak = Column(String(64), default="99.99%")
     joined_at = Column(DateTime, default=datetime.utcnow)
     visibility = Column(String(32), default="public")
@@ -89,3 +91,33 @@ class PDFOperation(Base):
     file_size_mb = Column(Float, nullable=True)
     status = Column(String(64), default="SUCCESS")
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class Transaction(Base):
+    """Financial ledger for credit purchases and AI usage."""
+    __tablename__ = "transactions"
+    id = Column(Integer, primary_key=True, index=True)
+    platform_id = Column(Integer, ForeignKey("platforms.id", ondelete="CASCADE"))
+    type = Column(String(128), nullable=False) # 'Credit Purchase', 'AI Generation', 'Subscription Upgrade'
+    tool = Column(String(128), nullable=True) # Flux, VideoGen, etc.
+    amount = Column(Integer, nullable=False) # Positive for purchase, negative for usage
+    date = Column(DateTime, default=datetime.utcnow)
+    status = Column(String(64), default="COMPLETED")
+
+class ConversionHistory(Base):
+    """Stores metadata for user conversion history and caching."""
+    __tablename__ = "conversion_history"
+    id = Column(Integer, primary_key=True, index=True)
+    conversion_key = Column(String(128), nullable=False, index=True)  # pdf_to_word, etc.
+    from_format = Column(String(64), nullable=False)
+    to_format = Column(String(64), nullable=False)
+    file_name = Column(String(256), nullable=False)
+    file_size_bytes = Column(Integer, nullable=True)
+    input_hash = Column(String(64), nullable=True)  # SHA256 of input file for cache matching
+    output_url = Column(String(512), nullable=True)  # B2/S3 URL or local path
+    output_size_bytes = Column(Integer, nullable=True)
+    status = Column(String(64), default="SUCCESS")  # SUCCESS, FAILED, PENDING
+    error_message = Column(Text, nullable=True)
+    processing_time_ms = Column(Integer, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    accessed_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
