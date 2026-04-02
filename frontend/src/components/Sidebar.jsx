@@ -20,6 +20,7 @@ import VideoConversionSidebar from './sidebars/VideoConversionSidebar';
 import AudioConversionSidebar from './sidebars/AudioConversionSidebar';
 import ImageFormatConversionSidebar from './sidebars/ImageFormatConversionSidebar';
 import DocumentConversionSidebar from './sidebars/DocumentConversionSidebar';
+import api from '../services/api';
 
 // Bespoke Aura Modern SVG Icons
 const Icons = {
@@ -62,6 +63,21 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const [isSocialOpen, setIsSocialOpen] = useState(false);
   const [isDevOpen, setIsDevOpen] = useState(false);
   const [isIntelOpen, setIsIntelOpen] = useState(false);
+  const [billingInfo, setBillingInfo] = useState({ credits: 1250, subscription: 'Pro Plan' });
+
+  useEffect(() => {
+    const fetchBilling = async () => {
+      try {
+        const data = await api.billing.getBalance();
+        setBillingInfo(data);
+      } catch (e) {
+        console.error('[Sidebar] Failed to fetch billing:', e);
+      }
+    };
+    fetchBilling();
+    const interval = setInterval(fetchBilling, 30000); // 30s
+    return () => clearInterval(interval);
+  }, []);
 
   const menuItems = [
     { id: 'dashboard', label: 'Home', icon: <Icons.Home /> },
@@ -134,6 +150,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
 
   const aboutCategories = [
     { id: 'billing', label: 'Billing Dashboard' },
+    { id: 'help-center', label: 'Help Center' },
     { id: 'docs', label: 'Documentation', url: 'http://localhost:8000/docs' },
     { id: 'faq', label: 'FAQ & Support' },
     { id: 'ask', label: 'Ask AI Assistant' },
@@ -782,10 +799,14 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           <div className="usage-card-aura">
             <div className="usage-header" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
               <span style={{ fontWeight: 700, fontSize: '13px', color: '#fff' }}>Aura Credits:</span>
-              <span style={{ fontSize: '12.5px', color: 'var(--text-muted, #b3b3b3)' }}>85/100 <span style={{ fontSize: '12px', color: '#8b5cf6', fontWeight: 700 }}>(85% remaining)</span></span>
+              <span style={{ fontSize: '12.5px', color: 'var(--text-muted, #b3b3b3)' }}>
+                {billingInfo.credits}/5000 <span style={{ fontSize: '12px', color: '#8b5cf6', fontWeight: 700 }}>
+                  ({Math.round((billingInfo.credits / 5000) * 100)}% remaining)
+                </span>
+              </span>
             </div>
             <div className="usage-bar-bg" style={{ marginTop: 6 }}>
-               <div className="usage-bar-fill" style={{ width: '85%' }}></div>
+               <div className="usage-bar-fill" style={{ width: `${(billingInfo.credits / 5000) * 100}%` }}></div>
             </div>
           </div>
           <div className="user-profile-footer-aura" onClick={() => { onTabChange('profile'); setSidebarView('main'); }}>
