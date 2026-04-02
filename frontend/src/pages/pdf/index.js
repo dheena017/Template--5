@@ -12,7 +12,7 @@ export { default as RemovePages } from './RemovePages.jsx'
 export { default as ExtractPages } from './ExtractPages.jsx'
 export { default as ScanToPDF } from './ScanToPDF.jsx'
 export { default as OCRPDF } from './OCRPDF.jsx'
-export { default as PDFSelectDashboard } from './PDFSelectDashboard.jsx'
+export { default as PDFDashboard } from './PDFDashboard.jsx'
 
 // Folder-based sub-pages
 export { default as AllConversions } from './AllConversions.jsx'
