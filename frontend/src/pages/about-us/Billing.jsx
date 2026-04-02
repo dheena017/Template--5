@@ -3,21 +3,21 @@ import {
   CreditCard, Zap, Shield, 
   ArrowUpRight, History, Check,
   ChevronRight, Plus, ExternalLink,
-  Crown, Star, Rocket
+  Crown, Star, Rocket, LayoutGrid,
+  Activity, Download, MessageSquare, ArrowRight,
+  TrendingUp, Info, BarChart3, Clock3
 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { api } from '../../services/api'
 import '../../styles/pages/about-us/Billing.css'
 
 const Billing = () => {
   const [billingData, setBillingData] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [showTopUp, setShowTopUp] = useState(false)
   const [topUpAmount, setTopUpAmount] = useState(5000)
   const [isProcessing, setIsProcessing] = useState(false)
 
-
-   const fetchBalance = async () => {
+  const fetchBalance = async () => {
     const res = await api.billing.getBalance()
     if (!res.error) {
       setBillingData(res)
@@ -25,28 +25,26 @@ const Billing = () => {
     setLoading(false)
   }
 
-   useEffect(() => {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      fetchBalance()
-   }, [])
+  useEffect(() => {
+    fetchBalance()
+  }, [])
+
   const handleTopUp = async () => {
     setIsProcessing(true)
-    // Simulate payment gateway delay
-    await new Promise(r => setTimeout(r, 2000))
-    
+    await new Promise(r => setTimeout(r, 1500)) // Sync feel
     const res = await api.billing.topUp(topUpAmount)
     if (!res.error) {
        await fetchBalance()
-       setShowTopUp(false)
     }
     setIsProcessing(false)
   }
 
   const handleUpgrade = async (tier) => {
     setIsProcessing(true)
+    await new Promise(r => setTimeout(r, 1200)) // Neural processing feel
     const res = await api.billing.upgrade(tier)
     if (!res.error) {
-      await fetchBalance()
+       await fetchBalance()
     }
     setIsProcessing(false)
   }
@@ -55,182 +53,248 @@ const Billing = () => {
     { 
         name: 'Trial', 
         price: '$0', 
-        credits: '500', 
-        icon: <Star size={24} />, 
+        icon: <Star size={24} className="text-secondary" />, 
         features: ['SD Quality', 'Watermark', 'Basic Support'],
         active: billingData?.subscription === 'Trial'
     },
     { 
         name: 'Standard', 
         price: '$29', 
-        credits: '5,000', 
-        icon: <Rocket size={24} />, 
+        icon: <Rocket size={24} className="text-primary" />, 
         features: ['4K Quality', 'No Watermark', 'Priority Processing', 'API Access'],
         active: billingData?.subscription === 'Standard'
     },
     { 
         name: 'Pro', 
         price: '$99', 
-        credits: '25,000', 
-        icon: <Crown size={24} />, 
+        icon: <Crown size={24} className="text-accent" />, 
         features: ['8K Quality', 'Dedicated Support', 'Custom Avatars', 'Early Features'],
         active: billingData?.subscription === 'Pro'
     }
   ]
 
-  if (loading) return <div className="p-loader">Loading billing records...</div>
+  if (loading) return <div className="billing-loading">Synchronizing financial node...</div>
 
   return (
-    <div className="billing-container">
-      <div className="b-header">
-         <div className="b-title">
+    <div className="billing-page-v4">
+      {/* Header with mini-button as per screenshot */}
+      <header className="b-page-header">
+         <div className="b-titles">
             <h1>Billing & Subscriptions</h1>
             <p>Manage your credits and subscription tiers</p>
          </div>
-         <button className="primary-btn" onClick={() => setShowTopUp(true)}>
-            <Plus size={18} /> Add Credits
+         <button className="mini-add-credits-btn">
+            <Plus size={14} /> Add Credits
          </button>
-      </div>
+      </header>
 
-      <div className="b-main-grid">
-         <div className="b-left">
-            {/* Futuristic Balance Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="balance-card-refined"
-            >
-               <div className="bc-info">
-                  <label>Available Credits</label>
-                  <motion.h2>
+      <div className="b-layout-main">
+         <div className="b-primary-content">
+            {/* Available Credits Card */}
+            <div className="available-credits-card">
+               <div className="ac-left">
+                  <label>AVAILABLE CREDITS</label>
+                  <motion.div 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="ac-val"
+                  >
                     {Math.round(billingData?.credits || 0).toLocaleString()}
-                  </motion.h2>
+                  </motion.div>
                </div>
-               <div className="zap-visual">
-                  <Zap size={40} fill="currentColor" />
+               <div className="ac-right">
+                  <div className="lightning-glow-circle">
+                     <Zap size={32} fill="currentColor" />
+                  </div>
+                  <div className="ac-prediction-badge" title="Projected asset synthesis capacity">
+                     <BarChart3 size={12} />
+                     ~{Math.floor((billingData?.credits || 0) / 450)} Pro Videos
+                  </div>
                </div>
-            </motion.div>
-
-            {/* Pricing Tiers Grid */}
-            <div className="plans-grid">
-               {plans.map((plan, idx) => (
-                 <motion.div 
-                   key={plan.name} 
-                   initial={{ opacity: 0, y: 20 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: idx * 0.1 }}
-                   className={`plan-card-refined ${plan.active ? 'active' : ''}`}
-                 >
-                    <div className="plan-header">
-                       {plan.icon}
-                       <h3>{plan.name}</h3>
-                    </div>
-                    <div className="plan-price">
-                       <span>{plan.price}</span>
-                       <small>/month</small>
-                    </div>
-                    <ul className="plan-features">
-                       {plan.features.map(f => (
-                         <li key={f}><Check size={14} className="check" /> {f}</li>
-                       ))}
-                    </ul>
-                    <motion.button 
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={plan.active ? 'active-btn' : 'secondary-btn'}
-                      onClick={() => !plan.active && handleUpgrade(plan.name)}
-                    >
-                       {plan.active ? 'Current Plan' : 'Select Tier'}
-                    </motion.button>
-                 </motion.div>
-               ))}
             </div>
+
+            {/* Plans Grid */}
+            <div className="tiers-comparison-grid">
+                {plans.map((plan, idx) => (
+                  <div key={plan.name} className={`tier-card ${plan.active ? 'active' : ''} ${plan.name === 'Pro' ? 'pro-tier-exclusive' : ''}`}>
+                     {plan.name === 'Pro' && <div className="pro-glow-border"></div>}
+                     <div className="tier-icon-box">{plan.icon}</div>
+                     <h3 className="tier-name">{plan.name}</h3>
+                     <div className="tier-pricing">
+                        <span className="p-val">{plan.price}</span>
+                        <span className="p-dur">/month</span>
+                     </div>
+                     <ul className="tier-perks">
+                        {plan.features.map(f => (
+                          <li key={f}><Check size={14} /> {f}</li>
+                        ))}
+                     </ul>
+                     <button 
+                       className={`tier-select-btn ${plan.active ? 'active-tier' : ''}`}
+                       onClick={() => !plan.active && handleUpgrade(plan.name)}
+                       disabled={isProcessing}
+                     >
+                        {plan.active ? 'Active' : isProcessing ? '...' : 'Select Tier'}
+                     </button>
+                  </div>
+                ))}
+             </div>
+             
+             <div className="compare-full-link">
+                <span>View full feature comparison</span>
+                <ArrowRight size={14} />
+             </div>
+
+             {/* Neural Efficiency Matrix - NEW Platinum Enhancement */}
+             <div className="efficiency-matrix-wrapper">
+                <div className="em-card">
+                   <div className="em-main">
+                      <div className="em-title">
+                         <TrendingUp size={18} /> 
+                         <span>Neural Efficiency Matrix</span>
+                      </div>
+                      <div className="em-row">
+                         <div className="em-score">98.4<small>%</small></div>
+                         <p>Your credit utilization is optimized for high-density synthesis.</p>
+                      </div>
+                   </div>
+                   <div className="em-metrics">
+                      <div className="em-stat">
+                         <label>SUCCESS RATE</label>
+                         <span>99.2%</span>
+                      </div>
+                      <div className="em-stat">
+                         <label>COST / RENDER</label>
+                         <span>~420 CR</span>
+                      </div>
+                   </div>
+                </div>
+
+                <div className="em-secondary-card">
+                    <div className="em-mini-header">
+                       <Clock3 size={14} />
+                       <span>Next Cycle Reset</span>
+                    </div>
+                    <div className="reset-timer">24d 12h 05m</div>
+                    <div className="tier-cap-label">PRO TIER LIMITS APPLIED</div>
+                </div>
+             </div>
+
+            {/* Usage Analytics - NEW Enhancement */}
+            <div className="usage-analytics-section">
+               <div className="ua-header">
+                  <h3><Activity size={18} /> Usage Intelligence</h3>
+                  <span>Last 10 Days</span>
+               </div>
+               <div className="ua-bars">
+                  {[40, 70, 45, 90, 65, 30, 85, 55, 95, 20].map((val, i) => (
+                    <div key={i} className="ua-bar-column">
+                       <motion.div 
+                         className="ua-bar-fill"
+                         initial={{ height: 0 }}
+                         animate={{ height: `${val}%` }}
+                         transition={{ delay: i * 0.05, duration: 1 }}
+                       />
+                       <span className="ua-day-label">{i + 1} Apr</span>
+                    </div>
+                  ))}
+               </div>
+            </div>
+
+            {/* Bottom Top Up Section Integrated */}
+            <section className="top-up-integrated">
+               <div className="tu-info">
+                  <div className="tu-title-row">
+                     <h3>Top Up Credits</h3>
+                     <div className="auto-refill-toggle">
+                        <label className="aura-switch">
+                           <input type="checkbox" />
+                           <span className="aura-slider"></span>
+                        </label>
+                        <span>Auto-Refill</span>
+                     </div>
+                  </div>
+                  <p>Purchase additional compute credits for your AI generations.</p>
+               </div>
+               <div className="tu-actions">
+                  <div className="tu-amount-row">
+                     {[1000, 5000, 10000, 50000].map(amt => (
+                       <button 
+                         key={amt}
+                         className={`tu-amt-btn ${topUpAmount === amt ? 'active' : ''}`}
+                         onClick={() => setTopUpAmount(amt)}
+                       >
+                         {amt.toLocaleString()}
+                       </button>
+                     ))}
+                  </div>
+                  <button className="tu-purchase-btn" onClick={handleTopUp} disabled={isProcessing}>
+                     {isProcessing ? 'SYNCHRONIZING...' : 'Purchase Now'}
+                  </button>
+               </div>
+            </section>
          </div>
 
-         <div className="b-right">
-            {/* Transaction History */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="history-card-refined"
-            >
-               <div className="h-head">
-                  <History size={20} />
-                  <h3>Transaction History</h3>
+         <aside className="b-sidebar-history">
+            {/* Payment Vault - NEW Enhancement */}
+            <div className="payment-vault-card">
+               <div className="pv-header">
+                  <CreditCard size={18} />
+                  <span>Payment Vault</span>
                </div>
-               <div className="h-list">
-                  {billingData?.history?.length > 0 ? (
-                    billingData.history.map((tx, i) => (
-                      <motion.div 
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.05 }}
-                        key={i} 
-                        className="tx-item-refined"
-                      >
-                         <div className={`tx-icon ${tx.amount > 0 ? 'up' : 'down'}`}>
-                            {tx.amount > 0 ? <Plus size={14} /> : <Zap size={14} />}
-                         </div>
-                         <div className="tx-info">
-                            <strong>{tx.type} {tx.tool ? `(${tx.tool})` : ''}</strong>
-                            <span>{tx.date}</span>
-                         </div>
-                         <div className={`tx-amount ${tx.amount > 0 ? 'pos' : 'neg'}`}>
-                            {tx.amount > 0 ? '+' : ''}{tx.amount}
-                         </div>
-                      </motion.div>
-                    ))
-                  ) : (
-                    <div className="empty-history">No recent transactions.</div>
-                  )}
+               <div className="pv-card-item primary">
+                  <div className="card-brand">VISA</div>
+                  <div className="card-info">
+                     <span>•••• 4242</span>
+                     <small>Expires 12/28</small>
+                  </div>
+                  <div className="card-badge">Default</div>
                </div>
-            </motion.div>
+               <button className="add-method-link"><Plus size={12} /> Add Method</button>
+            </div>
 
-            <div className="security-note">
-               <Shield size={16} />
+            <div className="history-portal-card">
+               <div className="hp-header">
+                  <History size={18} />
+                  <span>Transaction History</span>
+               </div>
+                <div className="hp-body">
+                   <div className="hp-list">
+                      {[
+                        { date: 'Mar 15, 2026', amt: '$49.00', status: 'Paid' },
+                        { date: 'Feb 15, 2026', amt: '$49.00', status: 'Paid' },
+                        { date: 'Jan 15, 2026', amt: '$12.50', status: 'Paid' }
+                      ].map((inv, idx) => (
+                        <div key={idx} className="hp-invoice-item">
+                           <div className="inv-info">
+                              <span className="inv-date">{inv.date}</span>
+                              <span className="inv-amt">{inv.amt}</span>
+                           </div>
+                           <button className="inv-download-btn" title="Download PDF">
+                              <Download size={14} />
+                           </button>
+                        </div>
+                      ))}
+                   </div>
+                </div>
+            </div>
+
+            <div className="b-security-disclaimer">
+               <Shield size={14} />
                <span>Secure payments via Stripe. End-to-end encrypted.</span>
             </div>
-         </div>
+         </aside>
       </div>
 
-      <AnimatePresence>
-         {showTopUp && (
-           <motion.div 
-             className="modal-overlay"
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             exit={{ opacity: 0 }}
-           >
-              <motion.div 
-                className="modal-box premium-card"
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-              >
-                 <h2>Top Up Credits</h2>
-                 <p>Purchase additional compute credits for your AI generations.</p>
-                 
-                 <div className="amount-grid">
-                    {[1000, 5000, 10000, 50000].map(amt => (
-                      <button 
-                        key={amt}
-                        className={`amt-btn ${topUpAmount === amt ? 'active' : ''}`}
-                        onClick={() => setTopUpAmount(amt)}
-                      >
-                         {amt.toLocaleString()}
-                      </button>
-                    ))}
-                 </div>
-
-                 <div className="modal-actions">
-                    <button className="secondary-btn" onClick={() => setShowTopUp(false)}>Cancel</button>
-                    <button className="primary-btn" onClick={handleTopUp} disabled={isProcessing}>
-                       {isProcessing ? 'Processing Payment...' : 'Purchase Now'}
-                    </button>
-                 </div>
-              </motion.div>
-           </motion.div>
-         )}
-      </AnimatePresence>
+      {/* Floating Concierge - NEW Enhancement */}
+      <motion.button 
+        className="billing-concierge-btn"
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        whileTap={{ scale: 0.9 }}
+      >
+         <MessageSquare size={20} />
+         <span>Concierge</span>
+      </motion.button>
     </div>
   )
 }
