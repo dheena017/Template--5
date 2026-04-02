@@ -64,7 +64,7 @@ const Profile = () => {
     timezone: 'Asia/Kolkata',
     creator_tier: 'Pro Creator',
     response_time: '~2h',
-    banner_url: 'C:/Users/dheen/.gemini/antigravity/brain/15a5a6da-47ef-4566-bfd9-eaa4db11f606/ai_banner_background_1774537758105.png',
+    banner_url: '',
     github_url: 'https://github.com/dheena-dev',
     portfolio_url: 'https://dheena.tech',
     email: 'dheen@example.com'
@@ -154,7 +154,8 @@ const Profile = () => {
         github_url: profileDraft.github_url,
         portfolio_url: profileDraft.portfolio_url,
         timezone: profileDraft.timezone,
-        status: profile.status
+        status: profile.status,
+        ...(profileDraft.photo ? { photo: profileDraft.photo } : {})
       }
       const updated = await api.updateProfile(payload)
       if (updated) {
