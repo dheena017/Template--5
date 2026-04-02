@@ -25,6 +25,10 @@ export const StudioDashboard = () => <GenericDashboard type="studio" />
 export const FilesDashboard = () => <GenericDashboard type="files" />
 export const ResourcesDashboard = () => <GenericDashboard type="resources" />
 
+// Synthesis Production Dashboards
+export const TextToVideoDashboard = () => <GenericDashboard type="text-to-video" />
+export const ImageToVideoDashboard = () => <GenericDashboard type="image-to-video" />
+
 // Specialized PDF Dashboards
 export const PDFOrganizeDashboard = OrganizePDFDashboard
 export const PDFOptimizeDashboard = OptimizePDFDashboard
