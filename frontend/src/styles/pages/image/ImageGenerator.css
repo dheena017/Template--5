@@ -4,6 +4,7 @@
   height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
+  padding-top: 10rem;
 }
 
 .gen-utility-bar {
