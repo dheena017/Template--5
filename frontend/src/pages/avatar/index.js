@@ -1,7 +1,6 @@
 export { default as Apps } from './Apps'
 export { default as AvatarCreator } from './AvatarCreator'
 export { default as AvatarTemplates } from './AvatarTemplates'
-export { default as AvatarVideosHome } from './AvatarVideosHome'
 export { default as Avatars } from './Avatars'
 export { default as BrandSystem } from './BrandSystem'
 export { default as ProjectAvatar } from './Project'
