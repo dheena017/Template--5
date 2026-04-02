@@ -1,0 +1,77 @@
+/* Image-to-Video Dashboard - Specialized Production Aesthetic */
+
+.dashboard-image-to-video {
+  --accent-primary: #c026d3;
+  --accent-secondary: #7c3aed;
+  --accent-glow: rgba(192, 38, 211, 0.15);
+}
+
+.dashboard-image-to-video::after {
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+}
+
+/* Unique Header Polish */
+.dashboard-image-to-video .welcome-section h1 {
+  background: linear-gradient(180deg, #fff 0%, #f5d0fe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Telemetry Card - Specialized for Diffusion */
+.dashboard-image-to-video .telemetry-card {
+  border: 1px solid rgba(192, 38, 211, 0.3) !important;
+  background: linear-gradient(135deg, rgba(192, 38, 211, 0.05) 0%, rgba(15, 17, 26, 0.4) 100%) !important;
+}
+
+.dashboard-image-to-video .load-bar-fill {
+  background: linear-gradient(90deg, #c026d3, #7c3aed);
+  box-shadow: 0 0 20px rgba(192, 38, 211, 0.5);
+}
+
+/* Sample Cards - Motion Design Refinement */
+.dashboard-image-to-video .sample-card-v4:hover {
+  border-color: #c026d3;
+  box-shadow: 0 40px 100px -20px rgba(192, 38, 211, 0.2);
+}
+
+.dashboard-image-to-video .sample-action {
+  color: #f5d0fe;
+}
+
+/* Table Enhancements */
+.dashboard-image-to-video .aura-table-glass tbody tr:hover td {
+  background: rgba(192, 38, 211, 0.03);
+}
+
+.dashboard-image-to-video .status-pill-v4.completed {
+  background: rgba(192, 38, 211, 0.1);
+  color: #f5d0fe;
+  border: 1px solid rgba(192, 38, 211, 0.2);
+}
+
+/* Kinetic Grid Polish */
+.dashboard-image-to-video .portal-tool-card-v3 {
+  border-color: rgba(192, 38, 211, 0.1) !important;
+}
+
+.dashboard-image-to-video .portal-tool-card-v3:hover {
+  border-color: rgba(192, 38, 211, 0.4) !important;
+  background: rgba(192, 38, 211, 0.02) !important;
+}
+
+/* Leveling the space - Section Transitions */
+.dashboard-image-to-video .samples-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(192, 38, 211, 0.02) 50%, transparent 100%);
+  border-radius: 40px;
+  position: relative;
+}
+
+.dashboard-image-to-video .section-header {
+  border-bottom: 1px solid rgba(192, 38, 211, 0.1);
+}
+
+.dashboard-image-to-video .section-tag {
+  color: #c026d3;
+  opacity: 0.8;
+}
