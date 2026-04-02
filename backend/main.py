@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from backend.api.routes import pdf, assets, profile, ebook, video
+from backend.api.routes import pdf, assets, profile, ebook, video, billing, faq_routes, image, ollama
 from backend.api.services import analytics_service
 from backend.init_db import init_db
 from backend.core.db import get_db
@@ -36,7 +36,12 @@ app = FastAPI(
 )
 
 # 1. CORS CONFIGURATION
-origins = ["*"]
+origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -51,6 +56,17 @@ async def startup_event():
     """Ensure Aura Engine architecture is provisioned on boot."""
     print("Aura Platform Engine: Running system integrity check and database provisioning...")
     init_db()
+    # Trim client error log to last 500 entries to prevent unbounded growth
+    report_file = Path(__file__).parent / "client_error_reports.jsonl"
+    if report_file.exists():
+        try:
+            lines = report_file.read_text(encoding="utf-8").splitlines()
+            if len(lines) > 500:
+                trimmed = lines[-500:]
+                report_file.write_text("\n".join(trimmed) + "\n", encoding="utf-8")
+                print(f"[Startup] Trimmed error log from {len(lines)} to 500 entries.")
+        except Exception as e:
+            print(f"[Startup] Error log trim failed: {e}")
 
 # 3. FEATURE ROUTES
 app.include_router(pdf.router)
@@ -58,6 +74,10 @@ app.include_router(assets.router)
 app.include_router(profile.router)
 app.include_router(ebook.router)
 app.include_router(video.router)
+app.include_router(billing.router)
+app.include_router(faq_routes.router)
+app.include_router(image.router)
+app.include_router(ollama.router)
 
 
 class ClientErrorReport(BaseModel):
