@@ -1,12 +1,15 @@
 .error-fallback-container {
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   width: 100vw;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding: 2rem 1rem;
   background: radial-gradient(circle at center, #1a1b26 0%, #0a0b10 100%);
   color: #fff;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -49,6 +52,7 @@
   border-radius: 32px;
   max-width: 580px;
   width: 90%;
+  margin: auto;
   position: relative;
   z-index: 20;
   box-shadow: 
@@ -341,8 +345,46 @@
 }
 
 @media (max-width: 650px) {
-  .error-card { padding: 3rem 2rem; border-radius: 30px; }
-  .error-card h1 { font-size: 2rem; }
+  .error-fallback-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .error-card { padding: 2.2rem 1.35rem; border-radius: 26px; width: 100%; }
+  .error-card h1 { font-size: 1.7rem; letter-spacing: -1px; }
+  .error-card p { font-size: 1rem; margin-bottom: 2rem; }
+  .error-summary-box,
+  .tech-details-v2,
+  .likely-cause-panel,
+  .primary-source-panel,
+  .diagnostic-panel {
+    padding: 0.8rem 0.85rem;
+    margin-bottom: 0.9rem;
+  }
+  .error-summary-row,
+  .tech-row {
+    gap: 0.35rem;
+  }
+  .tech-row {
+    font-size: 0.72rem;
+  }
+  .likely-cause-panel li {
+    font-size: 0.72rem;
+  }
+  .primary-source-panel code,
+  .diagnostic-panel pre {
+    font-size: 0.68rem;
+  }
+  .diagnostic-panel pre {
+    max-height: 110px;
+  }
+  .error-actions {
+    gap: 0.75rem;
+  }
+  .recovery-btn,
+  .restart-btn {
+    padding: 0.9rem 1.1rem;
+    font-size: 0.95rem;
+  }
   .error-summary-row { grid-template-columns: 1fr; }
   .diagnostic-tools { flex-direction: column; }
   .error-actions { flex-direction: column; width: 100%; }
