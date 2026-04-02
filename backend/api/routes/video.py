@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException, BackgroundTasks
 from typing import List, Optional, Any, Dict
-from ..services import analytics_service
+from ..services import analytics_service, assets_service
 import asyncio
 import time
 import uuid
@@ -184,6 +184,13 @@ async def run_mock_generation(job):
     job.output_source = "mock"
     job.status = "Completed"
     job.progress = 100
+    assets_service.register_ai_asset(
+        name=f"MockVideo_{job.job_id[:8]}.mp4",
+        type="video",
+        url=job.url,
+        is_generated=True,
+        tags=["Mock", "Proxy", job.mode]
+    )
 
 async def run_replicate_generation(job: VideoJob, replicate_token: str):
     headers = {
@@ -274,6 +281,13 @@ async def run_replicate_generation(job: VideoJob, replicate_token: str):
                 job.status = "Completed"
                 job.progress = 100
                 logger.info("[VideoEngine] provider=replicate event=completed job_id=%s prediction_id=%s", job.job_id, predict_id)
+                assets_service.register_ai_asset(
+                    name=f"Replicate_{job.job_id[:8]}.mp4",
+                    type="video",
+                    url=job.url,
+                    is_generated=True,
+                    tags=["AI Gen", "Replicate", job.mode]
+                )
                 break
             if p_status in ["failed", "canceled"]:
                 raise Exception(f"Cloud generation {p_status}: {p_data.get('error')}")
@@ -333,6 +347,13 @@ async def run_luma_generation(job: VideoJob, luma_api_key: str):
                 job.status = "Completed"
                 job.progress = 100
                 logger.info("[VideoEngine] provider=luma event=completed job_id=%s generation_id=%s", job.job_id, predict_id)
+                assets_service.register_ai_asset(
+                    name=f"Luma_{job.job_id[:8]}.mp4",
+                    type="video",
+                    url=job.url,
+                    is_generated=True,
+                    tags=["AI Gen", "Luma", job.mode]
+                )
                 break
 
             if p_status in ["failed", "canceled", "error"]:
