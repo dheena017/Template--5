@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { api, logger } from '../../services/api'
 import CreditErrorMessage from '../../components/CreditErrorMessage'
+import PromptBar from '../../components/common/PromptBar/PromptBar'
 import '../../styles/pages/image/ImageGenerator.css'
 
 const ImageGenerator = () => {
@@ -309,29 +310,18 @@ const ImageGenerator = () => {
             </div>
 
             <div className="field-group">
-              <label>Prompt</label>
-              <textarea
-                placeholder="Type your prompt to create assets for your video..."
-                className="asset-prompt-input"
-                maxLength={1000}
-                value={promptText}
-                onChange={(e) => setPromptText(e.target.value)}
-              />
-              <div className="prompt-meta">{promptText.length} / 1000</div>
+               <div className="prompt-commander-placeholder">
+                  <p className="tiny text-slate-500 uppercase font-black tracking-widest text-center py-5">
+                    Command the Aura Image Engines via the floating dock below
+                  </p>
+               </div>
             </div>
 
             <div className="usage-left">You have {usesRemaining} model uses remaining</div>
 
             <CreditErrorMessage error={generateState === 'error' ? statusMessage : null} />
-
-            <button
-              className={`generate-asset-btn ${generateState === 'loading' ? 'loading' : ''}`}
-              onClick={handleGenerateAsset}
-              disabled={!canGenerate}
-            >
-              <span>{generateState === 'loading' ? 'Generating...' : 'Generate Asset'}</span>
-              <div className="cost-badge"><Zap size={12} /> {activeGenerationCost}</div>
-            </button>
+            
+            <div className="spacer-v4 py-4"></div>
 
             <div className="recent-outputs">
               <h3>Recent outputs</h3>
@@ -358,6 +348,16 @@ const ImageGenerator = () => {
           </div>
         </main>
       </div>
+
+      {/* Global Semantic Prompt Bar */}
+      <PromptBar 
+        placeholder="Type your prompt to create images..."
+        onExecute={(val) => {
+          setPromptText(val);
+          handleGenerateAsset();
+        }}
+        isProcessing={generateState === 'loading'}
+      />
     </div>
   )
 }
