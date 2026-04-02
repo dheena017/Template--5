@@ -21,9 +21,9 @@ import '../../styles/pages/avatar/AvatarDashboard.css';
 const AVATAR_TOOLS = [
   {
     id: 'avatar-creator',
-    title: 'Avatar Creator',
+    title: 'Aura Persona Engine',
     category: 'DIGITAL IDENTITY',
-    desc: 'Create photorealistic talking avatars for your project',
+    desc: 'Synthesize photorealistic autonomous talking avatars via neural anchors.',
     icon: <User size={18} />,
     image: 'https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=800',
     path: 'avatar-creator',
@@ -31,9 +31,9 @@ const AVATAR_TOOLS = [
   },
   {
     id: 'face-swap',
-    title: 'Professional Face Swap',
+    title: 'Identity Sync Hub',
     category: 'IMAGE SYNTHESIS',
-    desc: 'Seamlessly shift identities in images and videos',
+    desc: 'Cinematic-grade neural re-skinning and face-swap studio.',
     icon: <Layers size={18} />,
     image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=800',
     path: 'face-swap',
