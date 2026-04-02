@@ -35,13 +35,42 @@ Aura is built as a decoupled full-stack application, ensuring high availability 
 
 ### Launch Options
 
-#### **Option A: One-Step Launch (Recommended)**
-Run both frontend and backend simultaneously using the integrated launcher:
+#### **Option A: PowerShell Wrapper (Recommended for Windows)**
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/dev.ps1
+```
+This automatically cleans problematic environment variables and provides helpful flags like `-VerboseLogs`, `-DryRun`, `-Quiet`, and more.
+
+#### **Option B: One-Step JavaScript Launcher**
 ```bash
 node scripts/start-full.js
 ```
+Start backend + frontend with default behavior and automatic health checks.
 
-#### **Option B: Manual Service Launch**
+For all launcher flags, environment variables, minimum timeout values, and troubleshooting, see [docs/START_FULL_COMMANDS.md](docs/START_FULL_COMMANDS.md).
+
+For the shortest daily workflow, see [docs/RUNBOOK.md](docs/RUNBOOK.md).
+
+#### **Option B: One-Step JavaScript Launcher**
+```bash
+node scripts/start-full.js
+```
+Start backend + frontend with default behavior and automatic health checks.
+
+For all launcher flags, environment variables, minimum timeout values, and troubleshooting, see [docs/START_FULL_COMMANDS.md](docs/START_FULL_COMMANDS.md).
+
+### Real-Time Monitoring
+
+While services are running, use the admin CLI to monitor status and view logs:
+
+```bash
+node scripts/admin.js status       # Backend health and resources
+node scripts/admin.js errors       # Recent error reports
+node scripts/admin.js logs         # Backend logs
+node scripts/admin.js stats        # Processing statistics
+```
+
+#### **Option C: Manual Service Launch**
 **1. Start Backend (from root):**
 ```bash
 ./venv/bin/python -m uvicorn backend.main:app --reload --port 8000
@@ -58,11 +87,49 @@ npm run dev
 
 ---
 
-## 📅 Platform Roadmap
+## � Observability & Monitoring
+
+### Error Reporting Dashboard
+The platform automatically captures frontend runtime errors and makes them available for debugging:
+
+**View Recent Client Errors:**
+```bash
+curl http://127.0.0.1:8000/api/client-errors?limit=20
+```
+
+**Filter by Error Type:**
+```bash
+curl "http://127.0.0.1:8000/api/client-errors?limit=10&filter_error=TypeError"
+```
+
+Errors include full stack traces, component context, browser info, and route information for rapid triage.
+
+### System Health Endpoints
+- **Backend Health:** `GET /api/health`
+- **System Metrics:** `GET /api/system/pulse` (CPU, memory, uptime)
+- **Platform Stats:** `GET /api/stats` (processing metrics)
+- **Live API Docs:** `GET /docs` (Swagger UI)
+
+---
 - [x] **v2.0**: Migrate to FastAPI & Vite 6 (Completed)
 - [x] **v2.1**: Standardize UI with Unified Tool Layouts (Completed)
 - [ ] **v2.2**: Integrate Advanced Task Queuing (Celery/Reddis)
 - [ ] **v2.3**: Multi-user Workspace Management
+
+---
+
+## 🛠️ Developer Productivity
+
+Aura includes specialized tools to maintain high code quality and clean project history:
+
+### 🤖 AI Git Agent
+Automate your workflow with **Atomic Commits**—committing every file individually with a unique, AI-generated message.
+```bash
+python scripts/git_agent.py
+```
+*Requires [Ollama](https://ollama.com) + `deepseek-coder`.*
+
+See [docs/AI_GIT_AGENT.md](docs/AI_GIT_AGENT.md) for full setup instructions.
 
 ---
 
