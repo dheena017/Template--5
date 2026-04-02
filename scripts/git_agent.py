@@ -9,7 +9,7 @@ from typing import List, Optional
 # Set this to your LLM API service (e.g., openai, ollama, anthropic)
 # For this example, we'll assume a local Ollama or OpenAI-like interface.
 LLM_API_URL = "http://localhost:11434/api/generate"  # Default Ollama URL
-LLM_MODEL = "llama3" # Or "gpt-4", "deepseek-coder", etc.
+LLM_MODEL = "deepseek-coder" # Expert model for code analysis
 
 def run_command(command: List[str], cwd: Optional[str] = None) -> str:
     """Helper to run shell commands and return output."""
