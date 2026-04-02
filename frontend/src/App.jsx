@@ -128,6 +128,7 @@ const Pages = {
   API: React.lazy(() => import('./pages/developers/API')),
   Billing: React.lazy(() => import('./pages/about-us/Billing')),
   Docs: React.lazy(() => import('./pages/about-us/Docs')),
+  HelpCenter: React.lazy(() => import('./pages/support/HelpCenter')),
   FAQSupport: React.lazy(() => import('./pages/about-us/FAQSupport')),
   Feedback: React.lazy(() => import('./pages/about-us/Feedback')),
   Notifications: React.lazy(() => import('./pages/about-us/Notifications')),
@@ -155,6 +156,8 @@ const Pages = {
   PDFIntelligenceDashboardMain: React.lazy(() => import('./pages/pdf/dashboards/PDFIntelligenceDashboard')),
   PDFEditDashboard: React.lazy(() => import('./pages/pdf/dashboards/EditPDFDashboard')),
   PDFSecurityDashboardMain: React.lazy(() => import('./pages/pdf/dashboards/PDFSecurityDashboard')),
+  // ── Additional PDF tools ──
+  AllConversions: React.lazy(() => import('./pages/pdf/AllConversions')),
 };
 
 
@@ -175,6 +178,16 @@ function App() {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
   const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  // Pre-declare transforms at component level (hooks cannot be called inside JSX)
+  const orbX1 = useTransform(springX, x => x * 0.5);
+  const orbY1 = useTransform(springY, y => y * 0.5);
+  const orbX2 = useTransform(springX, x => -x * 0.8);
+  const orbY2 = useTransform(springY, y => -y * 0.8);
+  const orbX3 = useTransform(springX, x => x * 1.2);
+  const orbY3 = useTransform(springY, y => -y * 1.2);
+  const orbX4 = useTransform(springX, x => -x * 1.5);
+  const orbY4 = useTransform(springY, y => y * 1.5);
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -204,7 +217,7 @@ function App() {
 
   useEffect(() => {
     const checkMobile = () => {
-      if (window.innerWidth <= 768) setIsSidebarOpen(true);
+      if (window.innerWidth <= 768) setIsSidebarOpen(false); // collapse sidebar on mobile
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -243,6 +256,7 @@ function App() {
       }
       if (e.key === 'Escape') {
         setShowQuickSearch(false);
+        setIsDeepFocus(false); // also exits Deep Focus mode
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -321,7 +335,6 @@ function App() {
       case 'history': return <Pages.History />;
       case 'instant-highlights': return <Pages.InstantHighlights />;
       case 'video-dubbing': return <Pages.VideoDubbing />;
-      case 'Text-to-Video': 
       case 'text-to-video': return <Pages.TextToVideoGenerator />;
       case 'text-to-video-dashboard': return <Pages.TextToVideoDashboard />;
       case 'image-to-video-dashboard': return <Pages.ImageToVideoDashboard />;
@@ -332,7 +345,6 @@ function App() {
       case 'record-to-video': return <Pages.RecordToVideo />;
       case 'blank-video': return <Pages.BlankCanvas />;
       case 'ComingSoon-Translate': return <Pages.ComingSoon title="Video Translate" />;
-      case 'video_dashboard':
       case 'video-dashboard': return <Pages.VideoDashboard onTabChange={handleTabChange} />;
       case 'artists-home': return <Pages.ArtistsHome />;
 
@@ -371,6 +383,7 @@ function App() {
       // About & Resources
       case 'billing': return <Pages.Billing />;
       case 'docs': return <Pages.Docs />;
+      case 'help-center': return <Pages.HelpCenter />;
       case 'faq': return <Pages.FAQSupport />;
       case 'feedback': return <Pages.Feedback />;
       case 'notifications': return <Pages.Notifications />;
@@ -449,9 +462,7 @@ function App() {
       case 'excel-to-pdf': return <ConvertToPDF.ExcelToPDF />;
       case 'jpg-to-pdf': return <ConvertToPDF.JPGToPDF />;
       case 'cad-to-pdf': return <ConvertToPDF.CADToPDF />;
-      case 'epub-to-pdf': return <ConvertToPDF.EPUBToPDF />;
-      case 'mobi-to-pdf': return <ConvertToPDF.MobiToPDF />;
-      case 'azw3-to-pdf': return <ConvertToPDF.AZW3ToPDF />;
+      // epub/mobi/azw3-to-pdf handled below in eBook Conversions section
       case 'hwp-to-pdf': return <ConvertToPDF.HWPToPDF />;
       case 'xps-to-pdf': return <ConvertToPDF.XPSToPDF />;
       case 'cbr-to-pdf': return <ConvertToPDF.CBRToPDF />;
@@ -484,6 +495,8 @@ function App() {
         return <Pages.PDFConvertFromDashboard />;
       case 'pdf-intelligence':
         return <Pages.PDFIntelligenceDashboardMain />;
+      case 'all-conversions':
+        return <Pages.AllConversions />;
       // Edit PDF Tools
       case 'edit': return <EditPDFTools.EditPDFPage />;
       case 'rotate': return <EditPDFTools.RotatePDF />;
@@ -521,6 +534,7 @@ function App() {
       case 'word-compress': return <OfficeTools.WordCompress />;
       case 'ppt-compress': return <OfficeTools.PptCompress />;
       case 'img-compress': return <OfficeTools.ImgCompress />;
+      case 'video-podcast': return <Pages.VideoPodcast />;
 
       default:
         return (
@@ -559,22 +573,10 @@ function App() {
             <div className="premium-main-bg"></div>
             {auraBackground && (
               <>
-                <motion.div
-                  className="aura-orb orb-1"
-                  style={{ x: useTransform(springX, x => x * 0.5), y: useTransform(springY, y => y * 0.5) }}
-                />
-                <motion.div
-                  className="aura-orb orb-2"
-                  style={{ x: useTransform(springX, x => -x * 0.8), y: useTransform(springY, y => -y * 0.8) }}
-                />
-                <motion.div
-                  className="aura-orb orb-3"
-                  style={{ x: useTransform(springX, x => x * 1.2), y: useTransform(springY, y => -y * 1.2) }}
-                />
-                <motion.div
-                  className="aura-orb orb-4"
-                  style={{ x: useTransform(springX, x => -x * 1.5), y: useTransform(springY, y => y * 1.5) }}
-                />
+                <motion.div className="aura-orb orb-1" style={{ x: orbX1, y: orbY1 }} />
+                <motion.div className="aura-orb orb-2" style={{ x: orbX2, y: orbY2 }} />
+                <motion.div className="aura-orb orb-3" style={{ x: orbX3, y: orbY3 }} />
+                <motion.div className="aura-orb orb-4" style={{ x: orbX4, y: orbY4 }} />
               </>
             )}
           </div>
