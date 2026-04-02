@@ -40,6 +40,28 @@ const Register = () => {
     }
   }
 
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateXValue = ((y - centerY) / centerY) * -10;
+    const rotateYValue = ((x - centerX) / centerX) * 10;
+
+    setRotateX(rotateXValue);
+    setRotateY(rotateYValue);
+  };
+
+  const handleMouseLeave = () => {
+    setRotateX(0);
+    setRotateY(0);
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-background">
@@ -50,12 +72,20 @@ const Register = () => {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+            perspective: 1000,
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d"
+        }}
         className="auth-card premium-card"
       >
-        <div className="auth-header">
-           <div className="brand-badge"><Sparkles size={24} /></div>
-           <h1>Create Your Account</h1>
-           <p>Start your 7-day free trial on the Pro Plan</p>
+        <div className="auth-header" style={{ transformStyle: "preserve-3d" }}>
+           <div className="brand-badge" style={{ translateZ: 80 }}><Sparkles size={24} /></div>
+           <h1 style={{ translateZ: 60 }}>Create Your Account</h1>
+           <p style={{ translateZ: 40 }}>Start your 7-day free trial on the Pro Plan</p>
         </div>
 
         <form className="auth-form" onSubmit={handleRegister}>
