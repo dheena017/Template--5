@@ -22,7 +22,7 @@ const Navbar = ({ activeTab, onTabChange, onToggle }) => {
     { id: 'studio', icon: <Icons.Studio /> },
     { id: 'flows', icon: <Icons.Flows /> },
     { id: 'files', icon: <Icons.Files /> },
-    { id: 'pdf-select', icon: <Icons.PDF /> },
+    { id: 'pdf-dashboard', icon: <Icons.PDF /> },
     { id: 'generate-images', icon: <Icons.Image /> },
     { id: 'ai-studio', icon: <Icons.Avatar /> },
     { id: 'social-media-home', icon: <Icons.Social /> },
