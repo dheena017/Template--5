@@ -357,3 +357,170 @@
   background: var(--primary); border: none; border-radius: 8px;
   color: var(--text-main); font-weight: 800;
 }
+
+/* ── User Preferences & Data panel ── */
+.prefs-data-card {
+  margin-top: 1rem;
+}
+
+.pref-refresh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  color: var(--text-muted);
+  width: 26px; height: 26px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.pref-refresh-btn:hover {
+  background: rgba(255,255,255,0.09);
+  color: var(--accent-primary);
+  transform: rotate(180deg);
+}
+
+.prefs-empty {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 1.2rem 0;
+}
+
+.prefs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.pref-item {
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.pref-item:hover {
+  border-color: rgba(255,255,255,0.12);
+}
+
+.pref-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  user-select: none;
+  gap: 0.5rem;
+}
+
+.pref-key {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  font-family: 'Fira Code', monospace;
+  letter-spacing: 0.01em;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pref-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.pref-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.15);
+  border-radius: 5px;
+  color: #ef4444;
+  width: 22px; height: 22px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.pref-clear-btn:hover {
+  background: rgba(239,68,68,0.2);
+  border-color: rgba(239,68,68,0.4);
+  transform: scale(1.1);
+}
+
+.pref-value {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  background: rgba(0,0,0,0.25);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 0.6rem 0.85rem;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: 'Fira Code', monospace;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.prefs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.prefs-count {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.clear-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.4rem 0.9rem;
+  border-radius: 7px;
+  border: 1px solid rgba(239,68,68,0.25);
+  background: rgba(239,68,68,0.06);
+  color: #ff5e5e;
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+.clear-all-btn:hover {
+  background: rgba(239,68,68,0.14);
+  border-color: rgba(239,68,68,0.5);
+  transform: translateY(-1px);
+}
+.clear-all-btn.confirm {
+  background: rgba(239,68,68,0.2);
+  border-color: rgba(239,68,68,0.6);
+  color: #ff3e3e;
+  animation: pulse-red 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-red {
+  from { box-shadow: 0 0 0 rgba(239,68,68,0); }
+  to   { box-shadow: 0 0 10px rgba(239,68,68,0.4); }
+}
