@@ -15,11 +15,18 @@ export const SIDEBAR_CATEGORIES = [
     name: 'Video AI',
     icon: React.createElement(Film, { size: 18 }),
     links: [
-      { name: 'Video Hub', path: '/video-dashboard', icon: React.createElement(Film, { size: 16 }) },
+      { name: 'Video Dashboard', path: '/video-dashboard', icon: React.createElement(Film, { size: 16 }) },
       { name: 'AI Studio', path: '/ai-studio', icon: React.createElement(Clapperboard, { size: 16 }) },
-      { name: 'Text-to-Video', path: '/video-ai', icon: React.createElement(Video, { size: 16 }) },
+      { name: 'Video Translate', path: '/ComingSoon-Translate', icon: React.createElement(Languages, { size: 16 }) },
       { name: 'Video Agent', path: '/video-agent', icon: React.createElement(Bot, { size: 16 }) },
-      { name: 'PPT to Video', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 16 }) }
+      { name: 'Text-to-Video', path: '/text-to-video-dashboard', icon: React.createElement(Video, { size: 16 }) },
+      { name: 'Image-to-Video', path: '/image-to-video-dashboard', icon: React.createElement(Video, { size: 16 }) },
+      { name: 'Script to video', path: '/script-to-video', icon: React.createElement(FileText, { size: 16 }) },
+      { name: 'Blog to video', path: '/blog-to-video', icon: React.createElement(Globe, { size: 16 }) },
+      { name: 'PPT to video', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 16 }) },
+      { name: 'Auto edit video', path: '/auto-edit', icon: React.createElement(Scissors, { size: 16 }) },
+      { name: 'Record to video', path: '/record-to-video', icon: React.createElement(Mic, { size: 16 }) },
+      { name: 'Empty', path: '/blank-video', icon: React.createElement(Box, { size: 16 }) }
     ]
   },
   {
