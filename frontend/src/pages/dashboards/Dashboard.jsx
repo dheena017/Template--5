@@ -25,6 +25,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import '../../styles/pages/dashboards/DashboardIndex.css'
 import { PrimaryButton } from '../../components/buttons'
 import SearchBar from '../../components/common/SearchBar/SearchBar'
+import api from '../../services/api'
 
 const TOOL_SUITES = [
   {
@@ -181,6 +182,26 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = React.useState('')
   const [activeCategory, setActiveCategory] = React.useState('all')
   const [currentTime, setCurrentTime] = React.useState(new Date())
+  const [systemPulse, setSystemPulse] = React.useState({ cpu_usage: 24, memory_usage: 45, active_tasks: 0 })
+  const [recentActivities, setRecentActivities] = React.useState([])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [pulse, activities] = await Promise.all([
+          api.getSystemPulse(),
+          api.getActivities()
+        ])
+        setSystemPulse(pulse)
+        setRecentActivities(activities)
+      } catch (e) {
+        console.error('[Dashboard] Data fetch failed:', e)
+      }
+    }
+    fetchData()
+    const interval = setInterval(fetchData, 10000) // 10s
+    return () => clearInterval(interval)
+  }, [])
 
   // Hero Parallax Motion Values
   const heroMouseX = useMotionValue(0);
@@ -331,23 +352,23 @@ const Dashboard = () => {
           </div>
           
           <div className="resume-grid">
-             {[
+             {(recentActivities.length > 0 ? recentActivities.slice(0, 3) : [
                { id: 'merge', label: 'Merge Documents', path: '/merge', icon: Combine, color: '#ef4444', lastUsed: '2m ago', config: '4 Files' },
                { id: 'image', label: 'Image Studio', path: '/image-dashboard', icon: Palette, color: '#db2777', lastUsed: '15m ago', config: 'Flux 1.1 Pro' },
                { id: 'pdf-dashboard', label: 'PDF Master', path: '/pdf-dashboard', icon: FileText, color: '#ec4899', lastUsed: '1h ago', config: 'Active System' }
-             ].map(tool => (
+             ]).map((tool, idx) => (
                <motion.button 
-                 key={tool.id} 
+                 key={tool.id || idx} 
                  className="resume-pill-card"
                  whileHover={{ x: 5, backgroundColor: 'rgba(255,255,255,0.05)' }}
-                 onClick={() => navigate(tool.path)}
+                 onClick={() => navigate(tool.path || '/dashboard')}
                >
-                 <div className="pill-icon" style={{ backgroundColor: `${tool.color}15`, color: tool.color }}>
-                   <tool.icon size={20} />
+                 <div className="pill-icon" style={{ backgroundColor: `${tool.color || '#8b5cf6'}15`, color: tool.color || '#8b5cf6' }}>
+                   {tool.icon ? <tool.icon size={20} /> : <Sparkles size={20} />}
                  </div>
                  <div className="pill-content">
-                    <span className="pill-title">{tool.label}</span>
-                    <span className="pill-meta">{tool.config} • {tool.lastUsed}</span>
+                    <span className="pill-title">{tool.label || tool.action}</span>
+                    <span className="pill-meta">{tool.config || tool.action_type} • {tool.lastUsed || 'Just now'}</span>
                  </div>
                  <ArrowUpRight size={14} className="pill-arrow" />
                </motion.button>
@@ -413,12 +434,16 @@ const Dashboard = () => {
 
       <motion.footer className="portal-quick-info" variants={itemVariants}>
         <div className="quick-stat">
-          <span className="stat-label">System Load</span>
-          <div className="stat-bar"><div className="stat-fill" style={{ width: '24%' }}></div></div>
+          <span className="stat-label">System Load (CPU)</span>
+          <div className="stat-bar"><div className="stat-fill" style={{ width: `${systemPulse.cpu_usage}%` }}></div></div>
+        </div>
+        <div className="quick-stat">
+          <span className="stat-label">Memory Usage</span>
+          <div className="stat-bar"><div className="stat-fill" style={{ width: `${systemPulse.memory_usage}%`, backgroundColor: '#ec4899' }}></div></div>
         </div>
         <div className="quick-stat">
           <span className="stat-label">Active Processes</span>
-          <span className="stat-value">0 Active</span>
+          <span className="stat-value">{systemPulse.active_tasks} Active</span>
         </div>
         <div className="quick-stat">
           <span className="stat-label">Security</span>
