@@ -8,7 +8,7 @@ import {
   History, Music, Video, Star, Users, CheckCircle2,
   Box, Eye, Layers, Combine, Split,
   Play, Clock, Download, User, Trash2, RotateCw, 
-  Hash, Lock, Unlock, PenTool, EyeOff
+  Hash, Lock, Unlock, PenTool, EyeOff, Scissors
 } from 'lucide-react';
 
 export const DASHBOARD_CONFIG = {
@@ -31,7 +31,7 @@ export const DASHBOARD_CONFIG = {
     ],
     tools: [
       { name: 'Video Hub', desc: 'Central command for all AI video production.', path: '/video-dashboard', icon: React.createElement(Film, { size: 20 }) },
-      { name: 'Text-to-Video', desc: 'Text-to-Video and Image-to-Video generation.', path: '/video-ai', icon: React.createElement(Video, { size: 20 }) },
+      { name: 'Text-to-Video', desc: 'Text-to-Video and Image-to-Video generation.', path: '/Text-to-Video', icon: React.createElement(Video, { size: 20 }) },
       { name: 'AI Studio', desc: 'Powerful studio for automated content creation.', path: '/ai-studio', icon: React.createElement(Clapperboard, { size: 20 }) },
       { name: 'Video Agent', desc: 'Build autonomous agents to execute complex tasks.', path: '/video-agent', icon: React.createElement(Bot, { size: 20 }) },
       { name: 'PPT to Video', desc: 'Convert presentations into narrated avatar videos.', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 20 }) }
@@ -202,7 +202,7 @@ export const DASHBOARD_CONFIG = {
     color: '#ec4899',
     rgb: '236, 72, 153',
     actionText: 'Process New PDF',
-    actionPath: '/pdf-select',
+    actionPath: '/pdf-dashboard',
     icon: React.createElement(Shield, { size: 24 }),
     groupLabel: 'Document Engines',
     badge: 'Enterprise',
@@ -335,7 +335,7 @@ export const DASHBOARD_CONFIG = {
     color: '#e53935',
     rgb: '229, 57, 53',
     actionText: 'Process PDF',
-    actionPath: '/pdf-select',
+    actionPath: '/pdf-dashboard',
     icon: React.createElement(Layers, { size: 24 }),
     groupLabel: 'Organization Tools',
     badge: 'Structure',
@@ -465,6 +465,72 @@ export const DASHBOARD_CONFIG = {
     recentItems: [
         { id: 1, name: 'Bank_Statement.pdf', specs: 'Table data', status: 'Ready' },
         { id: 2, name: 'Research_Paper.pdf', specs: 'Summary', status: 'Processed' }
+    ]
+  },
+  'text-to-video': {
+    title: 'Text Synthesis Hub',
+    subtitle: 'Generate cinematic videos from semantic text prompts.',
+    color: '#8b5cf6',
+    rgb: '139, 92, 246',
+    actionText: 'Synthesize Vision',
+    actionPath: '/text-to-video',
+    icon: React.createElement(Video, { size: 24 }),
+    groupLabel: 'Synthesis Tools',
+    badge: 'Nucleus v4',
+    version: 'v4.2',
+    hasPromptBar: true,
+    showTelemetry: true,
+    promptPlaceholder: 'Manifest your cinematic vision through semantic synthesis...',
+    samples: [
+      { id: 1, title: 'Cyberpunk rainy night', type: 'Text-to-Video', preview: 'https://images.unsplash.com/photo-1605142859862-978be7eba909?auto=format&fit=crop&q=80&w=300' },
+      { id: 2, title: 'Abstract flow 1', type: 'Motion Pattern', preview: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=300' }
+    ],
+    recentHeader: 'Recent Synthesis',
+    recentCols: ['Project', 'Specs', 'Status', 'Actions'],
+    stats: [
+      { label: 'Render Time', value: '45s', sub: 'Optimized', subColor: '#10b981', subIcon: React.createElement(Zap, { size: 12 }) },
+      { label: 'Resolution', value: '4K HDR', sub: 'Cinema', subColor: '#0ea5e9', subIcon: React.createElement(Shield, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Direct Synthesis', desc: 'Convert text directly to video steps.', path: '/text-to-video', icon: React.createElement(Zap, { size: 20 }) },
+      { name: 'Script breakdown', desc: 'Split scripts into production scenes.', path: '/script-to-video', icon: React.createElement(Scissors, { size: 20 }) }
+    ],
+    recentItems: [
+      { id: 1, name: 'Cyberpunk rainy night', specs: 'Cinematic • 24fps', status: 'Completed' },
+      { id: 2, name: 'Abstract flow 1', specs: '4K • 60fps', status: 'Processing' }
+    ]
+  },
+  'image-to-video': {
+    title: 'Visual Design Hub',
+    subtitle: 'Manifest motion from seed images and vision concepts.',
+    color: '#c026d3',
+    rgb: '192, 38, 211',
+    actionText: 'Start Generation',
+    actionPath: '/image-to-video',
+    icon: React.createElement(Palette, { size: 24 }),
+    groupLabel: 'Asset Production',
+    badge: 'Diffusion v3',
+    version: 'v3.0',
+    hasPromptBar: true,
+    showTelemetry: true,
+    promptPlaceholder: 'Define the motion vision for your visual assets...',
+    samples: [
+      { id: 1, title: 'Portrait Shift', type: 'Stable Diffusion', preview: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300' },
+      { id: 2, title: 'Landscape Flow', type: 'Atmos v4', preview: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=300' }
+    ],
+    recentHeader: 'Recent Productions',
+    recentCols: ['Seed Image', 'Specs', 'Status', 'Actions'],
+    stats: [
+      { label: 'Temporal Sync', value: 'High', sub: 'Coherent', subColor: '#10b981', subIcon: React.createElement(Shield, { size: 12 }) },
+      { label: 'Creations', value: '85', sub: 'Active', subColor: '#c026d3', subIcon: React.createElement(Activity, { size: 12 }) }
+    ],
+    tools: [
+      { name: 'Neural Generation', desc: 'High-fidelity image-to-video wizard.', path: '/image-to-video', icon: React.createElement(Zap, { size: 20 }) },
+      { name: 'Asset Library', desc: 'Manage your seed images and renders.', path: '/files', icon: React.createElement(HardDrive, { size: 20 }) }
+    ],
+    recentItems: [
+      { id: 1, name: 'Portrait Shift', specs: 'Stable Diffusion', status: 'Completed' },
+      { id: 2, name: 'Landscape Flow', specs: 'Atmos v4', status: 'Ready' }
     ]
   }
 };
