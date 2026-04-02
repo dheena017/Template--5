@@ -5,14 +5,14 @@
   gap: 1rem;
   height: 72px;
   padding: 0 32px;
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-  border-bottom: 1px solid var(--glass-border);
+  background: rgba(10, 11, 16, 0.5);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(120%);
+  backdrop-filter: blur(40px) saturate(200%) brightness(120%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: sticky;
   top: 0;
-  z-index: 100;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1100;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .toolbar-left {
