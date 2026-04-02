@@ -5,7 +5,7 @@ import {
   Grid, List, Filter, ChevronRight,
   HardDrive, Info, Share2, Plus,
   FileAudio, FileImage, FileVideo, FileText,
-  Clock, Tag, X, CheckCircle2, Sparkles
+  Clock, Tag, X, CheckCircle2, Sparkles, RefreshCw
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { api, resolveAssetUrl } from '../../services/api'
@@ -378,16 +378,6 @@ const Files = () => {
   )
 }
 
-
-const RefreshCw = ({ className, size }) => (
-  <motion.div 
-    animate={{ rotate: 360 }} 
-    transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-    className={className}
-  >
-    <File size={size} /> {/* fallback icon for loading */}
-  </motion.div>
-)
 
 export default Files
 
