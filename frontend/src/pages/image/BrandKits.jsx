@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
-import { 
-  Palette, Plus, Search, 
-  Settings, Type, Image as ImageIcon,
-  CheckCircle2, PlusCircle, Trash2, 
-  ExternalLink, Layers, Copy,
-  Grid2X2, List
+import React, { useEffect, useMemo, useState } from 'react'
+import {
+    Palette, Plus, Search,
+    Settings, Type, Image as ImageIcon,
+    PlusCircle,
+    Layers, Copy,
 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import '../../styles/pages/image/BrandKits.css'
 
 const BrandKits = () => {
-    const [selectedKit, setSelectedKit] = useState(1)
+        const [selectedKit, setSelectedKit] = useState(1)
+        const [kitSearch, setKitSearch] = useState('')
+        const [duplicateEnabled, setDuplicateEnabled] = useState(false)
+        const [copiedHex, setCopiedHex] = useState('')
 
     const brandKits = [
         {
@@ -31,6 +33,33 @@ const BrandKits = () => {
         }
     ]
 
+    const filteredKits = useMemo(() => {
+        const q = kitSearch.trim().toLowerCase()
+        if (!q) return brandKits
+        return brandKits.filter((kit) => (
+            kit.name.toLowerCase().includes(q) ||
+            kit.status.toLowerCase().includes(q)
+        ))
+    }, [kitSearch])
+
+    useEffect(() => {
+        if (!filteredKits.find((k) => k.id === selectedKit)) {
+            setSelectedKit(filteredKits[0]?.id ?? 1)
+        }
+    }, [filteredKits, selectedKit])
+
+    const activeKit = brandKits.find((k) => k.id === selectedKit)
+
+    const copyHex = async (hex) => {
+        try {
+            await navigator.clipboard.writeText(hex)
+            setCopiedHex(hex)
+            window.setTimeout(() => setCopiedHex(''), 1100)
+        } catch {
+            setCopiedHex('')
+        }
+    }
+
     return (
         <div className="brandkits-container">
             <header className="brand-header">
@@ -47,10 +76,21 @@ const BrandKits = () => {
                 <aside className="brand-sidebar">
                     <div className="sidebar-head">
                         <h3>Your Kits</h3>
-                        <button className="icon-btn"><Search size={16} /></button>
+                        <span className="kit-count-chip">{filteredKits.length}</span>
                     </div>
+
+                    <div className="kits-search-wrap">
+                        <Search size={15} />
+                        <input
+                            type="text"
+                            value={kitSearch}
+                            onChange={(e) => setKitSearch(e.target.value)}
+                            placeholder="Search kits..."
+                        />
+                    </div>
+
                     <div className="kits-list">
-                        {brandKits.map(kit => (
+                        {filteredKits.map(kit => (
                             <button 
                                 key={kit.id} 
                                 className={`kit-item ${selectedKit === kit.id ? 'active' : ''}`}
@@ -59,10 +99,13 @@ const BrandKits = () => {
                                 <div className="kit-icon"><Layers size={20} /></div>
                                 <div className="kit-info">
                                     <strong>{kit.name}</strong>
-                                    <span>{kit.status}</span>
+                                    <span>{kit.status} · {kit.lastModified}</span>
                                 </div>
                             </button>
                         ))}
+                        {filteredKits.length === 0 && (
+                            <div className="kits-empty-state">No kits matched your search.</div>
+                        )}
                     </div>
                     <button className="add-kit-btn">
                         <PlusCircle size={18} /> Add Organization
@@ -72,42 +115,53 @@ const BrandKits = () => {
                 <main className="brand-editor glass-card">
                     <div className="editor-head">
                         <div className="editor-title">
-                            <h2>{brandKits.find(k => k.id === selectedKit)?.name}</h2>
-                            <span className="last-sync">Last synced: {brandKits.find(k => k.id === selectedKit)?.lastModified}</span>
+                            <h2>{activeKit?.name}</h2>
+                            <span className="last-sync">Last synced: {activeKit?.lastModified}</span>
                         </div>
                         <div className="editor-actions">
-                            <button className="secondary-btn"><Copy size={16} /> Duplicate</button>
-                            <button className="secondary-btn danger"><Trash2 size={16} /></button>
+                            <label className="duplicate-toggle">
+                                <span>Duplicate</span>
+                                <button
+                                    type="button"
+                                    className={`toggle-switch ${duplicateEnabled ? 'on' : ''}`}
+                                    onClick={() => setDuplicateEnabled((prev) => !prev)}
+                                    aria-label="Toggle duplicate"
+                                >
+                                    <span className="toggle-dot" />
+                                </button>
+                            </label>
                             <button className="primary-btn sm">Save Changes</button>
                         </div>
                     </div>
 
                     <div className="editor-sections">
-                        <section className="editor-block">
+                        <motion.section className="editor-block" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                             <div className="block-head">
                                 <h3><div className="b-icon colors"><Palette size={16} /></div> Color Palette</h3>
                                 <button className="add-point"><Plus size={14} /></button>
                             </div>
                             <div className="colors-grid">
-                                {brandKits.find(k => k.id === selectedKit)?.colors.map((color, i) => (
+                                {activeKit?.colors.map((color, i) => (
                                     <div key={i} className="color-item">
                                         <div className="color-swatch" style={{ background: color }}></div>
                                         <div className="color-hex">
                                            <span>{color}</span>
-                                           <Copy size={12} />
+                                           <button type="button" className="copy-chip" onClick={() => copyHex(color)}>
+                                               {copiedHex === color ? 'Copied' : <Copy size={12} />}
+                                           </button>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        </section>
+                        </motion.section>
 
-                        <section className="editor-block">
+                        <motion.section className="editor-block" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                             <div className="block-head">
                                 <h3><div className="b-icon fonts"><Type size={16} /></div> Typography</h3>
                                 <button className="add-point"><Plus size={14} /></button>
                             </div>
                             <div className="fonts-list">
-                                {brandKits.find(k => k.id === selectedKit)?.fonts.map((font, i) => (
+                                {activeKit?.fonts.map((font, i) => (
                                     <div key={i} className="font-card">
                                         <div className="font-preview" style={{ fontFamily: font }}>AaBbCc</div>
                                         <div className="font-details">
@@ -120,9 +174,9 @@ const BrandKits = () => {
                                     </div>
                                 ))}
                             </div>
-                        </section>
+                        </motion.section>
 
-                        <section className="editor-block">
+                        <motion.section className="editor-block" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                             <div className="block-head">
                                 <h3><div className="b-icon assets"><ImageIcon size={16} /></div> Brand Assets</h3>
                                 <button className="add-point"><Plus size={14} /></button>
@@ -131,13 +185,15 @@ const BrandKits = () => {
                                 <div className="asset-upload-card">
                                     <Plus size={32} />
                                     <span>Upload Logo</span>
+                                    <small>SVG, PNG</small>
                                 </div>
                                 <div className="asset-upload-card">
                                     <Plus size={32} />
                                     <span>Upload Watermark</span>
+                                    <small>PNG with transparency</small>
                                 </div>
                             </div>
-                        </section>
+                        </motion.section>
                     </div>
                 </main>
             </div>
