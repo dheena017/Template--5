@@ -1,0 +1,200 @@
+.video-tool-page {
+  padding: 2.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  min-height: calc(100vh - 120px);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vt-header {
+  margin-bottom: 3.5rem;
+}
+
+.vt-header h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  letter-spacing: -0.03em;
+}
+
+.vt-header h1 svg {
+  color: var(--accent-primary);
+  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
+}
+
+.vt-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.vt-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.vt-upload-card {
+  padding: 5rem 3rem;
+  text-align: center;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  transition: var(--transition-gentle);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.vt-upload-card:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-elevated);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.vt-upload-card svg {
+  color: var(--text-muted);
+  transition: var(--transition-gentle);
+}
+
+.vt-upload-card:hover svg {
+  color: var(--accent-primary);
+  transform: scale(1.1);
+}
+
+.vt-settings-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: 100px;
+  backdrop-filter: blur(10px);
+}
+
+.vt-param-group {
+  margin-bottom: 0.5rem;
+}
+
+.vt-param-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: var(--text-main);
+}
+
+.vt-param-label svg {
+  color: var(--accent-primary);
+  opacity: 0.8;
+}
+
+/* Custom Select/Input styling */
+.vt-settings-panel select, 
+.vt-settings-panel input,
+.vt-settings-panel textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: var(--transition-gentle);
+}
+
+.vt-settings-panel select:focus, 
+.vt-settings-panel input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.vt-btn-primary {
+  width: 100%;
+  padding: 1.4rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #6366f1 100%);
+  color: #fff;
+  font-weight: 800;
+  border: none;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.25);
+  transition: var(--transition-gentle);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+.vt-btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+  filter: brightness(1.1);
+}
+
+.vt-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.vt-preview-placeholder {
+  aspect-ratio: 16/9;
+  background: var(--bg-deep);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  color: var(--text-dim);
+  border: 1px solid var(--border-strong);
+  position: relative;
+  overflow: hidden;
+}
+
+.vt-preview-placeholder::after {
+  content: 'PREVIEW';
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+@media (max-width: 1200px) {
+  .vt-grid {
+    grid-template-columns: 1fr;
+  }
+  .vt-settings-panel {
+    position: static;
+  }
+}
+
