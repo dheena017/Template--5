@@ -174,13 +174,13 @@ class ErrorBoundary extends React.Component {
         };
     }
 
-    reportError = async (errorArg = this.state.error, errorInfoArg = this.state.errorInfo) => {
+    reportError = async (errorArg = this.state.error, errorInfoArg = this.state.errorInfo, pendingStatus = 'Sending') => {
         if (!ERROR_REPORTING_ENABLED) {
             this.setState({ reportStatus: 'Disabled' });
             return;
         }
 
-        this.setState({ reportStatus: 'Sending' });
+        this.setState({ reportStatus: pendingStatus });
         const payload = this.buildDiagnosticPayload(errorArg, errorInfoArg);
 
         try {
@@ -200,8 +200,8 @@ class ErrorBoundary extends React.Component {
         }
     }
 
-    retryReport = () => {
-        void this.reportError(this.state.error, this.state.errorInfo);
+    retryReport = async () => {
+        await this.reportError(this.state.error, this.state.errorInfo, 'Retrying');
     }
 
     copyDiagnostics = async () => {
@@ -328,9 +328,13 @@ class ErrorBoundary extends React.Component {
                                 <Download size={15} />
                                 {downloadStatus}
                             </button>
-                            {reportStatus === 'Failed' && (
-                                <button className="diag-retry-btn" onClick={this.retryReport}>
-                                    Retry Report
+                            {(reportStatus === 'Failed' || reportStatus === 'Retrying') && (
+                                <button
+                                    className="diag-retry-btn"
+                                    onClick={this.retryReport}
+                                    disabled={reportStatus === 'Retrying'}
+                                >
+                                    {reportStatus === 'Retrying' ? 'Retrying...' : 'Retry Report'}
                                 </button>
                             )}
                         </div>
