@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Film,
@@ -21,38 +21,10 @@ import {
   CheckCircle,
   Clock
 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import '../../styles/pages/dashboards/DashboardIndex.css'
 import { PrimaryButton } from '../../components/buttons'
 import SearchBar from '../../components/common/SearchBar/SearchBar'
-
-
-const FEATURED_TOOLS = [
-  {
-    title: 'Merge PDF',
-    description: 'Combine multiple PDF files into one.',
-    path: '/merge',
-    icon: Combine,
-    color: '#ef4444',
-    suite: 'Document Intelligence'
-  },
-  {
-    title: 'Text to Speech',
-    description: 'Convert any text into natural sounding voices.',
-    path: '/text-to-speech',
-    icon: Mic,
-    color: '#f59e0b',
-    suite: 'Voice & Audio'
-  },
-  {
-    title: 'Image Creator',
-    description: 'Generate stunning AI images from text prompts.',
-    path: '/image-generator',
-    icon: Palette,
-    color: '#db2777',
-    suite: 'Visual Arts'
-  }
-]
 
 const TOOL_SUITES = [
   {
@@ -60,6 +32,7 @@ const TOOL_SUITES = [
     title: 'Document Intelligence',
     icon: FileText,
     color: '#ec4899',
+    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800',
     tools: [
       { id: 'pdf-dashboard', label: 'PDF Master Dashboard', path: '/pdf-dashboard', color: '#ec4899' },
       { id: 'merge', label: 'Merge Documents', path: '/merge', color: '#ef4444' },
@@ -72,6 +45,7 @@ const TOOL_SUITES = [
     title: 'Creative Studio',
     icon: Clapperboard,
     color: '#7c3aed',
+    image: 'https://images.unsplash.com/photo-1492691523567-6170c3295db5?auto=format&fit=crop&q=80&w=800',
     tools: [
       { id: 'artists-home', label: 'Studio Dashboard', path: '/artists-home', color: '#7c3aed' },
       { id: 'video-dashboard', label: 'Video Production', path: '/video-dashboard', color: '#ef4444' },
@@ -84,6 +58,7 @@ const TOOL_SUITES = [
     title: 'Voice & Speech',
     icon: Mic,
     color: '#f59e0b',
+    image: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=800',
     tools: [
       { id: 'speech-dashboard', label: 'Audio Dashboard', path: '/speech-dashboard', color: '#f59e0b' },
       { id: 'text-to-speech', label: 'AI Voiceover', path: '/text-to-speech', color: '#f59e0b' },
@@ -96,6 +71,7 @@ const TOOL_SUITES = [
     title: 'Smart Intelligence',
     icon: Bot,
     color: '#10b981',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
     tools: [
       { id: 'text-dashboard', label: 'Text Hub', path: '/text-dashboard', color: '#10b981' },
       { id: 'translate', label: 'Translation', path: '/translate', color: '#10b981' },
@@ -107,6 +83,7 @@ const TOOL_SUITES = [
     title: 'System & Cloud',
     icon: HardDrive,
     color: '#64748b',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
     tools: [
       { id: 'files', label: 'Library & Assets', path: '/files', color: '#64748b' },
       { id: 'dev-dashboard', label: 'Developer Console', path: '/dev-dashboard', color: '#475569' },
@@ -116,22 +93,116 @@ const TOOL_SUITES = [
   }
 ]
 
-const FEATURE_TAGS = ['PDF', 'Video', 'Voice', 'Avatar', 'Transcription', 'API']
-
 const TURBO_RECIPES = [
   { id: 'recipe-1', label: 'Scan + OCR + Translate', desc: 'Universal document digitizer', colors: ['#10b981', '#7c3aed'], icon: Zap },
   { id: 'recipe-2', label: 'Merge + Optimize + Sign', desc: 'Pro contract production', colors: ['#ef4444', '#f59e0b'], icon: Plus },
   { id: 'recipe-3', label: 'Text → Voice → Canvas', desc: 'Creative b-roll generator', colors: ['#3b82f6', '#db2777'], icon: Sparkles }
 ]
 
+const ToolTiltCard = ({ tool, navigate, SuiteIcon }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), { stiffness: 100, damping: 30 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 100, damping: 30 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  return (
+    <motion.div
+      layout
+      className="portal-tool-card-v3 aura-card-premium"
+      onClick={() => navigate(tool.path)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ 
+        cursor: 'pointer',
+        perspective: '1000px',
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d"
+      }}
+      whileHover={{ scale: 1.02 }}
+    >
+      <div className="card-glare-effect" style={{ transform: 'translateZ(1px)' }}></div>
+      
+      <div className="tool-card-top-v3" style={{ transform: 'translateZ(40px)' }}>
+        <div className="tool-suite-info">
+          <div className="suite-icon-mini" style={{ color: tool.color }}>
+            <SuiteIcon size={14} />
+          </div>
+          <span className="suite-name-tag">{tool.suiteName}</span>
+        </div>
+        <ArrowUpRight size={14} className="tool-arrow-v3" />
+      </div>
+
+      <div className="tool-card-body-v3" style={{ transform: 'translateZ(60px)' }}>
+        <div className="tool-meta-row">
+             <h4>{tool.label}</h4>
+             <CheckCircle size={14} className="active-dot-v3" />
+        </div>
+        <p className="tool-description-mini">Premium {tool.suiteName} automation module.</p>
+        <button 
+          className="card-launch-btn-v3" 
+          style={{ 
+            background: tool.color,
+            transform: 'translateZ(30px)',
+            boxShadow: `0 10px 20px -5px ${tool.color}50`
+          }}
+        >
+          <Zap size={14} /> Launch
+        </button>
+      </div>
+
+      <div 
+        className="card-hover-bg-v3" 
+        style={{ 
+          background: `radial-gradient(circle at top right, ${tool.color}25, transparent)`,
+          transform: 'translateZ(-10px)'
+        }} 
+      ></div>
+    </motion.div>
+  );
+};
+
 const Dashboard = () => {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = React.useState('')
   const [activeCategory, setActiveCategory] = React.useState('all')
-  const [hoveredTool, setHoveredTool] = React.useState(null)
   const [currentTime, setCurrentTime] = React.useState(new Date())
 
-  // Update clock every second
+  // Hero Parallax Motion Values
+  const heroMouseX = useMotionValue(0);
+  const heroMouseY = useMotionValue(0);
+  const heroRotateX = useSpring(useTransform(heroMouseY, [-0.5, 0.5], [5, -5]), { stiffness: 50, damping: 20 });
+  const heroRotateY = useSpring(useTransform(heroMouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 50, damping: 20 });
+  
+  const heroTranslateX = useSpring(useTransform(heroMouseX, [-0.5, 0.5], [-20, 20]), { stiffness: 50, damping: 20 });
+  const heroTranslateY = useSpring(useTransform(heroMouseY, [-0.5, 0.5], [-20, 20]), { stiffness: 50, damping: 20 });
+
+  const handleHeroMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    heroMouseX.set(clientX / innerWidth - 0.5);
+    heroMouseY.set(clientY / innerHeight - 0.5);
+  };
+
+  const handleHeroMouseLeave = () => {
+    heroMouseX.set(0);
+    heroMouseY.set(0);
+  };
+
   React.useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
     return () => clearInterval(timer)
@@ -187,47 +258,66 @@ const Dashboard = () => {
       <div className="portal-glow"></div>
       
       <div className="portal-content-container">
-        <motion.header className="portal-hero-section" variants={itemVariants}>
-          <div className="hero-top">
+        <motion.header 
+          className="portal-hero-premium" 
+          variants={itemVariants}
+          onMouseMove={handleHeroMouseMove}
+          onMouseLeave={handleHeroMouseLeave}
+          style={{ 
+            perspective: '1500px',
+            rotateX: heroRotateX,
+            rotateY: heroRotateY,
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          <motion.div 
+            className="hero-bg-overlay-aura"
+            style={{ 
+              x: useTransform(heroTranslateX, val => val * 0.5),
+              y: useTransform(heroTranslateY, val => val * 0.5),
+              translateZ: '-50px'
+            }}
+          >
+            <img src="/assets/dashboards/hero.png" alt="Hero" className="hero-image-aura" />
+          </motion.div>
+
+          <div className="hero-content-aura" style={{ transformStyle: 'preserve-3d' }}>
             <motion.div 
-              className="aura-chip-premium"
+              className="aura-chip-premium-v3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              style={{ transform: 'translateZ(80px)' }}
             >
-              <div className="status-dot-pulse"></div>
+              <div className="status-dot-pulse-v3"></div>
               <Sparkles size={14} className="text-secondary" />
-              <span>{formattedTime} • SYSTEM v2.4 ONLINE</span>
+              <span>{formattedTime} • ENTERPRISE AURA v2.5</span>
             </motion.div>
-            <h2 className="greeting-text-aura">{getGreeting()}, <span className="text-muted">Aura Explorer</span></h2>
-            <h1 className="hero-main-title">What can we <span className="text-gradient">automate</span> today?</h1>
-          </div>
-
-
-          <div className="universal-search-hub">
-            <SearchBar 
-              placeholder="Search organization tool..."
-              onSearch={(val) => setSearchQuery(val)}
-              className="dashboard-search-premium"
-            />
             
-            <div className="portal-filter-rail">
-
-              <button 
-                className={`filter-pill ${activeCategory === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveCategory('all')}
-              >
-                All Tools
-              </button>
-              {TOOL_SUITES.map(suite => (
-                <button 
-                  key={suite.id}
-                  className={`filter-pill ${activeCategory === suite.id ? 'active' : ''}`}
-                  onClick={() => setActiveCategory(suite.id)}
-                >
-                  {suite.title.split(' ')[0]}
-                </button>
-              ))}
-            </div>
+            <motion.h2 
+              className="greeting-text-premium"
+              style={{ transform: 'translateZ(100px)' }}
+            >
+              {getGreeting()}, <span className="text-muted">Creative Lead</span>
+            </motion.h2>
+            
+            <motion.h1 
+              className="hero-main-title-premium"
+              style={{ transform: 'translateZ(120px)' }}
+            >
+              One Interface. <br/> 
+              <span className="text-gradient-aura">Infinite Possibilities.</span>
+            </motion.h1>
+            
+            <motion.div 
+              className="universal-search-premium"
+              style={{ transform: 'translateZ(150px)' }}
+            >
+              <SearchBar 
+                placeholder="Ask Aura or search tools..."
+                onSearch={(val) => setSearchQuery(val)}
+                className="dashboard-search-cinematic"
+              />
+            </motion.div>
           </div>
         </motion.header>
 
@@ -297,92 +387,19 @@ const Dashboard = () => {
            </div>
         </motion.div>
 
-        {/* Render section headers as <h3> for each suite */}
-        {TOOL_SUITES.filter(suite => filteredTools.some(tool => tool.suiteId === suite.id)).map(suite => (
-          <React.Fragment key={suite.id}>
-            <h3 style={{
-              margin: '2.5rem 0 1.2rem 0',
-              fontSize: '1.1rem',
-              fontWeight: 900,
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              color: '#a78bfa',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-            }}>
-              <suite.icon size={20} style={{ color: suite.color }} />
-              {suite.title}
-            </h3>
-            <motion.div className="portal-tools-main-grid" variants={containerVariants}>
-              <AnimatePresence mode="popLayout">
-                {filteredTools.filter(tool => tool.suiteId === suite.id).map((tool) => {
-                  const SuiteIcon = tool.suiteIcon
-                  return (
-                    <motion.div
-                      layout
-                      key={tool.id}
-                      className="portal-tool-card aura-card-premium"
-                      variants={itemVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="hidden"
-                      onClick={() => navigate(tool.path)}
-                      onMouseEnter={() => setHoveredTool(tool.id)}
-                      onMouseLeave={() => setHoveredTool(null)}
-                      whileHover={{ y: -5, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)' }}
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {hoveredTool === tool.id && (
-                        <motion.div 
-                          className="live-signal-overlay"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                        >
-                          <SuiteIcon size={80} strokeWidth={0.5} style={{ color: tool.color }} />
-                        </motion.div>
-                      )}
-                      <div className="tool-card-top">
-                        <div className="tool-suite-info">
-                          <div className="suite-icon-mini" style={{ color: tool.color }}>
-                            <SuiteIcon size={14} />
-                          </div>
-                          <span className="suite-name-tag">{tool.suiteName}</span>
-                        </div>
-                        <div className="tool-action-indicator">
-                          <ArrowUpRight size={14} />
-                        </div>
-                      </div>
-                      <div className="tool-card-body">
-                        <div className="tool-meta-row">
-                             <h4>{tool.label}</h4>
-                             <div className="tool-tier-badge">PRO</div>
-                        </div>
-                        <p className="tool-description-mini">Optimized for high-performance AI processing.</p>
-                        <div className="tool-card-footer">
-                          <div className="tool-status-dot" style={{ backgroundColor: tool.color }}></div>
-                          <span className="tool-ready-text">Ready to use</span>
-                        </div>
-                        <div className="card-launch-aura">
-                            <PrimaryButton 
-                                className="w-full launch-btn-premium"
-                                size="md"
-                                style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none' }}
-                            >
-                                <Zap size={16} />
-                                Launch Hub
-                            </PrimaryButton>
-                        </div>
-                      </div>
+        <motion.div className="portal-tools-main-grid-v4" variants={containerVariants}>
+          <AnimatePresence mode="popLayout">
+            {filteredTools.map((tool) => (
+              <ToolTiltCard 
+                key={tool.id} 
+                tool={tool} 
+                navigate={navigate} 
+                SuiteIcon={tool.suiteIcon}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
-                      <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, ${tool.color}15, transparent)` }}></div>
-                    </motion.div>
-                  )
-                })}
-              </AnimatePresence>
-            </motion.div>
-          </React.Fragment>
-        ))}
 
         {filteredTools.length === 0 && (
           <motion.div className="portal-empty-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
