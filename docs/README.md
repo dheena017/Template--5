@@ -13,6 +13,8 @@ Welcome to the central knowledge base for the Aura Platform. This directory cont
 
 ## 🚀 Infrastructure
 - **[Docker Orchestration](../docker-compose.yml)**: Multi-container deployment configuration for local and staging environments.
+- **[start-full Command Guide](./START_FULL_COMMANDS.md)**: All launcher flags, environment variables, and PowerShell command examples.
+- **[Runbook](./RUNBOOK.md)**: Short workflow for start, monitor, diagnose, and fix.
 
 ---
 *Aura Documentation is maintained by the core engineering team.*
