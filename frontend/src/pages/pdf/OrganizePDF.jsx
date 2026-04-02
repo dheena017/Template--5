@@ -539,7 +539,7 @@ const OrganizePDF = ({ forcedTool = null }) => {
                                 <h1>Every tool you need to work with PDFs in one place</h1>
                                 <p className="mb-8">All are 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
                                 <button 
-                                    onClick={() => navigate('/pdf-select')}
+                                    onClick={() => navigate('/pdf-dashboard')}
                                     className="px-10 py-4 bg-white text-black font-black rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 mx-auto"
                                 >
                                     <Files size={20} />
