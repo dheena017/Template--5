@@ -1,0 +1,64 @@
+/* Avatar Dashboard Specific Styles Reusing VideoDashboard as base */
+.avatar-dashboard-v3 {
+    --accent-primary: #3b82f6;
+    --accent-secondary: #8b5cf6;
+    --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.avatar-hero {
+    background: radial-gradient(circle at 10% 70%, rgba(59, 130, 246, 0.1), transparent 50%),
+                radial-gradient(circle at 90% 20%, rgba(139, 92, 246, 0.08), transparent 50%);
+}
+
+.avatar-hero .hero-badge-aura {
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.1);
+    border-left-color: #60a5fa;
+}
+
+.avatar-hero h1 span {
+    color: #60a5fa;
+    background: linear-gradient(135deg, #60a5fa, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.avatar-frame {
+    border-radius: 40px;
+    transform: perspective(1000px) rotateY(15deg);
+    box-shadow: -20px 30px 100px rgba(0, 0, 0, 0.9);
+}
+
+.avatar-frame:hover {
+    transform: perspective(1000px) rotateY(0deg) scale(1.05);
+}
+
+.purple.video-glow-aura {
+    box-shadow: inset 0 0 80px rgba(139, 92, 246, 0.4);
+}
+
+.avatar-card:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.avatar-card .card-video-overlay-aura {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.avatar-card .video-icon-center {
+    border-color: rgba(96, 165, 250, 0.4);
+    background: rgba(59, 130, 246, 0.15);
+}
+
+.avatar-card:hover .card-action-btn-aura {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.avatar-card:hover .card-hover-border {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.avatar-card .platinum {
+    color: #60a5fa;
+    border-color: rgba(96, 165, 250, 0.3);
+}
