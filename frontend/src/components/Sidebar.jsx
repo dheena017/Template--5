@@ -4,6 +4,7 @@ import { useTasks } from '../context/TaskContext';
 import { Search, Zap, Sliders } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import SearchBar from './common/SearchBar/SearchBar';
+import { SIDEBAR_CATEGORIES } from '../constants/sidebarData';
 import '../styles/Sidebar.css';
 
 import '../styles/MissionControl.css';
@@ -70,7 +71,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   ];
 
   const pdfCategories = [
-    { id: 'pdf-select', label: 'PDF Dashboard' },
+    { id: 'pdf-dashboard', label: 'PDF Dashboard' },
     { id: 'organize-pdf', label: 'Organize PDF' },
     { id: 'optimize-pdf', label: 'Optimize PDF' },
     { id: 'convert-to-pdf', label: 'Convert to PDF' },
@@ -88,12 +89,6 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
     { id: 'document-conversion', label: 'Document Conversion' },
   ];
 
-  const videoCategories = [
-    { id: 'avatar-videos-home', label: 'Video Dashboard' },
-    { id: 'ai-studio', label: 'AI Studio' },
-    { id: 'video-agent', label: 'Video Agent' },
-    { id: 'ppt-to-video', label: 'PPT to Video' },
-  ];
 
   const avatarCategories = [
     { id: 'avatar-dashboard', label: 'Avatar Dashboard' },
@@ -187,6 +182,26 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   ];
   const [intelOpen, setIntelOpen] = useState(false);
   const [sidebarSearch, setSidebarSearch] = useState('');
+  const detailSidebarViews = [
+    'organize-pdf',
+    'optimize-pdf',
+    'convert-to-pdf',
+    'convert-from-pdf',
+    'edit-pdf',
+    'pdf-security',
+    'pdf-intelligence',
+    'video-conversion',
+    'audio-conversion',
+    'document-conversion',
+    'image-conversion',
+    'image-conversion-tools',
+  ];
+
+  useEffect(() => {
+    if (!detailSidebarViews.includes(activeTab)) {
+      setSidebarView('main');
+    }
+  }, [activeTab]);
 
   const filterLinks = (links) => {
     if (!sidebarSearch) return links;
@@ -196,6 +211,9 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const filteredMenuItems = menuItems.filter(item => 
     item.label.toLowerCase().includes(sidebarSearch.toLowerCase())
   );
+
+  const videoCategory = SIDEBAR_CATEGORIES.find(c => c.name === 'Video AI');
+  const videoCategories = videoCategory ? videoCategory.links.map(link => ({ id: link.path.substring(1), label: link.name })) : [];
 
   const filteredPdf = filterLinks(pdfCategories);
   const filteredConversion = filterLinks(conversionCategories);
@@ -208,6 +226,28 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
   const filteredText = filterLinks(textCategories);
   const filteredSocial = filterLinks(socialCategories);
   const filteredDev = filterLinks(devCategories);
+  const prefetchByTab = {
+    'dashboard': () => import('../pages/dashboards/Dashboard'),
+    'video-dashboard': () => import('../pages/video-ai/VideoDashboard'),
+    'image-dashboard': () => import('../pages/dashboards/CategoryDashboards'),
+    'avatar-dashboard': () => import('../pages/avatar/AvatarDashboard'),
+    'speech-dashboard': () => import('../pages/dashboards/CategoryDashboards'),
+    'text-dashboard': () => import('../pages/text/TextDashboard'),
+    'pdf-dashboard': () => import('../pages/pdf/PDFDashboard'),
+    'organize-pdf': () => import('../pages/pdf/OrganizePDF'),
+    'optimize-pdf': () => import('../pages/pdf/OptimizePDF'),
+    'image-generator': () => import('../pages/image/ImageGenerator'),
+    'brand-kits': () => import('../pages/image/BrandKits'),
+    'files': () => import('../pages/files/Files'),
+    'social-dashboard': () => import('../pages/dashboards/CategoryDashboards'),
+    'dev-dashboard': () => import('../pages/dashboards/CategoryDashboards'),
+    'billing': () => import('../pages/about-us/Billing'),
+  };
+  
+  const prefetchTab = (tabId) => {
+    const load = prefetchByTab[tabId];
+    if (load) load();
+  };
 
   const isAnyResult = sidebarSearch ? (
     filteredMenuItems.length > 0 || filteredPdf.length > 0 || filteredConversion.length > 0 || filteredVideo.length > 0 || filteredAvatar.length > 0 ||
@@ -267,16 +307,29 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           )}
 
           {filteredMenuItems.map((item, i) => (
-            <li 
+            <motion.li 
               key={item.id}
               className={`${activeTab === item.id ? 'active' : ''} animate-slide-right`}
-              style={{ animationDelay: `${i * 0.05}s` }}
-              onClick={() => onTabChange(item.id)}
+              style={{ animationDelay: `${i * 0.05}s`, transformStyle: 'preserve-3d' }}
+              onMouseEnter={() => prefetchTab(item.id)} onClick={() => onTabChange(item.id)}
+              whileHover={{ 
+                x: 8, 
+                rotateY: 10,
+                scale: 1.02,
+                transition: { type: 'spring', stiffness: 400, damping: 25 }
+              }}
             >
-              <span className="item-icon-aura">{item.icon}</span>
-              <span className="label-aura">{item.label}</span>
-              {item.badge && <span className={`item-badge-aura ${item.badge.toLowerCase()}`}>{item.badge}</span>}
-            </li>
+              <span className="item-icon-aura" style={{ transform: 'translateZ(10px)' }}>{item.icon}</span>
+              <span className="label-aura" style={{ transform: 'translateZ(15px)' }}>{item.label}</span>
+              {item.badge && (
+                <span 
+                  className={`item-badge-aura ${item.badge.toLowerCase()}`}
+                  style={{ transform: 'translateZ(20px)' }}
+                >
+                  {item.badge}
+                </span>
+              )}
+            </motion.li>
           ))}
 
           {/* CREATIVE SECTION */}
@@ -287,7 +340,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* VIDEO SECTION */}
           {(sidebarSearch ? filteredVideo.length > 0 : true) && (
             <>
-              <li className={`dropdown-trigger-aura ${(isVideoOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsVideoOpen(!isVideoOpen); onTabChange('avatar-videos-home'); }}>
+              <li className={`dropdown-trigger-aura ${(isVideoOpen || sidebarSearch) ? 'open' : ''}`} onMouseEnter={() => prefetchTab('video-dashboard')} onClick={() => { if (!sidebarSearch) setIsVideoOpen(!isVideoOpen); onTabChange('video-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Video /></span>
                  <span className="label-aura">Video AI</span>
                  {!sidebarSearch && (
@@ -314,7 +367,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* IMAGE SECTION */}
           {(sidebarSearch ? filteredImage.length > 0 : true) && (
             <>
-              <li className={`dropdown-trigger-aura ${(isImageOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsImageOpen(!isImageOpen); onTabChange('image-dashboard'); }}>
+              <li className={`dropdown-trigger-aura ${(isImageOpen || sidebarSearch) ? 'open' : ''}`} onMouseEnter={() => prefetchTab('image-dashboard')} onClick={() => { if (!sidebarSearch) setIsImageOpen(!isImageOpen); onTabChange('image-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Image /></span>
                  <span className="label-aura">Visual Design</span>
                  {!sidebarSearch && (
@@ -338,7 +391,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* AVATAR SECTION */}
           {(sidebarSearch ? filteredAvatar.length > 0 : true) && (
             <>
-              <li className={`dropdown-trigger-aura ${(isAvatarOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsAvatarOpen(!isAvatarOpen); onTabChange('avatar-dashboard'); }}>
+              <li className={`dropdown-trigger-aura ${(isAvatarOpen || sidebarSearch) ? 'open' : ''}`} onMouseEnter={() => prefetchTab('avatar-dashboard')} onClick={() => { if (!sidebarSearch) setIsAvatarOpen(!isAvatarOpen); onTabChange('avatar-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Avatar /></span>
                  <span className="label-aura">Avatar AI</span>
                  {!sidebarSearch && (
@@ -391,7 +444,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* SPEECH SECTION */}
           {(sidebarSearch ? filteredSpeech.length > 0 : true) && (
             <>
-              <li className={`dropdown-trigger-aura ${(isSpeechOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsSpeechOpen(!isSpeechOpen); onTabChange('speech-dashboard'); }}>
+              <li className={`dropdown-trigger-aura ${(isSpeechOpen || sidebarSearch) ? 'open' : ''}`} onMouseEnter={() => prefetchTab('speech-dashboard')} onClick={() => { if (!sidebarSearch) setIsSpeechOpen(!isSpeechOpen); onTabChange('speech-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Voices /></span>
                  <span className="label-aura">Voice & Speech</span>
                  {!sidebarSearch && (
@@ -415,7 +468,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* TEXT SECTION */}
           {(sidebarSearch ? filteredText.length > 0 : true) && (
             <>
-              <li className={`dropdown-trigger-aura ${(isTextOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => { if (!sidebarSearch) setIsTextOpen(!isTextOpen); onTabChange('text-dashboard'); }}>
+              <li className={`dropdown-trigger-aura ${(isTextOpen || sidebarSearch) ? 'open' : ''}`} onMouseEnter={() => prefetchTab('text-dashboard')} onClick={() => { if (!sidebarSearch) setIsTextOpen(!isTextOpen); onTabChange('text-dashboard'); }}>
                  <span className="item-icon-aura"><Icons.Text /></span>
                  <span className="label-aura">Smart Text</span>
                  {!sidebarSearch && (
@@ -474,9 +527,9 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
           {/* PDF SECTION */}
           {(sidebarSearch ? filteredPdf.length > 0 : true) && (
             <>
-              <li className={`dropdown-trigger-aura ${(isPdfOpen || sidebarSearch) ? 'open' : ''}`} onClick={() => {
+              <li className={`dropdown-trigger-aura ${(isPdfOpen || sidebarSearch) ? 'open' : ''}`} onMouseEnter={() => prefetchTab('pdf-dashboard')} onClick={() => {
                 if (!sidebarSearch) setIsPdfOpen(!isPdfOpen);
-                onTabChange('pdf-select'); 
+                onTabChange('pdf-dashboard'); 
               }}>
                  <span className="item-icon-aura"><Icons.PDF /></span>
                  <span className="label-aura">PDF Tools</span>
@@ -492,7 +545,10 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
                     <li key={item.id} 
                         className={`sub-item-aura ${sidebarView === item.id ? 'active' : ''} animate-slide-right`} 
                         style={{ animationDelay: `${idx * 0.03}s` }}
-                        onClick={() => { setSidebarView(item.id); onTabChange(item.id); }}>
+                        onClick={() => {
+                          setSidebarView(detailSidebarViews.includes(item.id) ? item.id : 'main');
+                          onTabChange(item.id);
+                        }}>
                       <span className="label-aura">{item.label}</span>
                     </li>
                   ))}
@@ -609,7 +665,7 @@ const Sidebar = ({ activeTab, onTabChange, isOpen, onToggle }) => {
         <button onClick={() => setIsToolsOpenMobile(false)}>×</button>
       </div>
       <div className="hub-grid">
-        <div className="hub-item" onClick={() => { onTabChange('pdf-select'); setIsToolsOpenMobile(false); }}>
+        <div className="hub-item" onClick={() => { onTabChange('pdf-dashboard'); setIsToolsOpenMobile(false); }}>
           <div className="hub-icon pdf"><Icons.PDF /></div>
           <span>PDF Tools</span>
         </div>
