@@ -88,7 +88,10 @@ export const SIDEBAR_CATEGORIES = [
       { name: 'Organize PDF', path: '/organize-pdf', icon: React.createElement(Layers, { size: 16 }) },
       { name: 'Remove Pages', path: '/remove-pages', icon: React.createElement(Trash2, { size: 16 }) },
       { name: 'Extract Pages', path: '/extract-pages', icon: React.createElement(Scissors, { size: 16 }) },
-      { name: 'Scan to PDF', path: '/scan-to-pdf', icon: React.createElement(Scan, { size: 16 }) }
+      { name: 'Scan to PDF', path: '/scan-to-pdf', icon: React.createElement(Scan, { size: 16 }) },
+      { name: 'All Conversions', path: '/all-conversions', icon: React.createElement(Search, { size: 16 }) },
+      { name: 'PDF Dashboard', path: '/pdf-dashboard', icon: React.createElement(FileText, { size: 16 }) },
+      { name: 'Document Conversions', path: '/document-conversion', icon: React.createElement(Layers, { size: 16 }) }
     ]
   },
   {
