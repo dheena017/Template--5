@@ -209,11 +209,62 @@ export const api = {
             return { job_id: 'job_' + Math.random().toString(36).substr(2, 9) };
         },
         getStatus: async (id) => {
+            try {
+                const res = await fetch(`${API_URL}/api/video/status/${id}`);
+                if (res.ok) return await res.json();
+            } catch (e) {}
             return { 
                 status: 'Completed', 
                 progress: 100, 
-                url: 'https://picsum.photos/800/800' // Mock result
+                url: 'https://cdn.pixabay.com/vimeo/327374737/city-22533.mp4?width=1280' // Mock result
             };
+        },
+        generate: async (data) => {
+            const formData = new FormData();
+            formData.append('prompt', data.prompt || '');
+            formData.append('mode', data.mode || 'text-to-video');
+            formData.append('settings', JSON.stringify(data.settings || {}));
+            
+            if (data.image_seed) {
+                formData.append('image_seed', data.image_seed);
+            }
+            
+            try {
+                const res = await fetch(`${API_URL}/api/video/generate`, {
+                    method: 'POST',
+                    body: formData
+                });
+                if (res.ok) return await res.json();
+            } catch (e) {
+                console.error('[API] Video Hub Error:', e);
+            }
+            return { job_id: 'v_job_' + Date.now() };
+        },
+        refinePrompt: async (prompt) => {
+            try {
+                const res = await fetch(`${API_URL}/api/video/refine-prompt`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                if (res.ok) return await res.json();
+            } catch (e) {
+                console.error('[API] Prompt Refinement Error:', e);
+            }
+            return { refined: prompt + " (enhanced)" };
+        },
+        breakdownScript: async (script) => {
+            try {
+                const res = await fetch(`${API_URL}/api/video/breakdown`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ script })
+                });
+                if (res.ok) return await res.json();
+            } catch (e) {
+                console.error('[API] Script Breakdown Error:', e);
+            }
+            return { scenes: [] };
         }
     },
 
