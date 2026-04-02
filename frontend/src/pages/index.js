@@ -22,6 +22,8 @@ export * from './files'
 export * from './pdf'
 export * from './developers'
 export * from './social-media'
+export * from './marketing'
+export * from './ebook'
 export * from './about-us'
 
 // Subsection Tabs & Layouts
