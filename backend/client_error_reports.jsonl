@@ -1,0 +1,15 @@
+{
+  "received_at": "2026-04-02T05:04:10.123Z",
+  "supportId": "V4KFIPCB",
+  "sessionToken": "AURA-129282",
+  "errorName": "TypeError",
+  "errorMessage": "Failed to fetch dynamically imported module: http://localhost:5174/src/pages/dashboards/Dashboard.jsx",
+  "stack": "TypeError: Failed to fetch dynamically imported module: http://localhost:5174/src/pages/dashboards/Dashboard.jsx\n    at Lazy (<anonymous>)\n    at div (<anonymous>)\n    at MotionDOMComponent",
+  "componentStack": "at Lazy (<anonymous>)\n    at div (<anonymous>)\n    at MotionDOMComponent",
+  "route": "/",
+  "url": "http://localhost:5174/",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+  "viewport": "4608x2188",
+  "timestamp": "2026-04-02T05:04:09.495Z"
+}
+{"received_at":"2026-04-02T05:04:10.123Z","supportId":"V4KFIPCB","sessionToken":"AURA-129282","errorName":"TypeError","errorMessage":"Failed to fetch dynamically imported module: http://localhost:5174/src/pages/dashboards/Dashboard.jsx","stack":"TypeError: Failed to fetch dynamically imported module...","componentStack":"at Lazy (<anonymous>)\n    at div (<anonymous>)","route":"/","url":"http://localhost:5174/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)","viewport":"4608x2188","timestamp":"2026-04-02T05:04:09.495Z"}
