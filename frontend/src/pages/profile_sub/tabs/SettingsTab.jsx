@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import '../../../styles/pages/profile/Settings.css'
-import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type, Sparkles, ExternalLink, Zap, RefreshCw, MapPin, Globe, Mail, Link as LinkIcon } from 'lucide-react'
+import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type, Sparkles, ExternalLink, Zap, RefreshCw, MapPin, Globe, Mail, Link as LinkIcon, Database, Trash2, ChevronDown, ChevronUp, ShieldAlert } from 'lucide-react'
+import usePreferences from '../../../hooks/usePreferences'
 
 const SettingsTab = ({
   theme,
@@ -32,6 +33,52 @@ const SettingsTab = ({
     { name: 'Mono', val: "'Fira Code', monospace" }
   ]
   const radiuses = ['0px', '8px', '16px', '32px']
+
+  const { getAllPreferences, clearPreference, clearAllPreferences } = usePreferences()
+  const [storedPrefs, setStoredPrefs] = useState({})
+  const [expandedKeys, setExpandedKeys] = useState({})
+  const [confirmClearAll, setConfirmClearAll] = useState(false)
+
+  const refreshPrefs = useCallback(() => {
+    setStoredPrefs(getAllPreferences())
+  }, [getAllPreferences])
+
+  useEffect(() => {
+    refreshPrefs()
+  }, [])
+
+  const handleClearKey = (key) => {
+    clearPreference(key)
+    refreshPrefs()
+    setToast?.(`Cleared "${key}"`)
+  }
+
+  const handleClearAll = () => {
+    if (!confirmClearAll) {
+      setConfirmClearAll(true);
+      // Auto-cancel after 4 seconds (works on mobile where onBlur is unreliable)
+      setTimeout(() => setConfirmClearAll(false), 4000);
+      return;
+    }
+    clearAllPreferences()
+    // also clear profile draft
+    localStorage.removeItem('profile-draft')
+    refreshPrefs()
+    setConfirmClearAll(false)
+    setToast?.('All stored preferences cleared')
+  }
+
+  const toggleExpand = (key) => {
+    setExpandedKeys(prev => ({ ...prev, [key]: !prev[key] }))
+  }
+
+  const formatValue = (val) => {
+    if (typeof val === 'object') return JSON.stringify(val, null, 2)
+    if (typeof val === 'boolean') return val ? 'true' : 'false'
+    return String(val)
+  }
+
+  const prefEntries = Object.entries(storedPrefs)
 
   const applyPreset = (preset) => {
     if (preset === 'Minimal') {
@@ -270,6 +317,57 @@ const SettingsTab = ({
           <button className="danger-btn mt-4" onClick={() => window.location.reload()}>
             <RefreshCw size={16} /> Restore Defaults
           </button>
+        </section>
+
+        {/* ── User Preferences & Data ── */}
+        <section className="premium-card prefs-data-card">
+          <div className="section-head mb-3">
+            <h3><Database size={16} style={{ display:'inline', marginRight:6, verticalAlign:'middle' }} />User Preferences &amp; Data</h3>
+            <button className="pref-refresh-btn" onClick={refreshPrefs} title="Refresh">
+              <RefreshCw size={13} />
+            </button>
+          </div>
+
+          {prefEntries.length === 0 ? (
+            <p className="prefs-empty">No preferences stored yet.</p>
+          ) : (
+            <ul className="prefs-list">
+              {prefEntries.map(([key, val]) => (
+                <li key={key} className="pref-item">
+                  <div className="pref-item-header" onClick={() => toggleExpand(key)}>
+                    <span className="pref-key">{key}</span>
+                    <div className="pref-actions">
+                      <button
+                        className="pref-clear-btn"
+                        onClick={(e) => { e.stopPropagation(); handleClearKey(key) }}
+                        title={`Clear ${key}`}
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                      {expandedKeys[key] ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                    </div>
+                  </div>
+                  {expandedKeys[key] && (
+                    <pre className="pref-value">{formatValue(val)}</pre>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="prefs-footer">
+            <span className="prefs-count">{prefEntries.length} key{prefEntries.length !== 1 ? 's' : ''} stored</span>
+            {prefEntries.length > 0 && (
+              <button
+                className={`clear-all-btn ${confirmClearAll ? 'confirm' : ''}`}
+                onClick={handleClearAll}
+                onBlur={() => setConfirmClearAll(false)}
+              >
+                <ShieldAlert size={13} />
+                {confirmClearAll ? 'Confirm Clear All?' : 'Clear All'}
+              </button>
+            )}
+          </div>
         </section>
       </div>
     </div>

@@ -17,5 +17,4 @@ export { default as VoiceIsolator } from './VoiceIsolator'
 export { default as ArtistsHome } from './ArtistsHome'
 export { default as UGCCreator } from './UGCCreator'
 export { default as ProductPlacement } from './ProductPlacement'
-export { default as AIOrchestrator } from './AIOrchestrator'
 

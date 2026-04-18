@@ -1,6 +1,7 @@
 import React from 'react'
 import '../../../styles/pages/profile/Settings.css'
 import { LayoutGrid, Maximize, Moon, Palette, Square, Sun, Type, Sparkles, ExternalLink, Zap, RotateCcw, Code2, Globe, Mail } from 'lucide-react'
+import PreferencesPanel from '../../../components/PreferencesPanel'
 
 const SettingsTab = ({
   theme,
@@ -257,6 +258,10 @@ const SettingsTab = ({
               <button className="preview-btn">Button Accent</button>
             </div>
           </div>
+        </section>
+
+        <section className="premium-card">
+          <PreferencesPanel />
         </section>
 
         <section className="premium-card">

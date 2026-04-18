@@ -4,10 +4,13 @@ import {
   Cpu, User, MoreHorizontal,
   Zap,
   Upload, Music, HelpCircle, ChevronRight,
-  Sparkles, Star, Lock, RefreshCw
+  Sparkles, Star, Lock, RefreshCw,
+  Activity, Shield
 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { api, logger } from '../../services/api'
 import CreditErrorMessage from '../../components/CreditErrorMessage'
+import PromptBar from '../../components/common/PromptBar/PromptBar'
 import '../../styles/pages/image/ImageGenerator.css'
 
 const ImageGenerator = () => {
@@ -15,356 +18,186 @@ const ImageGenerator = () => {
   const [stamina, setStamina] = useState(130)
   const [credit, setCredit] = useState(0)
   const [promptText, setPromptText] = useState('')
-  const [selectedVideoModel, setSelectedVideoModel] = useState('WAN 2.6')
-  const [selectedImageModel, setSelectedImageModel] = useState('Flux 2')
-  const [selectedImageTool, setSelectedImageTool] = useState('Controlled Text-to-image')
+  const [selectedImageModel, setSelectedImageModel] = useState('Flux 1.1 Pro')
   const [orientation, setOrientation] = useState('Portrait')
-  const [usesRemaining, setUsesRemaining] = useState(3)
   const [outputs, setOutputs] = useState([])
   const [generateState, setGenerateState] = useState('idle')
   const [statusMessage, setStatusMessage] = useState('')
+  const [progress, setProgress] = useState(0)
 
-  const videoCostMap = {
-    'WAN 2.6': 14,
-    'WAN 2.5': 13,
-    'WAN 2.2': 12,
-    'Grok Imagine': 15,
-    'Sora 2': 20,
-    'Kling 2.6': 18,
-    'Seedance 1.0': 11,
-    'Veo 3.1': 21,
-    'Veo 3.0': 19,
-    'WAN 2.1': 10,
-    'Kling 2.1': 14
-  }
-
-  const imageCostMap = {
-    'Grok Imagine': 12,
-    'Nano Banana': 8,
-    'Nano Banana Pro': 13,
-    'Flux 2': 9,
-    'Flux 2 Pro': 14,
-    'Flux 1': 7,
-    'XL Lightning': 10,
-    'SD1': 6,
-    'XL': 8
-  }
-
-  const imageToolCostMap = {
-    'Controlled Text-to-image': 3,
-    'Remove background': 2,
-    'Upscale': 2,
-    'Inpainting from text': 4,
-    'Edit image from text': 4
-  }
-
-  const videoModels = [
-    'WAN 2.6',
-    'WAN 2.5',
-    'WAN 2.2',
-    'Grok Imagine',
-    'Sora 2',
-    'Kling 2.6',
-    'Seedance 1.0',
-    'Veo 3.1',
-    'Veo 3.0',
-    'WAN 2.1',
-    'Kling 2.1'
-  ]
-
-  const imageModels = [
-    'Grok Imagine',
-    'Nano Banana',
-    'Nano Banana Pro',
-    'Flux 2',
-    'Flux 2 Pro',
-    'Flux 1',
-    'XL Lightning',
-    'SD1',
-    'XL'
-  ]
-
-  const imageTools = [
-    'Controlled Text-to-image',
-    'Remove background',
-    'Upscale',
-    'Inpainting from text',
-    'Edit image from text'
-  ]
-
-  const tabs = [
-    { id: 'Image', icon: <ImageIcon size={18} /> },
-    { id: 'Video', icon: <VideoIcon size={18} /> },
-    { id: 'AI App', icon: <Cpu size={18} /> },
-    { id: 'Agent', icon: <User size={18} /> },
-    { id: 'More', icon: <MoreHorizontal size={18} /> }
-  ]
-
-  const activeGenerationCost =
-    activeTab === 'Video'
-      ? (videoCostMap[selectedVideoModel] || 10)
-      : (imageCostMap[selectedImageModel] || 8) + (imageToolCostMap[selectedImageTool] || 2)
-
-  const canGenerate = promptText.trim().length > 0 && usesRemaining > 0 && generateState !== 'loading'
-
+  // Fetch initial outputs
   useEffect(() => {
-    logger.log('IMAGEGEN', 'Component mounted')
+    const fetchHistory = async () => {
+      const history = await api.getImageOutputs()
+      setOutputs(history)
+    }
+    fetchHistory()
   }, [])
 
-  const handleGenerateAsset = async () => {
-    if (!canGenerate) return
-    logger.log('IMAGEGEN', 'Starting asset generation', { model: selectedImageModel, orientation })
+  const pollJobStatus = async (jobId) => {
+    const interval = setInterval(async () => {
+      try {
+        const res = await api.imageStatus(jobId)
+        setProgress(res.progress || 0)
+        setStatusMessage(res.status || 'Synthesizing...')
 
-    setGenerateState('loading')
-    setStatusMessage('Generating your image asset...')
-
-    const result = await api.generateImageAsset({
-      prompt: promptText.trim(),
-      model: selectedImageModel,
-      orientation
-    })
-
-    if (result?.status === 'success' && result?.output) {
-      setOutputs((prev) => [result.output, ...prev].slice(0, 8))
-      setUsesRemaining((prev) => Math.max(0, prev - 1))
-      setGenerateState('success')
-      setStatusMessage('Asset generated successfully.')
-      logger.success('IMAGEGEN', 'Asset generated', { outputId: result.output.id })
-      return
-    }
-
-    setGenerateState('error')
-    const errorMsg = result?.error || result?.message || 'Failed to generate asset.'
-    setStatusMessage(errorMsg)
-    logger.error('IMAGEGEN', 'Asset generation failed', errorMsg)
+        if (res.is_ready) {
+          clearInterval(interval)
+          setGenerateState('success')
+          setOutputs(prev => [res, ...prev])
+          // Refresh list to get formatted objects
+          const history = await api.getImageOutputs()
+          setOutputs(history)
+        }
+      } catch (err) {
+        clearInterval(interval)
+        setGenerateState('error')
+        setStatusMessage('Connection lost during synthesis')
+      }
+    }, 2000)
   }
+
+  const handleGenerateAsset = async () => {
+    if (!promptText.trim()) return
+    
+    setGenerateState('loading')
+    setStatusMessage('Handshaking with Neural Cluster...')
+    setProgress(5)
+
+    try {
+      const res = await api.generateImageAsset({
+        prompt: promptText.trim(),
+        model: selectedImageModel,
+        orientation: orientation
+      })
+
+      if (res.job_id) {
+        pollJobStatus(res.job_id)
+      } else {
+        throw new Error(res.error || 'Failed to initialize job')
+      }
+    } catch (err) {
+      setGenerateState('error')
+      setStatusMessage(err.message)
+    }
+  }
+
+  const imageModels = ['Flux 1.1 Pro', 'Flux Schnell', 'Stable Diffusion 3']
 
   return (
     <div className="generator-container">
-      {/* Top Utility Bar */}
-      <div className="gen-utility-bar">
-        <div className="tabs-group">
-          {tabs.slice(0, 2).map(tab => (
-            <button 
-              key={tab.id} 
-              className={`tab-item ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.icon} {tab.id === 'Image' ? 'Image Generation' : 'Video Generation'}
-            </button>
-          ))}
+      <header className="fusion-header p-4 border-bottom border-white/5">
+        <div className="fh-left">
+           <div className="fh-badge"><Shield size={10} /> IMAGE SYNTHESIS v4.0</div>
+           <h1 className="display-title h2 font-black text-white">Neural <span className="text-secondary">Image Canvas</span></h1>
         </div>
-        <div className="metrics-group">
-          <div className="metric stamina">
-            <Zap size={14} className="icon-burn" /> <span>stamina</span> <strong>{stamina}</strong>
-          </div>
-          <div className="metric credit">
-            <Star size={14} className="icon-star" /> <span>credit</span> <strong>{credit}</strong>
-          </div>
+        <div className="fh-right d-flex gap-4">
+           <div className="metric glass-card p-2 px-3 d-flex align-items-center gap-2">
+              <Zap size={14} className="text-yellow-400" />
+              <span className="tiny font-black uppercase">Stamina: {stamina}</span>
+           </div>
+           <div className="metric glass-card p-2 px-3 d-flex align-items-center gap-2">
+              <Star size={14} className="text-secondary" />
+              <span className="tiny font-black uppercase">Credits: {credit}</span>
+           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="gen-main-layout">
-        <aside className="gen-settings-sidebar">
-          <div className="setting-header">
-             <button className="guide-btn"><HelpCircle size={14} /> Guides</button>
-             <button className="reset-btn"><RefreshCw size={14} /> Reset</button>
+      <div className="gen-main-layout mt-4">
+        <aside className="gen-settings-sidebar glass-card mx-3 p-4">
+          <div className="setting-section mb-4">
+            <label className="tiny-label mb-3 d-block text-slate-400 font-black">NEURAL MODEL</label>
+            <div className="model-chip-grid d-flex flex-wrap gap-2">
+              {imageModels.map((model) => (
+                <button
+                  key={model}
+                  className={`model-chip ${selectedImageModel === model ? 'active' : ''}`}
+                  onClick={() => setSelectedImageModel(model)}
+                >
+                  {model}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="settings-scroll-area">
-            {activeTab === 'Video' ? (
-              <div className="setting-section">
-                <label>Video Model</label>
-                <div className="model-chip-grid">
-                  {videoModels.map((model) => (
-                    <button
-                      key={model}
-                      className={`model-chip ${selectedVideoModel === model ? 'active' : ''}`}
-                      onClick={() => setSelectedVideoModel(model)}
-                    >
-                      {model}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="setting-section">
-                  <label>Image Model</label>
-                  <div className="model-chip-grid">
-                    {imageModels.map((model) => (
-                      <button
-                        key={model}
-                        className={`model-chip ${selectedImageModel === model ? 'active' : ''}`}
-                        onClick={() => setSelectedImageModel(model)}
-                      >
-                        {model}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="setting-section">
-                  <label>Image Tools</label>
-                  <div className="model-chip-grid">
-                    {imageTools.map((tool) => (
-                      <button
-                        key={tool}
-                        className={`model-chip ${selectedImageTool === tool ? 'active' : ''}`}
-                        onClick={() => setSelectedImageTool(tool)}
-                      >
-                        {tool}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
-
-            <div className="setting-section">
-              <div className="section-title">Element <span className="beta-lite">Combo Library NEW</span></div>
-              <div className="image-upload-zone">
-                <Upload size={24} />
-                <p>Click to upload or drag images here.</p>
-                <span className="small-text">Supports JPG/PNG, Up to 10MB</span>
-              </div>
-              <div className="example-images">
-                <div className="ex-box">🍌 Cat</div>
-                <div className="ex-box">Mitsuri</div>
-                <div className="ex-box">Hinata</div>
-                <div className="ex-box">Musk</div>
-              </div>
+          <div className="setting-section mb-4">
+            <label className="tiny-label mb-3 d-block text-slate-400 font-black">ORIENTATION</label>
+            <div className="orientation-toggle d-flex gap-2">
+              {['Portrait', 'Landscape'].map((item) => (
+                <button
+                  key={item}
+                  className={`tab-pill flex-fill ${orientation === item ? 'active' : ''}`}
+                  onClick={() => setOrientation(item)}
+                >
+                  {item}
+                </button>
+              ))}
             </div>
+          </div>
 
-            <div className="setting-section">
-              <label>Upload Audio (Optional)</label>
-              <div className="audio-upload-zone">
-                 <Music size={18} />
-                 <span>Click/Drag/Paste MP3/WAV</span>
-              </div>
-            </div>
-
-            <div className="setting-section">
-              <label>Generation Mode</label>
-              <div className="option-pills grid-2">
-                <button className="active">Standard</button>
-                <button className="vip">Quality <Star size={10} /></button>
-                <button className="vip">Ultra HD <Star size={10} /></button>
-                <button className="vip">Professional <Star size={10} /></button>
-              </div>
-            </div>
-
-            <div className="setting-section">
-              <label>Prompt Magic</label>
-              <div className="option-pills grid-3">
-                <button className="active">Auto</button>
-                <button>On</button>
-                <button>Off</button>
-              </div>
-            </div>
-
-            <div className="setting-section">
-              <label>Duration</label>
-              <div className="option-pills grid-3">
-                <button className="active">5s</button>
-                <button>10s</button>
-                <button>15s</button>
-              </div>
-            </div>
-
-            <div className="setting-section">
-              <label>Private Creation</label>
-              <div className="toggle-lock">
-                <Lock size={14} /> <span>Enabled for VIP</span>
-              </div>
-            </div>
-
-            <button className="advanced-config-btn">Advanced Config</button>
+          <div className="setting-section mb-4">
+             <div className="glass-card p-4 border-dashed">
+                <Upload size={20} className="text-slate-500 mb-2 mx-auto" />
+                <p className="tiny text-center text-slate-500 font-bold">DRAG IMAGE ANCHOR</p>
+             </div>
           </div>
         </aside>
 
-        <main className="gen-content-area">
-          <div className="image-generator-panel glass-card">
-            <h2>Generate images</h2>
-            <p>Here you can quickly create image assets</p>
+        <main className="gen-content-area flex-fill pe-3">
+          <div className="engine-viewport glass-card p-5 mb-4 text-center" style={{ minHeight: '400px', display: 'grid', placeItems: 'center' }}>
+            <AnimatePresence mode="wait">
+              {generateState === 'loading' ? (
+                <motion.div 
+                  key="loading"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                >
+                   <div className="status-blip-large active mx-auto mb-4" />
+                   <h3 className="tiny font-black uppercase tracking-widest text-white">{statusMessage}</h3>
+                   <div className="nv-progress-container mt-4 mx-auto" style={{ height: '4px', maxWidth: '300px' }}>
+                      <motion.div className="nv-progress-fill" animate={{ width: `${progress}%` }} />
+                   </div>
+                </motion.div>
+              ) : (
+                <div key="idle">
+                   <ImageIcon size={64} className="text-slate-800 mx-auto mb-4" />
+                   <p className="tiny text-slate-500 font-black uppercase">Awaiting neural commands</p>
+                </div>
+              )}
+            </AnimatePresence>
+          </div>
 
-            <div className="field-group">
-              <label>Model</label>
-              <div className="select-like">{selectedImageModel}</div>
-            </div>
-
-            <div className="field-group">
-              <label>Orientation</label>
-              <div className="orientation-toggle">
-                {['Portrait', 'Landscape'].map((item) => (
-                  <button
-                    key={item}
-                    className={orientation === item ? 'active' : ''}
-                    onClick={() => setOrientation(item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="field-group">
-              <label>Prompt</label>
-              <textarea
-                placeholder="Type your prompt to create assets for your video..."
-                className="asset-prompt-input"
-                maxLength={1000}
-                value={promptText}
-                onChange={(e) => setPromptText(e.target.value)}
-              />
-              <div className="prompt-meta">{promptText.length} / 1000</div>
-            </div>
-
-            <div className="usage-left">You have {usesRemaining} model uses remaining</div>
-
-            <CreditErrorMessage error={generateState === 'error' ? statusMessage : null} />
-
-            <button
-              className={`generate-asset-btn ${generateState === 'loading' ? 'loading' : ''}`}
-              onClick={handleGenerateAsset}
-              disabled={!canGenerate}
-            >
-              <span>{generateState === 'loading' ? 'Generating...' : 'Generate Asset'}</span>
-              <div className="cost-badge"><Zap size={12} /> {activeGenerationCost}</div>
-            </button>
-
-            <div className="recent-outputs">
-              <h3>Recent outputs</h3>
-              <div className="outputs-grid">
-                {outputs.length === 0 ? (
-                  <>
-                    <div className="output-placeholder">No outputs yet</div>
-                    <div className="output-placeholder">Your generated assets will appear here</div>
-                  </>
-                ) : (
-                  outputs.map((item) => (
-                    <article key={item.id} className="output-card">
-                      <img src={item.url} alt={item.prompt} loading="lazy" />
-                      <div className="output-meta">
-                        <strong>{item.model} • {item.orientation}</strong>
-                        <span>{item.created_at}</span>
+          <div className="recent-outputs-v4">
+             <div className="d-flex justify-content-between align-items-center mb-4">
+                <h3 className="tiny font-black text-white m-0">NEURAL VAULT (RECENT)</h3>
+                <button className="tiny text-slate-500 font-black bg-transparent border-none">VIEW ALL</button>
+             </div>
+             <div className="outputs-grid-v4">
+                {outputs.map(out => (
+                   <div key={out.id} className="output-card-v4 glass-card overflow-hidden">
+                      <div className="output-preview">
+                         <img src={out.url} alt={out.prompt} />
                       </div>
-                      <p>{item.prompt}</p>
-                    </article>
-                  ))
-                )}
-              </div>
-            </div>
+                      <div className="output-footer p-3 bg-black/40">
+                         <p className="tiny text-white font-bold m-0 truncate">{out.prompt}</p>
+                         <span className="tiny-label text-slate-500">{out.model} • {out.created_at}</span>
+                      </div>
+                   </div>
+                ))}
+             </div>
           </div>
         </main>
       </div>
+
+      <PromptBar 
+        placeholder="Synthesize a cinematic landscape of a futuristic neon city..."
+        onExecute={(val) => {
+          setPromptText(val);
+          handleGenerateAsset();
+        }}
+        isProcessing={generateState === 'loading'}
+      />
     </div>
   )
 }
 
 export default ImageGenerator
-
-
-
-
-

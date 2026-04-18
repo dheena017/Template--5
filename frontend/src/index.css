@@ -91,6 +91,13 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  perspective: 1500px;
+  overflow-x: hidden;
+}
+
+#root {
+  transform-style: preserve-3d;
+  min-height: 100vh;
 }
 
 button, input, select, textarea {

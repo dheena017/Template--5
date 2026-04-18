@@ -6,6 +6,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { SettingsProvider } from './context/SettingsContext'
 import ErrorBoundary from './components/ErrorBoundary'
+import { registerServiceWorker } from './services/serviceWorkerRegistration'
+
+registerServiceWorker()
 
 const rootElement = document.getElementById('root')
 

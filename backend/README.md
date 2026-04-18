@@ -54,4 +54,3 @@ If you need to install new packages, use the root environment's pip:
 - **Database**: SQLite (SQLAlchemy 2.0)
 - **Validation**: Pydantic v2
 - **I/O Operations**: aiofiles, python-multipart
-\n

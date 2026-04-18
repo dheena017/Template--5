@@ -1,211 +1,306 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import { 
-  Type, Sparkles, Play, Download, 
-  Share2, Save, Wand2, Volume2, 
-  Mic2, Settings2, Sliders, Info,
-  ChevronRight, ArrowRight, Activity,
-  Globe2, Zap, Headphones, MessageSquare,
-  Lock, Key, Layers, Palette
-} from 'lucide-react'
-import { useTheme } from '../../context/ThemeContext'
-import '../../styles/pages/speech/TextToSpeech.css'
-import { api, logger } from '../../services/api'
+  Speaker, 
+  Settings, 
+  Play, 
+  Download, 
+  Sparkles, 
+  Activity, 
+  Shield, 
+  ChevronRight, 
+  ChevronLeft,
+  Mic,
+  Waves,
+  Music,
+  Check,
+  Zap,
+  BotIcon
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import api from '../../services/api';
+import '../video-ai/ImageToVideo/ImageToVideo.css';
+import '../../styles/pages/speech/TextToSpeech.css';
 
 const TextToSpeech = () => {
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [voiceModel, setVoiceModel] = useState('Michael Caine')
-  const [inputText, setInputText] = useState('')
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState(null)
-  const { accentColor } = useTheme()
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    text: '',
+    voice: 'Narrator Prime',
+    settings: { stability: 0.65, similarity: 0.75, style: 0.1 },
+    audioUrl: null
+  });
 
-  useEffect(() => {
-    logger.log('TTS', 'Component mounted')
-  }, [])
-
-  const handleGenerate = async () => {
-    if (!inputText.trim()) {
-      alert('Please enter some text first')
-      return
-    }
-    setIsGenerating(true)
-    setResult(null)
-    setError(null)
-    logger.log('TTS', 'Starting generation', { voice: voiceModel, textLength: inputText.length })
-    try {
-      // TTS endpoint not yet implemented on backend — upload text as a file for queuing
-      const textBlob = new Blob([inputText], { type: 'text/plain' })
-      const file = new File([textBlob], 'tts_script.txt', { type: 'text/plain' })
-      const uploadRes = await api.uploadFile(file)
-      if (uploadRes && uploadRes.url) {
-        setResult({ message: 'Script queued for TTS synthesis.', url: uploadRes.url })
-        logger.success('TTS', 'Script uploaded successfully')
-      } else {
-        throw new Error('Upload failed')
-      }
-    } catch (err) {
-      setError(err.message)
-      logger.error('TTS', 'Generation failed', err.message)
-    } finally {
-      setIsGenerating(false)
-    }
-  }
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [statusMessage, setStatusMessage] = useState('IDLE');
 
   const voices = [
-    { name: 'Michael Caine', desc: 'Legendary, British, Calm', id: 'mc-1' },
-    { name: 'Sarah Anderson', desc: 'Youthful, Energetic, US', id: 'sa-1' },
-    { name: 'Marcus Flint', desc: 'Deep, Narrative, UK', id: 'mf-1' }
-  ]
+    { id: 'v1', name: 'Narrator Prime', desc: 'Cinematic documentary tone', gender: 'Male' },
+    { id: 'v2', name: 'Executive Aura', desc: 'Professional corporate clarity', gender: 'Female' },
+    { id: 'v3', name: 'Nova Synth', desc: 'Futuristic AI assistant', gender: 'Non-binary' },
+    { id: 'v4', name: 'Storyteller Pro', desc: 'Deep emotional narrative', gender: 'Male' },
+  ];
 
-  const quickStarts = [
-    'Narrate a story',
-    'Tell a silly joke',
-    'Record an advertisement',
-    'Speak in different languages',
-    'Direct a dramatic movie scene',
-    'Hear from a video game character',
-    'Introduce your podcast',
-    'Guide a meditation class'
-  ]
+  const handleSynthesize = async () => {
+    setCurrentStep(3); // Synthesis Phase
+    setIsProcessing(true);
+    setProgress(10);
+    setStatusMessage('UPLOADING NEURAL SCRIPT...');
+
+    // Simulate multi-stage synthesis
+    const stages = [
+      { p: 30, m: 'WARPING VOCAL CORDS...' },
+      { p: 60, m: 'BLENDING EMOTIONAL PITCH...' },
+      { p: 85, m: 'CLEANING SONIC NOISE...' },
+      { p: 100, m: 'GENERATING LOSSLESS MASTER...' }
+    ];
+
+    for (const stage of stages) {
+      await new Promise(r => setTimeout(r, 1200));
+      setProgress(stage.p);
+      setStatusMessage(stage.m);
+    }
+
+    setIsProcessing(false);
+    setFormData(prev => ({ 
+      ...prev, 
+      audioUrl: 'https://cdn.pixabay.com/audio/2022/01/18/audio_d0a13e69d2.mp3' // Mock Result
+    }));
+    setCurrentStep(4);
+  };
 
   return (
-    <div className="tts-container">
-      <header className="tts-header">
-        <div className="header-left">
-          <h1>Text to Speech <span className="hq-badge">Sono V3</span></h1>
-          <p>Start typing here or paste any text you want to turn into lifelike speech...</p>
+    <div className="fusion-dashboard">
+      <header className="fusion-header">
+        <div className="fh-left">
+           <div className="fh-badge"><Shield size={10} /> SONIC SYNTH v5.2</div>
+           <h1 className="display-title h1 font-black text-white">Aura <span className="text-secondary text-indigo-400">Voice Synth</span></h1>
+           <p className="tiny text-slate-500 uppercase font-black tracking-widest mt-1">Autonomous neural text-to-speech and vocal mastering studio.</p>
         </div>
-        <div className="header-actions">
-           <button className="secondary-btn"><Zap size={18} /> Optimization: On</button>
-           <button className="primary-btn"><Sparkles size={18} /> Pro Access</button>
+        <div className="fh-right d-flex align-items-center gap-4">
+           {currentStep > 1 && (
+             <div className="step-nav-pills d-flex gap-2">
+                {[1, 2, 3, 4].map(s => (
+                   <div 
+                     key={s} 
+                     className={`step-dot ${currentStep === s ? 'active' : ''} ${currentStep > s ? 'done' : ''}`} 
+                   />
+                ))}
+             </div>
+           )}
+           <div className="gpu-cluster-card p-3 glass-card">
+              <div className="gpu-label-v4 tiny font-black uppercase text-slate-400 d-flex align-items-center gap-2">
+                 <Activity size={12} className="text-indigo-400" /> Sonic Sync Pulse
+              </div>
+              <div className="gpu-mini-progress mt-1">
+                <motion.div 
+                    className="gpu-fill" 
+                    animate={{ width: isProcessing ? '90%' : '5%' }} 
+                    transition={{ duration: 1.5 }}
+                    style={{ background: '#818cf8' }}
+                />
+              </div>
+           </div>
         </div>
       </header>
 
-      <div className="tts-layout">
-        <main className="tts-main premium-card">
-           <div className="voice-selection-bar glass-card">
-              <label><Mic2 size={16} /> Select Neural Model</label>
-              <div className="voice-grid">
-                {voices.map(v => (
-                  <button 
-                    key={v.id} 
-                    className={`voice-btn ${voiceModel === v.name ? 'active' : ''}`}
-                    onClick={() => setVoiceModel(v.name)}
-                  >
-                    <strong>{v.name}</strong>
-                    <span>{v.desc}</span>
-                  </button>
-                ))}
-              </div>
-           </div>
-
-           <div className="text-canvas">
-              <h3>Input Text</h3>
-              <div className="quick-starts">
-                <span className="quick-starts-title">Get started with</span>
-                <div className="quick-start-grid">
-                  {quickStarts.map((prompt) => (
-                    <button
-                      key={prompt}
-                      type="button"
-                      className="quick-start-btn"
-                      onClick={() => setInputText(prompt)}
-                    >
-                      {prompt}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="canvas-wrapper">
-                 <textarea 
-                   placeholder="Start typing here or paste any text you want to turn into lifelike speech..."
-                   className="premium-textarea"
-                   value={inputText}
-                   onChange={(e) => setInputText(e.target.value)}
-                 />
-                 <div className="char-counter">{inputText.length} / 5,000 characters</div>
-              </div>
-           </div>
-
-           <div className="generation-controls">
-              <button 
-                className="generate-tts-btn" 
-                onClick={handleGenerate}
-                disabled={isGenerating}
-              >
-                {isGenerating ? (
-                  <><div className="loader-ring"></div> Synthesizing...</>
-                ) : (
-                  <><Wand2 size={20} /> Generate Speech</>
-                )}
-              </button>
-               <div className="cost-estimate">Est. Cost: <strong>4 Credits</strong></div>
-            </div>
-            {result && (
-              <div style={{ padding: '16px', background: 'rgba(100,200,100,0.1)', borderRadius: '12px', border: '1px solid rgba(100,200,100,0.2)', marginTop: '16px' }}>
-                <strong style={{ color: '#7dffb3' }}>✓ {result.message}</strong>
-              </div>
-            )}
-            {error && (
-              <div style={{ padding: '16px', background: 'rgba(255,107,107,0.1)', borderRadius: '12px', border: '1px solid rgba(255,107,107,0.2)', marginTop: '16px' }}>
-                <strong style={{ color: '#ff6b6b' }}>Error: {error}</strong>
-              </div>
-            )}
-         </main>
-
-        <aside className="tts-sidebar">
-           <section className="premium-card control-panel">
-              <div className="panel-title"><Settings2 size={18} /> Voice Laboratory</div>
-              
-              <div className="control-groups">
-                 <div className="control-item">
-                    <label>Stability</label>
-                    <input type="range" className="premium-range" data-accent={accentColor} />
-                    <div className="l-range"><span>Wild</span><span>Solid</span></div>
-                 </div>
-                 <div className="control-item">
-                    <label>Clarity + Similarity</label>
-                    <input type="range" className="premium-range" />
-                    <div className="l-range"><span>Lo-fi</span><span>Ultra</span></div>
-                 </div>
-                 <div className="control-item">
-                    <label>Style Exaggeration</label>
-                    <input type="range" className="premium-range" />
-                 </div>
-              </div>
-              
-              <div className="speaker-boost">
-                 <label className="checkbox-row">
-                    <input type="checkbox" defaultChecked />
-                    <span>Enable Speaker Boost <Info size={14} /></span>
-                 </label>
-              </div>
-           </section>
-
-           <section className="premium-card output-shelf">
-              <div className="panel-title"><Activity size={18} /> Recent Generations</div>
-              <div className="output-list">
-                 {[1, 2].map(i => (
-                   <div key={i} className="output-item">
-                      <div className="o-play"><Play size={14} fill="currentColor" /></div>
-                      <div className="o-info">
-                         <strong>Michael Caine - Script v2</strong>
-                         <span>12s • 420 KB</span>
-                      </div>
-                      <button className="icon-btn"><Download size={14} /></button>
+      <div className="fusion-grid mt-5">
+        <aside className="fusion-control-panel glass-card p-4">
+           <AnimatePresence mode="wait">
+              {currentStep === 1 && (
+                <motion.div 
+                  key="step1"
+                  initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
+                  className="brainstorm-wizard-v4"
+                >
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-indigo-400 d-flex align-items-center gap-2"><Sparkles size={10} /> CHAPTER 1</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Voice Selection</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Select the neural signature for your synthesis.</p>
                    </div>
-                 ))}
-              </div>
-           </section>
+
+                   <div className="voice-grid-aura mb-4">
+                      {voices.map(v => (
+                         <div 
+                           key={v.id} 
+                           className={`voice-card-v5 glass-card p-4 mb-2 ${formData.voice === v.name ? 'active' : ''}`}
+                           onClick={() => setFormData(p => ({ ...p, voice: v.name }))}
+                         >
+                            <div className="d-flex align-items-center gap-3">
+                               <div className="v-icon-box"><Mic size={18} /></div>
+                               <div>
+                                  <h4 className="tiny font-black text-white m-0">{v.name}</h4>
+                                  <p className="tiny text-slate-500 m-0">{v.desc}</p>
+                               </div>
+                            </div>
+                            <button className="play-btn-mini"><Play size={12} fill="currentColor" /></button>
+                         </div>
+                      ))}
+                   </div>
+
+                   <div className="wizard-footer-aura mt-5">
+                      <button 
+                        className="primary-aura-btn w-100" 
+                        onClick={() => setCurrentStep(2)}
+                        disabled={!formData.voice}
+                        style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)' }}
+                      >
+                         <span>Configure Parameters</span>
+                         <Settings size={18} />
+                      </button>
+                   </div>
+                </motion.div>
+              )}
+
+              {currentStep === 2 && (
+                <motion.div 
+                  key="step2"
+                  initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
+                  className="brainstorm-wizard-v4"
+                >
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-indigo-400 d-flex align-items-center gap-2"><Zap size={10} /> CHAPTER 2</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Vocal Scripting</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Provide the raw text for neural re-skinning.</p>
+                   </div>
+
+                   <div className="glass-card p-4 mb-4">
+                      <textarea 
+                         className="aura-input w-100" 
+                         rows={6}
+                         placeholder="Enter cinematic narration or dialogue here..."
+                         value={formData.text}
+                         onChange={(e) => setFormData(p => ({ ...p, text: e.target.value }))}
+                      />
+                   </div>
+
+                   <div className="sonic-parameters glass-card p-4">
+                      <div className="p-item mb-3">
+                         <div className="d-flex justify-content-between mb-1">
+                            <label className="tiny-label">Stability</label>
+                            <span className="tiny text-indigo-400">65%</span>
+                         </div>
+                         <div className="p-slider-track"><div className="fill" style={{ width: '65%', background: '#818cf8' }}></div></div>
+                      </div>
+                      <div className="p-item">
+                         <div className="d-flex justify-content-between mb-1">
+                            <label className="tiny-label">Clarity / Similarity</label>
+                            <span className="tiny text-indigo-400">75%</span>
+                         </div>
+                         <div className="p-slider-track"><div className="fill" style={{ width: '75%', background: '#818cf8' }}></div></div>
+                      </div>
+                   </div>
+
+                   <div className="wizard-footer-aura mt-5 d-flex gap-3">
+                      <button className="secondary-aura-btn flex-fill" onClick={() => setCurrentStep(1)}>
+                         <ChevronLeft size={18} />
+                         <span>Voices</span>
+                      </button>
+                      <button 
+                         className="primary-aura-btn flex-fill" 
+                         disabled={!formData.text}
+                         onClick={handleSynthesize}
+                         style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)' }}
+                      >
+                         <span>Synthesize Master</span>
+                         <Waves size={18} />
+                      </button>
+                   </div>
+                </motion.div>
+              )}
+
+              {currentStep === 3 && (
+                <div key="step3" className="processing-wizard-aura brainstorm-wizard-v4">
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-indigo-400 d-flex align-items-center gap-2"><Activity size={10} /> SONIC SYNTHESIS</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Kinetic Fusion</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Synthesizing vocal anchors. Stabilizing pitch nodes and temporal breath.</p>
+                   </div>
+                   <div className="glass-card p-5 text-center border-none" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                      <div className="status-blip-large active mx-auto mb-4 bg-indigo-500" />
+                      <h4 className="tiny font-black text-white uppercase tracking-widest">{statusMessage}</h4>
+                      <div className="nv-progress-container mt-4" style={{ height: '4px' }}>
+                         <motion.div 
+                            className="nv-progress-fill" 
+                            style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)' }}
+                            animate={{ width: `${progress}%` }}
+                         />
+                      </div>
+                   </div>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                <div key="step4" className="brainstorm-wizard-v4">
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-indigo-400 d-flex align-items-center gap-2"><Check size={10} /> FINAL CHAPTER</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Vocal Master Ready</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Aura sonic synthesis successful. Audio is now ready for production.</p>
+                   </div>
+
+                   <div className="glass-card p-4 mb-4 text-center">
+                      <div className="audio-player-v5 mb-3">
+                         <div className="d-flex align-items-center gap-3 justify-content-center p-3 bg-white/5 rounded-2xl">
+                            <button className="play-circle-btn"><Play size={24} fill="white" /></button>
+                            <div className="wave-sim-v5 flex-fill d-flex gap-1 align-items-center">
+                               {[20, 60, 40, 80, 50, 30, 70, 90, 40, 60].map((h, i) => (
+                                 <motion.div 
+                                    key={i} 
+                                    className="wave-bar bg-indigo-400" 
+                                    style={{ height: `${h}%`, width: '4px', borderRadius: '2px' }} 
+                                 />
+                               ))}
+                            </div>
+                         </div>
+                      </div>
+                      <p className="tiny text-indigo-400 font-black">BITRATE: 320KBPS LOSSLESS</p>
+                   </div>
+
+                   <div className="wizard-footer-aura mt-5">
+                      <button className="primary-aura-btn w-100 mb-3" onClick={() => window.open(formData.audioUrl)}>
+                         <Download size={18} />
+                         <span>Download Master WAV</span>
+                      </button>
+                      <button className="secondary-aura-btn w-100" onClick={() => setCurrentStep(1)}>
+                         Synthesize New Script
+                      </button>
+                   </div>
+                </div>
+              )}
+           </AnimatePresence>
         </aside>
+
+        <section className="fusion-viewport-container">
+           <div className="neural-viewport-v4 sonic-viewport">
+              <div className="nv-header border-bottom border-white/5">
+                 <div className="d-flex align-items-center gap-3">
+                    <div className="status-blip active bg-indigo-500" />
+                    <span className="tiny font-black text-white uppercase tracking-widest">Sonic Waveform Monitor</span>
+                 </div>
+              </div>
+              <div className="nv-content d-grid place-items-center">
+                 <div className="text-center">
+                    {currentStep === 3 ? (
+                      <motion.div 
+                        animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0, -5, 0] }}
+                        transition={{ repeat: Infinity, duration: 2.5 }}
+                      >
+                         <BotIcon size={120} className="text-indigo-500 mb-4 opacity-50" />
+                         <div className="kinetic-pulse-waves"></div>
+                      </motion.div>
+                    ) : (
+                      <div className="vocal-spectrogram-sim">
+                         <Activity size={100} className="text-indigo-400 opacity-20 mb-4" />
+                         <p className="tiny font-black text-white uppercase tracking-widest">Neural Vocal Registry Idle</p>
+                      </div>
+                    )}
+                 </div>
+              </div>
+           </div>
+        </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TextToSpeech
-
-
-
-
-
+export default TextToSpeech;

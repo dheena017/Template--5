@@ -83,92 +83,130 @@ const History = () => {
   }
 
   return (
-    <div className="history-page">
-      <header className="history-header">
-        <div>
-          <h1><HistoryIcon size={26} /> Activity History</h1>
-          <p>Track your recent creations, edits, exports, and automation events in one place.</p>
-        </div>
-        <button className="history-refresh-btn" onClick={loadHistory} disabled={loading}>
-          <RefreshCw size={16} className={loading ? 'spin' : ''} />
-          {loading ? 'Loading...' : 'Refresh'}
-        </button>
-      </header>
+    <div className="history-page-v3 cinematic-view">
+      <section className="history-hero-aura">
+         <motion.div 
+           className="hero-inner-aura"
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+         >
+           <span className="hero-tag-aura"><HistoryIcon size={14} /> SYSTEM AUDIT LOG</span>
+           <h1>Activity Timeline</h1>
+           <p>Monitor your distributed AI processing, generation events, and identity synthesis in real-time.</p>
+         </motion.div>
+         
+         <div className="hero-actions-aura">
+           <button className="premium-refresh-btn" onClick={loadHistory} disabled={loading}>
+             <RefreshCw size={18} className={loading ? 'spin' : ''} />
+             {loading ? 'Synchronizing...' : 'Refresh Logs'}
+           </button>
+         </div>
+      </section>
 
-      <AnimatePresence mode="wait">
-        {loading ? (
-          <motion.div
-            key="loading"
-            className="history-loading"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{ textAlign: 'center', padding: '60px', color: 'var(--text-secondary)' }}
-          >
-            <Loader2 size={32} className="spin" style={{ marginBottom: '16px' }} />
-            <p>Loading activity...</p>
-          </motion.div>
-        ) : error ? (
-          <motion.div key="error" className="history-error" style={{ padding: '40px', textAlign: 'center' }}>
-            <AlertCircle size={32} color="#ff4757" style={{ marginBottom: '12px' }} />
-            <p style={{ color: '#ff4757' }}>{error}</p>
-            <button onClick={loadHistory} style={{ marginTop: '16px', padding: '10px 24px', background: 'var(--primary)', border: 'none', borderRadius: '8px', color: '#fff', cursor: 'pointer' }}>
-              Retry
-            </button>
-          </motion.div>
-        ) : events.length === 0 ? (
-          <motion.div key="empty" style={{ textAlign: 'center', padding: '80px 20px', color: 'var(--text-secondary)' }}>
-            <HistoryIcon size={48} style={{ opacity: 0.3, marginBottom: '16px' }} />
-            <h3>No activity yet</h3>
-            <p>Your job history will appear here once you start using the AI tools.</p>
-          </motion.div>
-        ) : (
-          <motion.section
-            key="list"
-            className="history-timeline premium-card"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            {events.map((event, idx) => {
-              const status = event.status || 'Accepted'
-              const jobType = event.type || event.tool_name || 'job'
-              const statusColor = statusColors[status] || '#747d8c'
-              const icon = typeIcons[jobType.toLowerCase()] || <Layers size={16} />
-              return (
-                <article key={event.id || idx} className="history-item">
-                  <div className="history-icon" style={{ background: `${statusColor}22`, color: statusColor }}>
-                    {icon}
-                  </div>
-                  <div className="history-copy">
-                    <h3>{event.name || `Job #${String(event.id).slice(0, 8)}`}</h3>
-                    <p style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ color: statusColor, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        {statusIcons[status] || null}
-                        {status}
-                      </span>
-                      {event.progress != null && ` • ${event.progress}%`}
-                      {jobType && ` • ${jobType}`}
-                    </p>
-                  </div>
-                  <div className="history-meta">
-                    <span>{formatTime(event.created_at || event.timestamp)}</span>
-                    {event.result?.url && (
-                      <a
-                        href={event.result.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="history-open-btn"
-                      >
-                        Open <ExternalLink size={14} />
-                      </a>
-                    )}
-                  </div>
-                </article>
-              )
-            })}
-          </motion.section>
-        )}
-      </AnimatePresence>
+      <div className="history-content-bridge">
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <motion.div
+              key="loading"
+              className="history-loading-aura"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+            >
+              <div className="loading-orbit">
+                <Loader2 size={48} className="spin text-secondary" />
+                <div className="orbit-ring"></div>
+              </div>
+              <p>Scanning Neural Network...</p>
+            </motion.div>
+          ) : error ? (
+            <motion.div key="error" className="history-error-aura" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <div className="error-icon-box">
+                <AlertCircle size={40} />
+              </div>
+              <h3>Connection Terminated</h3>
+              <p>{error}</p>
+              <button className="retry-btn-aura" onClick={loadHistory}> Reconnect </button>
+            </motion.div>
+          ) : events.length === 0 ? (
+            <motion.div key="empty" className="history-empty-aura" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <div className="empty-symbol"><Ghost size={64} /></div>
+              <h3>Void Detected</h3>
+              <p>No activity logs found in the current temporal window.</p>
+              <button className="action-btn-primary" onClick={() => window.location.href='/dashboard'}>Launch Tool</button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="list"
+              className="history-timeline-v3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {events.map((event, idx) => {
+                const status = event.status || 'Accepted';
+                const jobType = event.type || event.tool_name || 'Workflow';
+                const statusColor = statusColors[status] || '#747d8c';
+                const icon = typeIcons[jobType.toLowerCase()] || <Layers size={16} />;
+                
+                return (
+                  <motion.article 
+                    key={event.id || idx} 
+                    className="history-event-card glass-ui-active"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                  >
+                    <div className="event-marker">
+                       <div className="marker-dot" style={{ backgroundColor: statusColor, boxShadow: `0 0 15px ${statusColor}` }}></div>
+                       <div className="marker-line"></div>
+                    </div>
+                    
+                    <div className="event-body-premium">
+                      <div className="event-type-icon" style={{ background: `${statusColor}15`, color: statusColor }}>
+                        {icon}
+                      </div>
+                      
+                      <div className="event-main-content">
+                        <div className="event-header-flex">
+                          <h3 className="event-title">{event.name || `Session_ID: ${String(event.id || idx).slice(0, 10)}`}</h3>
+                          <span className="event-time-stamp">{formatTime(event.created_at || event.timestamp)}</span>
+                        </div>
+                        
+                        <div className="event-meta-row">
+                          <div className="event-status-badge" style={{ color: statusColor, background: `${statusColor}10` }}>
+                            {statusIcons[status]}
+                            <span>{status.toUpperCase()}</span>
+                          </div>
+                          
+                          <span className="event-sep">|</span>
+                          <span className="event-category">{jobType}</span>
+                          
+                          {event.progress != null && (
+                            <div className="event-progress-mini">
+                               <div className="progress-track"><div className="progress-fill" style={{ width: `${event.progress}%`, background: statusColor }}></div></div>
+                               <span>{event.progress}%</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="event-actions-hub">
+                        {event.result?.url ? (
+                          <a href={event.result.url} target="_blank" rel="noopener noreferrer" className="event-link-btn">
+                            Retrieve <ExternalLink size={14} />
+                          </a>
+                        ) : (
+                          <button className="event-view-btn" title="View details"> Inspect </button>
+                        )}
+                      </div>
+                    </div>
+                  </motion.article>
+                )
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }

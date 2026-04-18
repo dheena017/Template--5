@@ -1,143 +1,290 @@
-import React, { useState } from 'react'
-import { Bot, Upload, Camera, Sparkles, Check, Zap, ChevronRight, User } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import '../../styles/pages/avatar/AvatarCreator.css'
-
-const steps = ['Method', 'Setup', 'Preview', 'Publish']
+import React, { useState, useMemo } from 'react';
+import { 
+  Bot, 
+  Upload, 
+  Camera, 
+  Sparkles, 
+  Check, 
+  Zap, 
+  ChevronRight, 
+  ChevronLeft,
+  User,
+  Activity,
+  Shield,
+  Layers
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import api from '../../services/api';
+import '../video-ai/ImageToVideo/ImageToVideo.css';
+import '../../styles/pages/avatar/AvatarCreator.css';
 
 const AvatarCreator = () => {
-  const [step, setStep] = useState(0)
-  const [method, setMethod] = useState(null)
-  const [name, setName] = useState('')
-  const [file, setFile] = useState(null)
-  const [processing, setProcessing] = useState(false)
-  const [done, setDone] = useState(false)
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    method: null,
+    name: '',
+    file: null,
+    settings: { precision: 'High', style: 'Realistic', voiceSync: true }
+  });
+
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [genProgress, setGenProgress] = useState(0);
+  const [tickerText, setTickerText] = useState('IDLE');
+  const [resultAvatar, setResultAvatar] = useState(null);
 
   const methods = [
-    { id: 'photo', icon: <Camera size={32} />, title: 'From Photo', desc: 'Upload a clear front-facing photo to create your avatar', color: '#6366f1' },
-    { id: 'video', icon: <Upload size={32} />, title: 'From Video', desc: 'Record or upload a short 5-minute video for a hyper-realistic avatar', color: '#10b981', badge: 'Most Realistic' },
-    { id: 'preset', icon: <Bot size={32} />, title: 'Preset Avatar', desc: 'Customize an existing avatar to match your brand', color: '#f59e0b' },
-  ]
+    { id: 'photo', icon: <Camera size={28} />, title: 'Visual Synthesis', desc: 'Generate from a single anchor photo', color: '#a855f7' },
+    { id: 'video', icon: <Upload size={28} />, title: 'Kinetic Training', desc: '5-minute deep-drive video training', color: '#10b981', badge: 'ULTRA' },
+    { id: 'preset', icon: <Bot size={28} />, title: 'Neural Template', desc: 'Selection of studio-tuned personas', color: '#f59e0b' },
+  ];
 
-  const handleProcess = () => {
-    setProcessing(true)
-    setTimeout(() => { setProcessing(false); setDone(true); setStep(2) }, 3000)
-  }
+  const handleUpdateData = (newData) => {
+    setFormData(prev => ({ ...prev, ...newData }));
+  };
+
+  const handleInitializeTraining = async () => {
+    setCurrentStep(3); // Training Phase
+    setIsProcessing(true);
+    setGenProgress(0);
+    setTickerText('UPLOADING NEURAL ANCHORS...');
+
+    const interval = setInterval(() => {
+      setGenProgress(p => {
+        if (p >= 100) {
+          clearInterval(interval);
+          setIsProcessing(false);
+          setTickerText('TRAINING COMPLETE');
+          setResultAvatar({ id: 'av_1', name: formData.name });
+          setCurrentStep(4);
+          return 100;
+        }
+        if (p > 30) setTickerText('OPTIMIZING LATENT SPACE...');
+        if (p > 70) setTickerText('STABILIZING PERSONA BIOMETRICS...');
+        return p + 1.25;
+      });
+    }, 100);
+  };
 
   return (
-    <div className="avatar-creator-page">
-      {/* Steps */}
-      <div className="ac-steps glass-card">
-        {steps.map((s, i) => (
-          <div key={s} className={`ac-step ${step === i ? 'active' : ''} ${step > i ? 'done' : ''}`}>
-            <div className="ac-step-num">{step > i ? <Check size={14} /> : i + 1}</div>
-            <span>{s}</span>
-          </div>
-        ))}
-      </div>
-
-      <AnimatePresence mode="wait">
-        {step === 0 && (
-          <motion.div key="step0" className="ac-body" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <div className="ac-hero">
-              <h1>Create Your Avatar</h1>
-              <p>Choose how you'd like to create your personal AI avatar</p>
-            </div>
-            <div className="ac-method-grid">
-              {methods.map(m => (
-                <motion.div
-                  key={m.id}
-                  className={`ac-method-card premium-card ${method === m.id ? 'selected' : ''}`}
-                  whileHover={{ y: -6 }}
-                  onClick={() => setMethod(m.id)}
-                  style={{ '--method-color': m.color }}
-                >
-                  {m.badge && <div className="ac-method-badge">{m.badge}</div>}
-                  <div className="ac-method-icon" style={{ background: `${m.color}22`, color: m.color }}>{m.icon}</div>
-                  <h3>{m.title}</h3>
-                  <p>{m.desc}</p>
-                  {method === m.id && <div className="ac-check"><Check size={14} /></div>}
-                </motion.div>
-              ))}
-            </div>
-            <button className="ac-next-btn" disabled={!method} onClick={() => setStep(1)}>
-              Continue <ChevronRight size={16} />
-            </button>
-          </motion.div>
-        )}
-
-        {step === 1 && (
-          <motion.div key="step1" className="ac-body" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <div className="ac-hero">
-              <h1>Setup Your Avatar</h1>
-              <p>Name it and {method === 'photo' ? 'upload a photo' : method === 'video' ? 'upload a video' : 'pick a preset'}</p>
-            </div>
-            <div className="ac-setup premium-card">
-              <div className="ac-form-group">
-                <label>Avatar Name</label>
-                <input type="text" placeholder="e.g. My Work Avatar" value={name} onChange={e => setName(e.target.value)} className="ac-input" />
+    <div className="fusion-dashboard">
+      <header className="fusion-header">
+        <div className="fh-left">
+           <div className="fh-badge"><Shield size={10} /> PERSONA ENGINE v4.8</div>
+           <h1 className="display-title">Aura <span className="text-secondary">Persona Engine</span></h1>
+           <p className="tiny text-slate-500 uppercase font-black tracking-widest mt-1">Autonomous digital identity synthesis & neural character training hub.</p>
+        </div>
+        <div className="fh-right d-flex align-items-center gap-4">
+           {currentStep > 1 && (
+             <div className="step-nav-pills d-flex gap-2">
+                {[1, 2, 3, 4].map(s => (
+                   <div 
+                     key={s} 
+                     className={`step-dot ${currentStep === s ? 'active' : ''} ${currentStep > s ? 'done' : ''}`} 
+                   />
+                ))}
+             </div>
+           )}
+           <div className="gpu-cluster-card p-3 glass-card">
+              <div className="gpu-label-v4 tiny font-black uppercase text-slate-400 d-flex align-items-center gap-2">
+                 <Activity size={12} className="text-emerald-400" /> Training State
               </div>
+              <div className="gpu-mini-progress mt-1">
+                <motion.div 
+                    className="gpu-fill" 
+                    animate={{ width: isProcessing ? '85%' : '5%' }} 
+                    transition={{ duration: 1 }}
+                />
+              </div>
+           </div>
+        </div>
+      </header>
 
-              <div className="ac-form-group">
-                <label>{method === 'photo' ? 'Upload Photo' : method === 'video' ? 'Upload Video' : 'Select Preset'}</label>
-                {method !== 'preset' ? (
-                  <div className="ac-upload-box" onClick={() => document.getElementById('ac-file').click()}>
-                    {file ? (
-                      <div className="ac-file-preview">
-                        <Check size={24} />
-                        <span>{file.name}</span>
+      <div className="fusion-grid mt-5">
+        <aside className="fusion-control-panel glass-card p-4">
+           <AnimatePresence mode="wait">
+              {currentStep === 1 && (
+                <motion.div 
+                  key="step1"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="brainstorm-wizard-v4"
+                >
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-emerald-400 d-flex align-items-center gap-2"><Zap size={10} /> CHAPTER 1</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Select Methodology</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Choose the synthesis pipeline for your digital identity.</p>
+                   </div>
+
+                   <div className="method-grid-aura">
+                      {methods.map(m => (
+                        <div 
+                           key={m.id} 
+                           className={`method-card-aura glass-card p-4 mb-3 ${formData.method === m.id ? 'active' : ''}`}
+                           onClick={() => handleUpdateData({ method: m.id })}
+                        >
+                           <div className="d-flex align-items-center gap-3">
+                              <div className="m-icon" style={{ color: m.color }}>{m.icon}</div>
+                              <div>
+                                 <h4 className="tiny font-black text-white m-0">{m.title}</h4>
+                                 <p className="tiny text-slate-500 m-0">{m.desc}</p>
+                              </div>
+                           </div>
+                           {m.badge && <span className="m-badge">{m.badge}</span>}
+                        </div>
+                      ))}
+                   </div>
+
+                   <div className="wizard-footer-aura mt-5">
+                      <button 
+                        className="primary-aura-btn w-100" 
+                        disabled={!formData.method}
+                        onClick={() => setCurrentStep(2)}
+                      >
+                         <span>Initialize Setup</span>
+                         <ChevronRight size={18} />
+                      </button>
+                   </div>
+                </motion.div>
+              )}
+
+              {currentStep === 2 && (
+                <motion.div 
+                  key="step2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="brainstorm-wizard-v4"
+                >
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-emerald-400 d-flex align-items-center gap-2"><Layers size={10} /> CHAPTER 2</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Identity Parameters</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Provide labels and visual anchors for neural indexing.</p>
+                   </div>
+
+                   <div className="glass-card p-4 mb-4">
+                      <label className="tiny-label mb-2">Persona Name</label>
+                      <input 
+                         type="text" 
+                         className="aura-input w-100" 
+                         placeholder="e.g. Executive Avatar V1"
+                         value={formData.name}
+                         onChange={(e) => handleUpdateData({ name: e.target.value })}
+                      />
+                   </div>
+
+                   <div className="upload-zone-aura mb-4" onClick={() => document.getElementById('persona-file').click()}>
+                      <Upload size={32} className="text-primary mb-2 mx-auto" />
+                      <p className="tiny text-white font-black uppercase">Upload Visual Anchor</p>
+                      <span className="tiny text-slate-500 block">Drag & Drop JPG/MP4</span>
+                      <input id="persona-file" type="file" hidden />
+                   </div>
+
+                   <div className="wizard-footer-aura mt-5 d-flex gap-3">
+                      <button className="secondary-aura-btn flex-fill" onClick={() => setCurrentStep(1)}>
+                         <ChevronLeft size={18} />
+                         <span>Method</span>
+                      </button>
+                      <button 
+                         className="primary-aura-btn flex-fill" 
+                         disabled={!formData.name}
+                         onClick={handleInitializeTraining}
+                      >
+                         <span>Start Training</span>
+                         <Sparkles size={18} />
+                      </button>
+                   </div>
+                </motion.div>
+              )}
+
+              {currentStep === 3 && (
+                <div key="step3" className="processing-wizard-aura brainstorm-wizard-v4">
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-emerald-400 d-flex align-items-center gap-2"><Activity size={10} /> NEURAL TRAINING</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Synthesis Phase</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Training neural nodes. Calibrating lip-sync weights and facial skinning.</p>
+                   </div>
+                   <div className="glass-card p-5 text-center border-none" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                      <div className="status-blip-large active mx-auto mb-4" />
+                      <h4 className="tiny font-black text-white uppercase tracking-widest">{tickerText}</h4>
+                      <div className="nv-progress-container mt-4" style={{ height: '4px' }}>
+                         <motion.div 
+                            className="nv-progress-fill" 
+                            animate={{ width: `${genProgress}%` }}
+                         />
+                      </div>
+                   </div>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                <div key="step4" className="brainstorm-wizard-v4">
+                   <div className="wizard-header-v4 mb-5">
+                      <label className="tiny-label text-emerald-400 d-flex align-items-center gap-2"><Check size={10} /> FINAL CHAPTER</label>
+                      <h2 className="display-6 fw-900 border-none text-white">Persona Verified</h2>
+                      <p className="tiny text-slate-500 uppercase font-black tracking-widest">Aura synthesis successful. Character is now ready for global production.</p>
+                   </div>
+
+                   <div className="glass-card p-4 mb-4 text-center">
+                      <div className="avatar-placeholder-v4 mx-auto mb-4">
+                         <User size={64} className="text-secondary" />
+                      </div>
+                      <h3 className="tiny font-black uppercase text-white">{formData.name}</h3>
+                      <p className="tiny text-emerald-400">STATUS: READY FOR PRODUCTION</p>
+                   </div>
+
+                   <div className="wizard-footer-aura mt-5">
+                      <button className="primary-aura-btn w-100 mb-3" onClick={() => window.location.reload()}>
+                         <Zap size={18} />
+                         <span>Deploy in Video Studio</span>
+                      </button>
+                      <button className="secondary-aura-btn w-100" onClick={() => setCurrentStep(1)}>
+                         Initialization New Training
+                      </button>
+                   </div>
+                </div>
+              )}
+           </AnimatePresence>
+        </aside>
+
+        <section className="fusion-viewport-container">
+           <div className="neural-viewport-v4 persona-viewport">
+              <div className="nv-header">
+                 <div className="d-flex align-items-center gap-3">
+                    <div className="status-blip active" />
+                    <span className="tiny font-black text-white uppercase tracking-widest">LIVE BIOMETRIC MONITOR</span>
+                 </div>
+              </div>
+              <div className="nv-content d-grid place-items-center">
+                 <div className="text-center">
+                    {currentStep === 3 ? (
+                      <motion.div 
+                        animate={{ scale: [1, 1.05, 1], opacity: [0.5, 1, 0.5] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        className="biometric-mesh"
+                      >
+                         <Layers size={80} className="text-primary mb-4" />
+                         <p className="tiny font-black text-primary uppercase">MESHING IDENTITY...</p>
+                      </motion.div>
+                    ) : resultAvatar ? (
+                      <div className="avatar-preview-final">
+                         <div className="status-circle pulse"></div>
+                         <Bot size={120} className="text-white mb-4" />
+                         <h2 className="text-white font-black uppercase tracking-widest">PERSONA_001_ACTIVE</h2>
                       </div>
                     ) : (
-                      <>
-                        <Upload size={32} />
-                        <p>Click to upload {method === 'photo' ? 'a photo (JPG, PNG)' : 'a video (MP4, MOV)'}</p>
-                      </>
-                    )}
-                  </div>
-                ) : (
-                  <div className="ac-preset-row">
-                    {['Alex', 'Sofia', 'Marcus', 'Zoe', 'Daniel', 'Aria'].map(n => (
-                      <div key={n} className={`ac-preset-opt ${name === n ? 'active' : ''}`} onClick={() => setName(n)}>
-                        <Bot size={28} />
-                        <span>{n}</span>
+                      <div className="text-center opacity-25">
+                         <User size={80} className="mb-4" />
+                         <p className="tiny font-black uppercase">Awaiting Neural Link</p>
                       </div>
-                    ))}
-                  </div>
-                )}
-                <input id="ac-file" type="file" accept={method === 'photo' ? 'image/*' : 'video/*'} style={{ display: 'none' }} onChange={e => setFile(e.target.files?.[0])} />
+                    )}
+                 </div>
               </div>
-
-              <button className="ac-next-btn" disabled={!name || (!file && method !== 'preset')} onClick={handleProcess}>
-                {processing ? <><div className="ac-spin" /> Processing...</> : <><Sparkles size={16} /> Create Avatar</>}
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {step === 2 && done && (
-          <motion.div key="step2" className="ac-body" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
-            <div className="ac-done-card premium-card">
-              <div className="ac-done-icon"><Sparkles size={56} /></div>
-              <h2>Avatar Created!</h2>
-              <p>"{name}" is ready to use in your videos</p>
-              <div className="ac-done-avatar">
-                <Bot size={80} />
-              </div>
-              <div className="ac-done-actions">
-                <button className="ac-use-btn"><Zap size={16} /> Create Video Now</button>
-                <button className="ac-another-btn" onClick={() => { setStep(0); setMethod(null); setName(''); setFile(null); setDone(false) }}>Create Another</button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+           </div>
+        </section>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AvatarCreator
-
-
-
-
-
+export default AvatarCreator;

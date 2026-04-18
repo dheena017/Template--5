@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Dropdown } from './index';
 
 const DASHBOARDS = [
-    { id: 'pdf-select', label: 'PDF Dashboard', icon: LayoutTemplate, color: '#94a3b8' },
+    { id: 'pdf-dashboard', label: 'PDF Dashboard', icon: LayoutTemplate, color: '#94a3b8' },
     { id: 'organize-pdf', label: 'Organize PDF', icon: Layers, color: '#42a5f5' },
     { id: 'optimize-pdf', label: 'Optimize PDF', icon: Zap, color: '#10b981' },
     { id: 'convert-to-pdf', label: 'Convert to PDF', icon: FileUp, color: '#0ea5e9' },

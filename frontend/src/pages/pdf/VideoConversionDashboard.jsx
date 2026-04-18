@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Film, MonitorPlay, Zap, ShieldCheck, Box, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { Search, Film, MonitorPlay, Zap, ShieldCheck, Box, ChevronRight, ArrowUpRight, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import '../../styles/pages/pdf/PDFPages.css';
 import '../../styles/pages/dashboards/DashboardIndex.css';
 import { PrimaryButton } from '../../components/buttons';
 import SearchBar from '../../components/common/SearchBar/SearchBar';
-
 
 const VIDEO_TOOLS = [
   { id: 'avi-to-mp4', name: 'AVI to MP4', desc: 'Convert legacy AVI videos to modern MP4 format' },
@@ -29,9 +29,76 @@ const VIDEO_TOOLS = [
   { id: 'wmv-to-mkv', name: 'WMV to MKV', desc: 'Convert WMV into open MKV format' }
 ];
 
+const ConversionToolCard = ({ tool, navigate, idx }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [15, -15]), { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-15, 15]), { stiffness: 300, damping: 30 });
+
+  function handleMouse(event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    x.set(event.clientX / rect.width - rect.left / rect.width - 0.5);
+    y.set(event.clientY / rect.height - rect.top / rect.height - 0.5);
+  }
+
+  return (
+    <motion.button
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: idx * 0.02 }}
+      onMouseMove={handleMouse}
+      onMouseLeave={() => { x.set(0); y.set(0); }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className="portal-tool-card-v3"
+      onClick={() => navigate(`/${tool.id}`)}
+    >
+      <div className="tool-card-inner-v3" style={{ transform: 'translateZ(50px)' }}>
+        <div className="tool-card-top-v3">
+          <div className="tool-suite-info-v3">
+            <div className="suite-icon-mini-v3" style={{ background: '#7c3aed30', color: '#7c3aed' }}>
+              <Film size={14} />
+            </div>
+            <span className="suite-name-tag-v3">VIDEO CONVERSION</span>
+          </div>
+          <div className="tool-action-indicator-v3">
+            <ArrowUpRight size={16} />
+          </div>
+        </div>
+
+        <div className="tool-card-body-v3">
+          <h3 className="text-xl font-black text-white mb-2">{tool.name}</h3>
+          <p className="text-sm text-slate-500 mb-6 font-medium line-clamp-2">{tool.desc}</p>
+          
+          <div className="tool-card-footer-v3">
+            <div className="tool-status-dot-v3" style={{ backgroundColor: '#7c3aed' }}></div>
+            <span className="tool-ready-text-v3">Transcoding Engine Ready</span>
+          </div>
+
+          <div className="card-launch-aura-v3">
+            <PrimaryButton
+              className="launch-btn-premium-v3"
+              style={{ backgroundColor: '#7c3aed' }}
+            >
+              Open Transcoder
+            </PrimaryButton>
+          </div>
+        </div>
+      </div>
+      <div className="card-glare-effect-v3"></div>
+      <div className="card-hover-bg-v3" style={{ background: `radial-gradient(circle at top right, rgba(124, 58, 237, 0.15), transparent)` }}></div>
+    </motion.button>
+  );
+};
+
 const VideoConversionDashboard = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+
+  // Hero Parallax
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const heroRotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), { stiffness: 50, damping: 20 });
+  const heroRotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 50, damping: 20 });
 
   const filteredTools = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -43,103 +110,86 @@ const VideoConversionDashboard = () => {
   }, [search]);
 
   return (
-    <section className="pdf-pages-shell" style={{ width: '100%', height: '100%', overflowY: 'auto' }}>
-      <div className="pdf-hero bg-gradient-to-br from-violet-900 via-indigo-950 to-black py-20 px-8 text-center border-b border-white/5 mb-12">
-        <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight">
-          Universal <span className="text-violet-500">Video</span> Conversion
-        </h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-10">
-          Professional video transcoding tools running directly in your browser. Blazing fast, format-perfect, and entirely private. No video is ever uploaded.
-        </p>
-        <div className="flex flex-wrap justify-center gap-8 text-sm font-bold text-slate-300">
-          <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
-            <ShieldCheck size={18} className="text-emerald-400" />
-            OFFLINE PROCESSING
+    <section className="pdf-pages-shell" style={{ width: '100%', height: '100%', overflowY: 'auto', backgroundColor: '#05060b' }}>
+       <motion.header 
+          className="portal-hero-premium mb-12" 
+          onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              mouseX.set(e.clientX / rect.width - rect.left / rect.width - 0.5);
+              mouseY.set(e.clientY / rect.height - rect.top / rect.height - 0.5);
+          }}
+          onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+          style={{ 
+              perspective: '1500px',
+              rotateX: heroRotateX,
+              rotateY: heroRotateY,
+              transformStyle: 'preserve-3d'
+          }}
+        >
+          <div className="hero-bg-overlay-aura">
+              <img src="/assets/dashboards/conversion_hero.png" alt="Conversion Hero" className="hero-image-aura" style={{ opacity: 0.5 }} />
           </div>
-          <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
-            <Zap size={18} className="text-yellow-400" />
-            HARDWARE ACCELERATED
+          <div className="hero-content-aura" style={{ transformStyle: 'preserve-3d', padding: '6rem 8%' }}>
+              <motion.div className="aura-chip-premium-v3" style={{ transform: 'translateZ(80px)' }}>
+                  <div className="status-dot-pulse-v3" style={{ backgroundColor: '#7c3aed' }}></div>
+                  <Sparkles size={14} className="text-violet-400" />
+                  <span>TRANSCODE ENGINE ACTIVE</span>
+              </motion.div>
+              <motion.h1 
+                  className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter"
+                  style={{ transform: 'translateZ(120px)', lineHeight: 0.9 }}
+              >
+                  Universal <br/> <span className="text-violet-500">Transcoding.</span>
+              </motion.h1>
+              <motion.p 
+                  className="text-xl text-slate-400 max-w-2xl mb-12 font-medium"
+                  style={{ transform: 'translateZ(100px)' }}
+              >
+                  Professional browser-based video conversion. 
+                  Zero server lag, 100% privacy, infinite possibilities.
+              </motion.p>
+              <div className="flex gap-8 text-sm font-black text-slate-500" style={{ transform: 'translateZ(130px)' }}>
+                <div className="flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-500" /> LOCAL PROCESSING</div>
+                <div className="flex items-center gap-2"><Zap size={18} className="text-yellow-500" /> ULTRA FAST</div>
+                <div className="flex items-center gap-2"><Box size={18} className="text-violet-500" /> ALL FORMATS</div>
+              </div>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/5">
-            <Box size={18} className="text-purple-400" />
-            NO FILE SIZE LIMITS
-          </div>
-        </div>
-      </div>
+      </motion.header>
 
-      <main className="pdf-pages-main p-8 pt-10 md:p-12 md:pt-12 w-full max-w-[1400px] mx-auto">
-        <header className="pdf-pages-header mb-12 flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-violet-500/20 rounded-xl">
-              <MonitorPlay className="text-violet-400" size={24} />
+      <main className="pdf-pages-main p-8 pt-0 md:p-12 md:pt-0 w-full max-w-[1700px] mx-auto">
+        <header className="mb-12 flex flex-col md:flex-row justify-between items-center bg-white/[0.02] backdrop-blur-3xl p-6 rounded-[32px] border border-white/5 gap-6">
+          <div className="flex items-center gap-5">
+            <div className="p-4 bg-violet-500/20 rounded-2xl border border-violet-500/20">
+              <MonitorPlay className="text-violet-400" size={28} />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Video Format Tools</h2>
-              <p className="text-sm text-slate-400">{filteredTools.length} formats available</p>
+              <h2 className="text-2xl font-black text-white tracking-tight uppercase">Master Library</h2>
+              <p className="text-sm font-bold text-slate-500 tracking-widest">{filteredTools.length} TRANSCODERS READY</p>
             </div>
           </div>
 
           <SearchBar 
             placeholder="Search format (e.g. mp4)"
             onSearch={(val) => setSearch(val)}
-            className="w-72"
+            className="w-full md:w-96"
           />
-
         </header>
 
-        {filteredTools.length > 0 ? (
-          <div className="portal-tools-main-grid">
-            {filteredTools.map((tool, idx) => (
-              <button
-                key={tool.id}
-                type="button"
-                className="portal-tool-card"
-                style={{
-                  animationDelay: `${idx * 0.03}s`,
-                  backgroundColor: '#0f1016',
-                  border: '1px solid rgba(255, 255, 255, 0.04)'
-                }}
-                onClick={() => navigate(`/${tool.id}`)}
-              >
-                <div className="tool-card-top">
-                  <div className="tool-suite-info">
-                    <div className="suite-icon-mini" style={{ color: '#7c3aed' }}>
-                      <Film size={14} />
-                    </div>
-                    <span className="suite-name-tag">VIDEO CONVERSION</span>
-                  </div>
-                  <div className="tool-action-indicator">
-                    <ArrowUpRight size={14} />
-                  </div>
-                </div>
-
-                <div className="tool-card-body">
-                  <h3>{tool.name}</h3>
-                  <div className="tool-card-footer">
-                    <div className="tool-status-dot" style={{ backgroundColor: '#7c3aed' }}></div>
-                    <span className="tool-ready-text">Ready to use</span>
-                  </div>
-
-                  <div className="card-launch-aura">
-                    <PrimaryButton
-                      className="launch-btn-premium"
-                      size="md"
-                      style={{ backgroundColor: '#7c3aed', color: '#fff', borderRadius: '100px', fontWeight: '800', border: 'none', boxShadow: '0 10px 20px rgba(124, 58, 237, 0.3)', paddingInline: '2rem' }}
-                    >
-                      Open Tool
-                    </PrimaryButton>
-                  </div>
-                </div>
-                <div className="card-hover-bg" style={{ background: `radial-gradient(circle at top right, #7c3aed15, transparent)` }}></div>
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 text-slate-400">
-            <Film size={48} className="mx-auto mb-4 opacity-20" />
-            <p className="text-xl">No video formats matching "{search}"</p>
-          </div>
-        )}
+        <AnimatePresence mode="popLayout">
+          {filteredTools.length > 0 ? (
+            <div className="portal-tools-main-grid-v4">
+              {filteredTools.map((tool, idx) => (
+                <ConversionToolCard key={tool.id} tool={tool} navigate={navigate} idx={idx} />
+              ))}
+            </div>
+          ) : (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-40 text-slate-500 border border-dashed border-white/5 rounded-[48px] bg-white/[0.01]">
+              <Film size={64} className="mx-auto mb-6 opacity-10" />
+              <p className="text-2xl font-black tracking-tight">Format Registry Empty</p>
+              <p className="text-slate-600 mt-2">No transcoders found matching "{search}"</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </section>
   );

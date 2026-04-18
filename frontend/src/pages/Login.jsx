@@ -40,6 +40,28 @@ const Login = () => {
     }
   }
 
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateXValue = ((y - centerY) / centerY) * -10;
+    const rotateYValue = ((x - centerX) / centerX) * 10;
+
+    setRotateX(rotateXValue);
+    setRotateY(rotateYValue);
+  };
+
+  const handleMouseLeave = () => {
+    setRotateX(0);
+    setRotateY(0);
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-background">
@@ -48,14 +70,22 @@ const Login = () => {
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+            perspective: 1000,
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d"
+        }}
         className="auth-card premium-card"
       >
-        <div className="auth-header">
-           <div className="brand-badge"><Sparkles size={24} /></div>
-           <h1>Welcome Back</h1>
-           <p>Continue your creative journey with TextAI</p>
+        <div className="auth-header" style={{ transformStyle: "preserve-3d" }}>
+           <motion.div className="brand-badge" style={{ translateZ: 80 }}><Sparkles size={24} /></motion.div>
+           <h1 style={{ translateZ: 60 }}>Welcome Back</h1>
+           <p style={{ translateZ: 40 }}>Continue your creative journey with TextAI</p>
         </div>
 
         <form className="auth-form" onSubmit={handleLogin}>

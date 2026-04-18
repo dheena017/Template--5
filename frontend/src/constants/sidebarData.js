@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Film, Palette, Bot, Mic, FileText, 
   Clapperboard, HardDrive, Terminal, 
-  Share2, Info, Layout, Languages,
+  Share2, Info, Languages,
   Zap, Settings, Activity, Shield,
   Globe, Code2, Key, Webhook,
   History, Music, Video, Star,
@@ -12,12 +12,21 @@ import {
 
 export const SIDEBAR_CATEGORIES = [
   {
-    name: 'Video',
+    name: 'Video AI',
     icon: React.createElement(Film, { size: 18 }),
     links: [
+      { name: 'Video Dashboard', path: '/video-dashboard', icon: React.createElement(Film, { size: 16 }) },
       { name: 'AI Studio', path: '/ai-studio', icon: React.createElement(Clapperboard, { size: 16 }) },
+      { name: 'Video Translate', path: '/ComingSoon-Translate', icon: React.createElement(Languages, { size: 16 }) },
       { name: 'Video Agent', path: '/video-agent', icon: React.createElement(Bot, { size: 16 }) },
-      { name: 'PPT to Video', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 16 }) }
+      { name: 'Text-to-Video', path: '/text-to-video-dashboard', icon: React.createElement(Video, { size: 16 }) },
+      { name: 'Image-to-Video', path: '/image-to-video-dashboard', icon: React.createElement(Video, { size: 16 }) },
+      { name: 'Script to video', path: '/script-to-video', icon: React.createElement(FileText, { size: 16 }) },
+      { name: 'Blog to video', path: '/blog-to-video', icon: React.createElement(Globe, { size: 16 }) },
+      { name: 'PPT to video', path: '/ppt-to-video', icon: React.createElement(FileText, { size: 16 }) },
+      { name: 'Auto edit video', path: '/auto-edit', icon: React.createElement(Scissors, { size: 16 }) },
+      { name: 'Record to video', path: '/record-to-video', icon: React.createElement(Mic, { size: 16 }) },
+      { name: 'Empty', path: '/blank-video', icon: React.createElement(Box, { size: 16 }) }
     ]
   },
   {
@@ -59,7 +68,6 @@ export const SIDEBAR_CATEGORIES = [
     name: 'Studio',
     icon: React.createElement(Clapperboard, { size: 18 }),
     links: [
-      { name: 'AI Orchestrator', path: '/ai-orchestrator', icon: React.createElement(Layout, { size: 16 }) },
       { name: 'Video Highlights', path: '/highlights', icon: React.createElement(Star, { size: 16 }) }
     ]
   },
@@ -80,7 +88,10 @@ export const SIDEBAR_CATEGORIES = [
       { name: 'Organize PDF', path: '/organize-pdf', icon: React.createElement(Layers, { size: 16 }) },
       { name: 'Remove Pages', path: '/remove-pages', icon: React.createElement(Trash2, { size: 16 }) },
       { name: 'Extract Pages', path: '/extract-pages', icon: React.createElement(Scissors, { size: 16 }) },
-      { name: 'Scan to PDF', path: '/scan-to-pdf', icon: React.createElement(Scan, { size: 16 }) }
+      { name: 'Scan to PDF', path: '/scan-to-pdf', icon: React.createElement(Scan, { size: 16 }) },
+      { name: 'All Conversions', path: '/all-conversions', icon: React.createElement(Search, { size: 16 }) },
+      { name: 'PDF Dashboard', path: '/pdf-dashboard', icon: React.createElement(FileText, { size: 16 }) },
+      { name: 'Document Conversions', path: '/document-conversion', icon: React.createElement(Layers, { size: 16 }) }
     ]
   },
   {

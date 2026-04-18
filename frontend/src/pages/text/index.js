@@ -1,3 +1,3 @@
 export { default as Rules } from './Rules'
 export { default as SpeechToText } from './SpeechToText'
-// Add others as needed
+export { default as TextDashboard } from './TextDashboard'

@@ -15,7 +15,10 @@ def get_stats():
                 "pdf": 850,
                 "image": 120,
                 "text": 90,
-                "video": 190
+                "video": 190,
+                "ollama": 45,
+                "speech": 32,
+                "marketing": 28
             },
             "recent_activity": [
                 {"id": 1, "action": "PDF Encrypted", "target": "Q1_Summary.pdf", "time": "2m ago"},
